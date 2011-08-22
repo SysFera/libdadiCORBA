@@ -1,0 +1,39 @@
+/**
+ * \brief Root forwarder class IDL
+ *
+ */
+
+#ifndef CORBAFORWARDER_IDL
+#define CORBAFORWARDER_IDL
+
+// Contain seqString and corba_request_t definition
+#include "common_types.idl"
+
+
+interface CorbaForwarder
+{	
+	/* Common methods. */
+	long ping(in string objName)
+		raises(UnknownObject, BadNameException);
+  oneway void getRequest(in corba_request_t req, in string objName);
+  string getHostname(in string objName)
+		raises(UnknownObject, BadNameException);
+	/* CORBA remote management. */
+	void bind(in string objName, in string ior);
+	oneway void unbind(in string objName);
+	SeqString getBindings(in string ctxt);
+	
+	/* Peer connection. */
+	void connectPeer(in string ior, in string host, in long port);
+	string getIOR();
+	
+	/* Obtain informations about this forwarder. */
+	string getName();
+  string getPeerName();
+  string getHost();
+  string getPeerHost();
+
+	SeqString routeTree();
+};
+
+#endif
