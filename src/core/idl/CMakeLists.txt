@@ -17,6 +17,11 @@ common_types
 CorbaForwarder
 )
 
+set (IDL_INST_SOURCES
+  common_types.idl
+  CorbaForwarder.idl
+)
+
 SET( GENERATED_CXX_FILES "" )
 SET( TARGET_IDL_GENERATED_HEADER_FILES "" )
 
@@ -34,8 +39,6 @@ FOREACH( loop_var ${IDL_SOURCES} )
     DEPENDS   ${CMAKE_CURRENT_SOURCE_DIR}/${loop_var}.idl
     IMPLICIT_DEPENDS CXX ${loop_var}.idl
     COMMENT   "idl generated code: ${loop_var}SK.cc, ${loop_var}DynSK.cc and ${loop_var}.hh")
-
-  message("Writting: ${CMAKE_CURRENT_BINARY_DIR}/${loop_var}.hh")
 
     set (GENERATED_CXX_FILES
       ${GENERATED_CXX_FILES}
@@ -69,14 +72,19 @@ ADD_CUSTOM_TARGET( TARGET_IDL_GENERATED_HEADERS
   DEPENDS  ${TARGET_IDL_GENERATED_HEADER_FILES}
 )
 
+install (FILES ${TARGET_IDL_GENERATED_HEADER_FILES} DESTINATION include/)
+install (FILES ${IDL_INST_SOURCES} DESTINATION include/idl/ )
+
 add_custom_target(CORBAFiles
   DEPENDS  
   ${TARGET_IDL_GENERATED_HEADER_FILES}
   ${GENERATED_CXX_FILES}
   )
 
-add_library(Corba SHARED
+add_library(corba SHARED
   ${GENERATED_CXX_FILES}
   )
 
-add_dependencies(Corba ${TARGET_IDL_GENERATED_HEADER_FILES})
+add_dependencies(corba ${TARGET_IDL_GENERATED_HEADER_FILES})
+
+install (TARGETS corba DESTINATION lib/)

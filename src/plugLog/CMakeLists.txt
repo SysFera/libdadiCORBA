@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(BOBLOG)
+project(DADICORBALOG)
 
 message("path = ${PROJECT_SOURCE_DIR}/Cmake")
 
@@ -10,6 +10,11 @@ set(binary)
 
 
 include (UseOmniORB4)
+
+find_package(dadiCORBA)
+if(DADICORBA_FOUND)
+  message("FOUND IT")
+endif(DADICORBA_FOUND)
 
 
 # Options set to ON by default
@@ -27,7 +32,7 @@ else (OMNIORB4_FOUND)
   set(OMNIORB4_DIR "" cache path "OMNIORB4 installation path")
 endif(OMNIORB4_FOUND)
 
-set(BOBLOG_LIBRARIES ${BOBLOG_LIBRARIES} ${OMNIORB4_LIBRARIES})
+set(DADICORBALOG_LIBRARIES ${DADICORBALOG_LIBRARIES} ${OMNIORB4_LIBRARIES})
 
 
 find_package(
@@ -40,6 +45,8 @@ find_package( Threads )
 if( THREADS_FOUND )
   set( THREADS_LIB ${CMAKE_THREAD_LIBS_INIT} )
 endif()
+
+
 
 set( Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB} )
 
@@ -60,41 +67,41 @@ set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
 link_directories(
   ${Boost_LIBRARY_DIRS}
   ${OMNIORB4_LIBRARY_DIR}
-  ${BOB_SOURCE_DIR/build/lib}
+  ${DADICORBA_LIB}
 )
 
-message("val:   ${BOBLOG_SOURCE_DIR}/idl")
+message("val:   ${DADICORBALOG_SOURCE_DIR}/idl")
 
 include_directories(
   ${Boost_INCLUDE_DIRS}
   ${OMNIORB4_INCLUDE_DIR}
-  ${BOB_SOURCE_DIR}/idl
-  ${BOB_BINARY_DIR}/idl
-  ${BOB_SOURCE_DIR}/impl
-  ${BOB_SOURCE_DIR}/monitor
-  ${BOB_SOURCE_DIR}
-  ${BOBLOG_BINARY_DIR}/idl
+  ${DADICORBA_INCLUDE_DIR}/idl
+  ${DADICORBAlog_INCLUDE_DIR}/monitor
+  ${DADICORBA_INCLUDE_DIR}
+  ${PROJECT_BINARY_DIR}/idl
 )
 
 set(idl_path
-  ${BOB_SOURCE_DIR}/idl/common_types.idl
-  ${BOB_SOURCE_DIR}/idl/CorbaForwarder.idl
+  ${DADICORBA_INCLUDE_DIR}/idl/common_types.idl
+  ${DADICORBA_INCLUDE_DIR}/idl/CorbaForwarder.idl
   ${PROJECT_SOURCE_DIR}/idl/CorbaLogForwarder.idl
   ${PROJECT_SOURCE_DIR}/idl/LogComponentFwdr.idl
   ${PROJECT_SOURCE_DIR}/idl/LogComponent.idl
   ${PROJECT_SOURCE_DIR}/idl/LogToolFwdr.idl
   ${PROJECT_SOURCE_DIR}/idl/LogTool.idl
+  ${PROJECT_SOURCE_DIR}/idl/LogTypes.idl
 )
 
-generate_idl(IDLS idl_path INCLUDE_DIR "/home/keo/Bureau/src/fwdr/core/idl" OUTPUT generated)
+generate_idl(IDLS idl_path INCLUDE_DIR ${DADICORBA_INCLUDE_DIR}/idl  OUTPUT generated)
 
 add_subdirectory(monitor)
-
-add_library(boblog
+add_library(dadiCORBAlog
   ${generated}
   LogConnector.cc
   LogForwarder.cc
 )
 
-#add_subdirectory(idl)
+install (TARGETS dadiCORBAlog DESTINATION lib)
+
+add_subdirectory(examples)
 

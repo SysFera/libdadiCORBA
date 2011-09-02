@@ -17,6 +17,8 @@
 
 #include <omnithread.h>
 
+#include <stdio.h>
+#include <stdlib.h>
 
 
 #define FWRDCTXT "forwarder"

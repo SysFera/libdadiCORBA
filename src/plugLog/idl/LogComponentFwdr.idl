@@ -33,7 +33,7 @@
 #ifndef _LOGCOMPONENTFWDR_IDL_
 #define _LOGCOMPONENTFWDR_IDL_
 
-#include "LogTypes.idl"
+#include "common_types.idl"
 
 #include "LogComponent.idl"
 

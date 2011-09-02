@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(BOB)
+project(DADICORBA)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 set(MANDIR /usr/share/man CACHE string "the man path")
@@ -19,7 +19,7 @@ else (OMNIORB4_FOUND)
   set(OMNIORB4_DIR "" cache path "OMNIORB4 installation path")
 endif(OMNIORB4_FOUND)
 
-set(BOB_LIBRARIES ${BOB_LIBRARIES} ${OMNIORB4_LIBRARIES})
+set(DADICORBA_LIBRARIES ${DADICORBA_LIBRARIES} ${OMNIORB4_LIBRARIES})
 
 find_package(
 	Boost
@@ -57,27 +57,34 @@ link_directories(
 include_directories(
   ${Boost_INCLUDE_DIRS}
   ${OMNIORB4_INCLUDE_DIR}
-  ${BOB_BINARY_DIR}/idl
-  ${BOB_SOURCE_DIR}/impl
-  ${BOB_SOURCE_DIR}
+  ${DADICORBA_BINARY_DIR}/idl
+  ${DADICORBA_SOURCE_DIR}/impl
+  ${DADICORBA_SOURCE_DIR}
 )
 
 
 add_subdirectory(idl)
 
 
-add_library(bob
+add_library(dadicorba
   Connector.cc
   ORBMgr.cc
   impl/Forwarder.cc
   Options.cc
   SSHTunnel.cc
   NetConfig.cc
-  LocalTime.cc
-  ORBTools.cc
 )
 
-add_dependencies(bob CORBAFiles)
+target_link_libraries(dadicorba
+  ${OMNIORB4_LIBRARIES}
+)
+
+install (FILES Connector.hh ORBMgr.hh Options.hh SSHTunnel.hh NetConfig.hh impl/Forwarder.hh FullLinkedList.hh DESTINATION include/)
+
+
+add_dependencies(dadicorba CORBAFiles)
+
+install (TARGETS  dadicorba DESTINATION lib/)
 
 add_executable(fwdr
   genericFwdr.cc
@@ -86,6 +93,8 @@ add_executable(fwdr
 target_link_libraries(fwdr
   ${Boost_LIBRARIES}
   ${OMNIORB4_LIBRARIES}
-  Corba
-  bob
+  corba
+  dadicorba
 )
+
+install (TARGETS fwdr DESTINATION bin/)

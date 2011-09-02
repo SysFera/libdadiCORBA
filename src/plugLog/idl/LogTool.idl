@@ -24,6 +24,7 @@
 #define _LOGTOOL_IDL_
 
 #include "LogTypes.idl"
+#include "common_types.idl"
 
 /**
  * This file defines everything needed to attach a tool

@@ -32,7 +32,7 @@ macro(generate_idl)
     set(MY_OUTPUT_PATH "${IDL_OUTPUT_PATH}")
   endif()
   file(MAKE_DIRECTORY ${MY_OUTPUT_PATH})
-  # add include directories
+
   if(omni_INCLUDE_DIR)
     set(MY_INCLUDE_DIR ${IDL_INCLUDE_DIRECTORIES} ${omni_INCLUDE_DIR})
   else()

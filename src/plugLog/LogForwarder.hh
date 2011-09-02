@@ -57,7 +57,7 @@
 #include "NetConfig.hh"
 
 #include "CorbaLogForwarder.hh"
-#include "commonLogTypes.hh"
+#include "common_types.hh"
 
 #define LOGCOMPCTXT "LogServiceC" //"LogService component"
 #define LOGTOOLCTXT "LogServiceT" //"LogService tool"
@@ -108,7 +108,7 @@ public:
   /* CORBA remote management implementation. */
   void bind(const char* objName, const char* ior);
   void unbind(const char* objName);
-  SeqString* getBindings(const char* ctxt);
+  //  SeqString* getBindings(const char* ctxt);
   
   /* Connect the peer forwarder. */
   void connectPeer(const char* ior, const char* host,
@@ -123,11 +123,11 @@ public:
   void cleanCaches();
   
   char* getName();
-  SeqString* acceptList();
-  SeqString* rejectList();
+  //  SeqString* acceptList();
+  //  SeqString* rejectList();
   ::CORBA::Boolean manage(const char* hostname);
   
-  SeqString* routeTree();
+  //  SeqString* routeTree();
   
   /* LogComponentFwdr implementation. */
   void setTagFilter(const ::tag_list_t& tagList,

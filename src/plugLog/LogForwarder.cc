@@ -253,28 +253,28 @@ void LogForwarder::bind(const char* objName, const char* ior) {
 /* Return the local bindings. Result is a set of couple
  * (object name, object ior)
  */
-SeqString* LogForwarder::getBindings(const char* ctxt) {
-  list<string> objects;
-  list<string>::iterator it;
-  SeqString* result = new SeqString();
-  unsigned int cmpt = 0;
-	
-  objects = ORBMgr::getMgr()->list(ctxt);
-  result->length(objects.size()*2);
-  
-  for (it=objects.begin(); it!=objects.end(); ++it) {
-    try {
-      CORBA::Object_ptr obj = ORBMgr::getMgr()->resolveObject(ctxt, it->c_str(),
-                                                                 "no-Forwarder");
-      (*result)[cmpt++]=it->c_str();
-      (*result)[cmpt++]=ORBMgr::getMgr()->getIOR(obj).c_str();
-    } catch (const runtime_error& err) {
-      continue;
-    }
-  }
-  result->length(cmpt);
-  return result;
-}
+//SeqString* LogForwarder::getBindings(const char* ctxt) {
+//  list<string> objects;
+//  list<string>::iterator it;
+//  SeqString* result = new SeqString();
+//  unsigned int cmpt = 0;
+//	
+//  objects = ORBMgr::getMgr()->list(ctxt);
+//  result->length(objects.size()*2);
+//  
+//  for (it=objects.begin(); it!=objects.end(); ++it) {
+//    try {
+//      CORBA::Object_ptr obj = ORBMgr::getMgr()->resolveObject(ctxt, it->c_str(),
+//                                                                 "no-Forwarder");
+//      (*result)[cmpt++]=it->c_str();
+//      (*result)[cmpt++]=ORBMgr::getMgr()->getIOR(obj).c_str();
+//    } catch (const runtime_error& err) {
+//      continue;
+//    }
+//  }
+//  result->length(cmpt);
+//  return result;
+//}
 
 void LogForwarder::unbind(const char* objName) {
   string objString(objName);
@@ -388,68 +388,68 @@ char* LogForwarder::getName() {
   return CORBA::string_dup(name.c_str());
 }
 
-SeqString* LogForwarder::acceptList() {
-  SeqString* result = new SeqString;
-  list<string>::const_iterator it;
-  
-  result->length(netCfg.getAcceptList().size());
-  
-  unsigned int i=0;
-  for (it=netCfg.getAcceptList().begin();
-       it!=netCfg.getAcceptList().end();
-       ++it, ++i)
-    {
-      (*result)[i] = it->c_str();
-    }
-	
-  return result;
-}
-
-SeqString* LogForwarder::rejectList() {
-  SeqString* result = new SeqString;
-  list<string>::const_iterator it;
-  
-  result->length(netCfg.getRejectList().size());
-  
-  unsigned int i=0;
-  for (it=netCfg.getRejectList().begin();
-       it!=netCfg.getRejectList().end();
-       ++it, ++i)
-    {
-      (*result)[i] = it->c_str();
-    }
-  
-  return result;
-}
+//SeqString* LogForwarder::acceptList() {
+//  SeqString* result = new SeqString;
+//  list<string>::const_iterator it;
+//  
+//  result->length(netCfg.getAcceptList().size());
+//  
+//  unsigned int i=0;
+//  for (it=netCfg.getAcceptList().begin();
+//       it!=netCfg.getAcceptList().end();
+//       ++it, ++i)
+//    {
+//      (*result)[i] = it->c_str();
+//    }
+//	
+//  return result;
+//}
+//
+//SeqString* LogForwarder::rejectList() {
+//  SeqString* result = new SeqString;
+//  list<string>::const_iterator it;
+//  
+//  result->length(netCfg.getRejectList().size());
+//  
+//  unsigned int i=0;
+//  for (it=netCfg.getRejectList().begin();
+//       it!=netCfg.getRejectList().end();
+//       ++it, ++i)
+//    {
+//      (*result)[i] = it->c_str();
+//    }
+//  
+//  return result;
+//}
 
 ::CORBA::Boolean LogForwarder::manage(const char* hostname) {
   return netCfg.manage(hostname);
 }
 
-SeqString* LogForwarder::routeTree() {
-  SeqString* result = new SeqString();
-  /*std::list<string> forwarders = ORBMgr::list(FWRDCTXT);
-    std::list<string>::const_iterator it;
-    
-    result->length(1);
-    (*result)[0]=CORBA::string_dup(name.c_str())
-    for (it=forwarders.begin(); it!=forwarders.end(); ++it) {
-    if (*it==name) continue;
-    
-    Forwarder_var fwd = resolve<Forwarder, Forwarder_var>(FWRDCTXT, *it,
-    this->name);
-    SeqString* tmp = fwd->routeTree();
-    unsigned int curLgth = result->length();
-    unsigned int tmpLgth = tmp->lgth();
-    
-    result->length(lgth+tmpLgth);
-    for (unsigned int i=lgth; i<lgth+tmpLgth; ++i) {
-    (*result)[i] = (*tmp)[i-lgth];
-    }
-    
-    }*/
-  return result;
-}
+//SeqString* LogForwarder::routeTree() {
+//  SeqString* result = new SeqString();
+//  /*std::list<string> forwarders = ORBMgr::list(FWRDCTXT);
+//    std::list<string>::const_iterator it;
+//    
+//    result->length(1);
+//    (*result)[0]=CORBA::string_dup(name.c_str())
+//    for (it=forwarders.begin(); it!=forwarders.end(); ++it) {
+//    if (*it==name) continue;
+//    
+//    Forwarder_var fwd = resolve<Forwarder, Forwarder_var>(FWRDCTXT, *it,
+//    this->name);
+//    SeqString* tmp = fwd->routeTree();
+//    unsigned int curLgth = result->length();
+//    unsigned int tmpLgth = tmp->lgth();
+//    
+//    result->length(lgth+tmpLgth);
+//    for (unsigned int i=lgth; i<lgth+tmpLgth; ++i) {
+//    (*result)[i] = (*tmp)[i-lgth];
+//    }
+//    
+//    }*/
+//  return result;
+//}
 
 string LogForwarder::getName(const string& namectxt) {
   size_t pos = namectxt.find('/');

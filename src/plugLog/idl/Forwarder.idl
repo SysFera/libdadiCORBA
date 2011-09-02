@@ -58,7 +58,7 @@ interface Forwarder :
 	/* CORBA remote management. */
 	void bind(in string objName, in string ior);
 	oneway void unbind(in string objName);
-	SeqString getBindings(in string ctxt);
+	//	SeqString getBindings(in string ctxt);
 	
 	/* Peer connection. */
 	void connectPeer(in string ior, in string host, in long port);
@@ -66,11 +66,11 @@ interface Forwarder :
 	
 	/* Obtain informations about this forwarder. */
 	string getName();
-	SeqString acceptList();
-	SeqString rejectList();
+//	SeqString acceptList();
+//	SeqString rejectList();
 	boolean manage(in string hostname);
 	
-	SeqString routeTree();
+	//	SeqString routeTree();
 
 
 	/* Forwarders management. */

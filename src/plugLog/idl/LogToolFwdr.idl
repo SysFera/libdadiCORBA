@@ -23,7 +23,7 @@
 #ifndef _LOGTOOLFWDR_IDL_
 #define _LOGTOOLFWDR_IDL_
 
-#include "LogTypes.idl"
+#include "common_types.idl"
 
 #include "LogTool.idl"
 

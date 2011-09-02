@@ -113,7 +113,7 @@ public :
 
   void init(int argc, char* argv[]);
   
-  ORBMgr* getMgr();
+  //  ORBMgr* getMgr();
   
   /* IOR management functions. */
   void makeIOR(const std::string& strIOR, IOP::IOR& ior);

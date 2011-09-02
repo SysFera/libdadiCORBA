@@ -94,9 +94,11 @@ void ORBMgr::init(CORBA::ORB_ptr ORB) {
 
 ORBMgr::ORBMgr(int argc, char* argv[]) {
   const char* opts[][2]= {{0,0}};
-  
+  std::cout << "In the constructor " << std::endl;  
   ORB = CORBA::ORB_init(argc, argv, "omniORB4", opts);
+  std::cout << "In the constructor B4 init " << std::endl;  
   init(ORB);
+  std::cout << "In the constructor, not down " << std::endl;  
   down = false;
 }
 
@@ -247,14 +249,19 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& IOR) const {
 
 CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& name,
 					const string& connectId, const string& fwdName) const {
+  fprintf (stderr, "Z1 \n");
   string ctxt = context;
   string ctxt2 = context;
 
+  fprintf (stderr, "Z1 \n");
   Connector* c = getConnector(connectId);
+  fprintf (stderr, "Z2 \n");
   if (!c) {
+    fprintf (stderr, "Z3 \n");
     std::cerr << "failure" << std::cerr;
     throw std::exception();
   }
+  fprintf (stderr, "Z4 \n");
 
   ctxt = c->getContext(context);
 
@@ -415,7 +422,9 @@ ORBMgr* ORBMgr::getMgr() {
 }
 
 void ORBMgr::init(int argc, char* argv[]) {
+  std::cout << "In the init " << std::endl;
   if (!theMgr) {
+    std::cout << "In the constructor " << std::endl;
     //delete theMgr;
     theMgr = new ORBMgr(argc, argv);
   }

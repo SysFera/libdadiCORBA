@@ -186,7 +186,9 @@ int main(int argc, char** argv)
   delete readConfig;
   
   // ADD *******
+  std::cout << "Before init orb mgr " << endl;
   ORBMgr::init(argc, argv);
+  std::cout << "DONE init orb mgr " << endl;
 
   /**
    * Start ORB and initialize Servants

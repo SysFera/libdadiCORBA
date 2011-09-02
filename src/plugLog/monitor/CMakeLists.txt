@@ -1,27 +1,32 @@
 ######### First the LogServiceMonitor library:
 INCLUDE_DIRECTORIES(
   ${OMNIORB4_INCLUDE_DIR}
-  ${BOBLOG_BINARY_DIR}/idl
-  ${BOBLOG_SOURCE_DIR}
+  ${DADICORBA_INCLUDE_DIR}/idl
+  ${DADICORBALOG_BINARY_DIR}/idl
+  ${DADICORBALOG_SOURCE_DIR}/monitor
+  ${DADICORBALOG_SOURCE_DIR}
 )
 
 #message("link : ")
 
 link_directories(
-  ${BOB_SOURCE_DIR}/build/lib
+  ${DADICORBA_SOURCE_DIR}/build/lib
 )
 
 
 add_library(LogServiceMonitor SHARED
-  ${BOBLOG_SOURCE_DIR}/monitor/CoreThread.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/LogCentralComponent_impl.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/LogCentralTool_impl.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/ReadConfig.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/SendThread.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/SimpleFilterManager.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/StateManager.cc
-  ${BOBLOG_SOURCE_DIR}/monitor/TimeBuffer.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/CoreThread.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/LogCentralComponent_impl.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/LogCentralTool_impl.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/ReadConfig.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/SendThread.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/SimpleFilterManager.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/StateManager.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/TimeBuffer.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/LogOptions.cc
 )
+
+install (TARGETS LogServiceMonitor DESTINATION lib)
 
 set (binary
   ${binary}
@@ -37,22 +42,23 @@ set (binary
   )
 
 add_dependencies (LogServiceMonitor
-  BOBLOG_TARGET_IDL_GENERATED_HEADER_FILES
+  DADICORBALOG_TARGET_IDL_GENERATED_HEADER_FILES
 )
 
 TARGET_LINK_LIBRARIES( LogServiceMonitor
-#  LogServiceUtils
-  Corba
+  ${DADICORBA_LIB}
+  dadiCORBAlog
   ${OMNIORB4_LIBRARIES}
-)
+  pthread
+  )
 
 
 ######### Then the LogCentral executable:
 ADD_EXECUTABLE( LogCentral LogCentral.cc )
 TARGET_LINK_LIBRARIES( LogCentral
-  LogForwarderUtils
-  bob
-  Corba
+  dadiCORBAlog
+  ${DADICORBA_LIB}
+  ${OMNIORB4_LIBRARIES}
   LogServiceMonitor
-)
+  )
 INSTALL( TARGETS LogCentral DESTINATION bin )
