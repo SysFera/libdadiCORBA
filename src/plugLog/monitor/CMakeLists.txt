@@ -25,6 +25,7 @@ add_library(LogServiceMonitor SHARED
   ${DADICORBALOG_SOURCE_DIR}/monitor/TimeBuffer.cc
   ${DADICORBALOG_SOURCE_DIR}/monitor/LogOptions.cc
   ${DADICORBALOG_SOURCE_DIR}/monitor/LocalTime.cc
+  ${DADICORBALOG_SOURCE_DIR}/monitor/ORBTools.cc
 )
 
 install (TARGETS LogServiceMonitor DESTINATION lib)
