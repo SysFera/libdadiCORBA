@@ -12,7 +12,7 @@ find_path(DADICORBA_INCLUDE_DIR
 )
 
 find_library(DADICORBA_LIB
-  NAMES dadiCORBA
+  NAMES dadicorba
   PATHS
   ${DADICORBA_DIR}/lib
   /usr/lib
