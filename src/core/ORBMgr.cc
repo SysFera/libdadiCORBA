@@ -94,6 +94,7 @@ void ORBMgr::init(CORBA::ORB_ptr ORB) {
 
 ORBMgr::ORBMgr(int argc, char* argv[]) {
   const char* opts[][2]= {{0,0}};
+  mconn = map<string,Connector*>();
   std::cout << "In the constructor " << std::endl;  
   ORB = CORBA::ORB_init(argc, argv, "omniORB4", opts);
   std::cout << "In the constructor B4 init " << std::endl;  
@@ -638,7 +639,7 @@ void ORBMgr::cleanCache() const {
 void
 ORBMgr::addConnector(Connector* conn, string id) {
   // Do not add an existing connector twice
-  if (mconn.find(id) != mconn.end()) {
+  if (mconn.find(id) == mconn.end()) {
     mconn.insert(pair<string, Connector*>(id, conn));
   }
 }

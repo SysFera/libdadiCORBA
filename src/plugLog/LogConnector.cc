@@ -41,7 +41,7 @@ LogConnector::getContext(std::string context) {
   } else if (context.compare(LOGTOOLMSGCTXT)== 0) {
     return LOGTOOLCTXT;
   }
-  return "";
+  return context;
 }
 
 void

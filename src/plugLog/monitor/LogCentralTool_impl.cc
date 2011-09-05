@@ -33,6 +33,7 @@
 #include <iostream>
 #include <ctime>
 #include "LogForwarder.hh"
+#include "LogConnector.hh"
 
 #include "ORBMgr.hh"
 
@@ -67,12 +68,14 @@ CORBA::Short
 LogCentralTool_impl::connectTool(char*& toolName, 
                                  const char* msgRec)
 {
+  LogConnector* conn = new LogConnector(ORBMgr::getMgr());
+  conn->registrer("log");
   ToolList::Iterator* it;
   char tmpName[6];
   it = toolList->getIterator();
   // MODIF ***
-  ToolMsgReceiver_ptr msgReceiver = ORBMgr::getMgr()->resolve
-    <ToolMsgReceiver, ToolMsgReceiver_ptr>(LOGTOOLMSGCTXT, msgRec);
+  ToolMsgReceiver_ptr msgReceiver = conn->resolve
+    <ToolMsgReceiver, ToolMsgReceiver_ptr>(LOGTOOLMSGCTXT, msgRec, "log");
 //  LogCentralTool_ptr msgReceiver = LogORBMgr::getMgr()->resolve
 //    <LogCentralTool, LogCentralTool_ptr>(LOGTOOLCTXT, msgRec);
   if (CORBA::is_nil(msgReceiver)){

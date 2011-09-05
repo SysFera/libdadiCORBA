@@ -90,8 +90,9 @@ public :
   
   template <typename CORBA_object, typename CORBA_ptr>
   CORBA_ptr resolve(const std::string& ctxt, const std::string& name,
+		    const std::string& connectId,
 		    const std::string& fwdName = "") const {
-    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject(ctxt, name, fwdName)));
+    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject(ctxt, name, connectId, fwdName)));
   }
   template <typename CORBA_object, typename CORBA_ptr>
   CORBA_ptr resolve(const std::string& IOR) const {

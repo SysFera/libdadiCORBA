@@ -51,7 +51,6 @@ public :
 
 protected :
 private :
-  ORBMgr* mmgr;
 
 } ; //end class connector
 

@@ -63,6 +63,7 @@
 // helpers
 #include "ORBTools.hh"
 #include "LogForwarder.hh"
+#include "LogConnector.hh"
 
 //#include "debug.hh"
 
@@ -142,8 +143,9 @@ LogCentralComponent_impl::connectComponent(
     fprintf (stderr, "Bad name componnent. Cannot connect component. \n");
     return LS_COMPONENT_CONNECT_BADNAME;
   }
-  ComponentConfigurator_ptr compoConf = ORBMgr::getMgr()->resolve
-    <ComponentConfigurator,ComponentConfigurator_ptr>(LOGCOMPCONFCTXT, compConfigurator);
+  LogConnector* conn = new LogConnector(ORBMgr::getMgr());
+  conn->registrer("log");
+  ComponentConfigurator_ptr compoConf = conn->resolve<ComponentConfigurator,ComponentConfigurator_ptr>(LOGCOMPCONFCTXT, compConfigurator, "log");
 
   if (CORBA::is_nil(compoConf)) {
     fprintf (stderr, "Bad component configurator **** \n");
