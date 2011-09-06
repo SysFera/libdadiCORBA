@@ -77,6 +77,7 @@ using namespace std;
 // helpers
 #include "ORBTools.hh"
 #include "ORBMgr.hh"
+#include "LogConnector.hh"
 
 int main(int argc, char** argv) 
 {
@@ -213,9 +214,11 @@ int main(int argc, char** argv)
 //  ORBMgr::getMgr()->bind("LogServiceT", "LCT",
 //			 ORBMgr::getMgr()->getIOR(myLCT->_this()), true);
 //
+    LogConnector* conn = new LogConnector(ORBMgr::getMgr());
+    conn->registrer("log");
     // Inscription in the others fwdr
-    ORBMgr::getMgr()->fwdsBind("LogServiceT", "LCT",
-				  ORBMgr::getMgr()->getIOR(myLCT->_this()));
+    conn->fwdsBind("LogServiceT", "LCT",
+		   ORBMgr::getMgr()->getIOR(myLCT->_this()));
   
   if (!ORBTools::activateServant(myLCC)) {
     printf("Could not activate servants\n");
@@ -230,8 +233,8 @@ int main(int argc, char** argv)
 //  ORBMgr::getMgr()->bind("LogServiceC", "LCC",
 //			 ORBMgr::getMgr()->getIOR(myLCC->_this()), true);
   // Inscription in the others fwdr
-  ORBMgr::getMgr()->fwdsBind("LogServiceC", "LCC",
-				ORBMgr::getMgr()->getIOR(myLCC->_this()));
+  conn->fwdsBind("LogServiceC", "LCC",
+		 ORBMgr::getMgr()->getIOR(myLCC->_this()));
 
   if (!ORBTools::activatePOA()) {
     printf("Could not activate the POA\n");
