@@ -218,7 +218,7 @@ int main(int argc, char** argv)
     conn->registrer("log");
     // Inscription in the others fwdr
     conn->fwdsBind("LogServiceT", "LCT",
-		   ORBMgr::getMgr()->getIOR(myLCT->_this()));
+		   ORBMgr::getMgr()->getIOR(myLCT->_this()), "log");
   
   if (!ORBTools::activateServant(myLCC)) {
     printf("Could not activate servants\n");
@@ -234,7 +234,7 @@ int main(int argc, char** argv)
 //			 ORBMgr::getMgr()->getIOR(myLCC->_this()), true);
   // Inscription in the others fwdr
   conn->fwdsBind("LogServiceC", "LCC",
-		 ORBMgr::getMgr()->getIOR(myLCC->_this()));
+		 ORBMgr::getMgr()->getIOR(myLCC->_this()), "log");
 
   if (!ORBTools::activatePOA()) {
     printf("Could not activate the POA\n");

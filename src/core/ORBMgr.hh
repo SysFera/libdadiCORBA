@@ -57,7 +57,8 @@ public:
 	
   /* Forwarders binding. */
   void fwdsBind(const std::string& ctxt, const std::string& name,
-                const std::string& ior, const std::string& fwName = "") const;
+                const std::string& ior, const string& connectId,
+		const std::string& fwName = "") const;
   /* Forwarders unbinding. */
   void fwdsUnbind(const std::string& ctxt, const std::string& name,
                   const std::string& fwName = "") const;
