@@ -19,6 +19,8 @@
 #include <list>
 #include <unistd.h>  // For gethostname()
 
+#include <iostream>
+
 #ifdef MAXHOSTNAMELEN
 #define MAX_HOSTNAME_LENGTH MAXHOSTNAMELEN
 #else
@@ -79,6 +81,29 @@ char* Forwarder::getHostname(const char* objName)
 
 
 void Forwarder::bind(const char* objName, const char* ior) {
+  /* To avoid crashes when the peer forwarder is not ready: */
+  /* If the peer was not initialized, the following call is blocking. */
+  peerMutex.lock();
+  peerMutex.unlock();
+
+  string objString(objName);
+  string name;
+  string ctxt;
+
+  if (!remoteCall(objString)) {
+    std::cout << "Forward bind to peer (" << objName << ")" << std::endl;
+    return getPeer()->bind(objString.c_str(), ior);
+  }
+  ctxt = getCtxt(objString);
+  name = getName(objString);
+  std::cout << "Bind locally (" << objString << ")" << std::endl;
+  /* NEW: Tag the object with the forwarder name. */
+  string newIOR = ORBMgr::convertIOR(ior, string("@")+getName(), 0);
+
+  ORBMgr::getMgr()->bind(ctxt, name, newIOR, true);
+  // Broadcast the binding to all forwarders.
+  ORBMgr::getMgr()->fwdsBind(ctxt, name, newIOR, this->name);
+  std::cout << "Binded! (" << ctxt << "/" << name << ")" << std::endl;
 }
 
 /* Return the local bindings. Result is a set of couple
