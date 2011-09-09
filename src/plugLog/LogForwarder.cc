@@ -226,7 +226,7 @@ ToolMsgReceiver_ptr LogForwarder::getToolMsgReceiver(const char* name)
 
 
 
-void LogForwarder::bind(const char* objName, const char* ior) {
+void LogForwarder::bind(const char* objName, const char* ior, const char* connect) {
   /* To avoid crashes when the peer forwarder is not ready: */
   /* If the peer was not initialized, the following call is blocking. */
   peerMutex.lock();
@@ -238,15 +238,15 @@ void LogForwarder::bind(const char* objName, const char* ior) {
   
   if (!remoteCall(objString)) {
     //    TRACE_TEXT(TRACE_MAIN_STEPS, "Forward bind to peer" << std::endl);
-    return getPeer()->bind(objString.c_str(), ior);
+    return getPeer()->bind(objString.c_str(), ior, connect);
   }
   ctxt = getCtxt(objString);
   name = getName(objString);
   //  TRACE_TEXT(TRACE_MAIN_STEPS, "Bind locally" << std::endl);
 
-  ORBMgr::getMgr()->bind(ctxt, name, ior, true);
+  ORBMgr::getMgr()->bind(ctxt, name, ior, connect, true);
   // Broadcast the binding to all forwarders.
-  ORBMgr::getMgr()->fwdsBind(ctxt, name, ior, this->name);
+  ORBMgr::getMgr()->fwdsBind(ctxt, name, ior, connect, this->name);
   //  TRACE_TEXT(TRACE_MAIN_STEPS, "Binded !" << endl);
 }
 

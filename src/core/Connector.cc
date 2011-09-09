@@ -39,26 +39,26 @@ Connector::registrer(std::string id) {
 
 void
 Connector::bind(const std::string& ctxt, const std::string& name,
-     CORBA::Object_ptr object, const bool rebind ) const {
-  return mmgr->bind(ctxt, name, object, rebind);
+		CORBA::Object_ptr object, const std::string& connect, const bool rebind ) const {
+  return mmgr->bind(ctxt, name, object, connect, rebind);
 }
 
 void 
 Connector::bind(const std::string& ctxt, const std::string& name,
-	  const std::string& IOR, const bool rebind ) const {
-  return mmgr->bind(ctxt, name, IOR, rebind);
+	  const std::string& IOR, const std::string& connect, const bool rebind ) const {
+  return mmgr->bind(ctxt, name, IOR, connect, rebind);
 }
 
 void 
 Connector::rebind(const std::string& ctxt, const std::string& name,
-       CORBA::Object_ptr object) const {
-  return mmgr->rebind(ctxt, name, object);
+		  CORBA::Object_ptr object, const std::string& connect) const {
+  return mmgr->rebind(ctxt, name, object, connect);
 }
 
 void 
 Connector::rebind(const std::string& ctxt, const std::string& name,
-       const std::string& IOR) const {
-  return mmgr->rebind(ctxt, name, IOR);
+		  const std::string& IOR, const std::string& connect) const {
+  return mmgr->rebind(ctxt, name, IOR, connect);
 }
 
 void 
@@ -68,8 +68,9 @@ Connector::unbind(const std::string& ctxt, const std::string& name) const {
 	
 void
 Connector::fwdsBind(const std::string& ctxt, const std::string& name,
-	 const std::string& ior, const std::string& fwName ) const {
-  return mmgr->fwdsBind(ctxt, name, ior, fwName);
+		    const std::string& ior, const std::string& connectId,
+		    const std::string& fwName ) const {
+  return mmgr->fwdsBind(ctxt, name, ior, connectId, fwName);
 }
 
 void 

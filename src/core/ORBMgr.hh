@@ -43,15 +43,15 @@ public:
 
   /* Bind the object using its ctxt/name */
   void bind(const std::string& ctxt, const std::string& name,
-            CORBA::Object_ptr object, const bool rebind = false) const;
+            CORBA::Object_ptr object, const string& connectId, const bool rebind = false) const;
   /* Bind an object using its IOR. */
   void bind(const std::string& ctxt, const std::string& name,
-            const std::string& IOR, const bool rebind = false) const;
+            const std::string& IOR, const string& connectId, const bool rebind = false) const;
   /* Rebind objects. */
   void rebind(const std::string& ctxt, const std::string& name,
-              CORBA::Object_ptr object) const;
+              CORBA::Object_ptr object, const string& connectId) const;
   void rebind(const std::string& ctxt, const std::string& name,
-              const std::string& IOR) const;
+              const std::string& IOR, const string& connectId) const;
   /* Unbind an object. */
   void unbind(const std::string& ctxt, const std::string& name) const;
 	

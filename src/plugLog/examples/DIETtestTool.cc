@@ -169,8 +169,8 @@ public :
     }
 
     try{
-      mcon->bind("LogServiceT", name, _this(), true);
-      mcon->fwdsBind("LogServiceT", name,
+      mcon->bind("LogServiceT", name, _this(), "log", true);
+      mcon->fwdsBind("LogServiceT", name, "log",
 		     mcon->getIOR(_this()));
     }
     catch (...){

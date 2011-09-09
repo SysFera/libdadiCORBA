@@ -122,8 +122,8 @@ ORBMgr::~ORBMgr() {
 }
 
 void ORBMgr::bind(const string& ctxt, const string& name,
-                     CORBA::Object_ptr object,
-                     const bool rebind) const {
+                     CORBA::Object_ptr object, const string& connectId,
+		  const bool rebind) const {
   CORBA::Object_var obj;
   CosNaming::NamingContext_var rootContext, context;
   CosNaming::Name cosName;
@@ -164,22 +164,22 @@ void ORBMgr::bind(const string& ctxt, const string& name,
 }
 
 void ORBMgr::bind(const string& ctxt, const string& name,
-                     const string& IOR, const bool rebind) const {
+                     const string& IOR, const string& connectId, const bool rebind) const {
   CORBA::Object_ptr object = ORB->string_to_object(IOR.c_str());
 	
-  bind(ctxt, name, object, rebind);
+  bind(ctxt, name, object, connectId, rebind);
 }
 
 void ORBMgr::rebind(const string& ctxt, const string& name,
-                       CORBA::Object_ptr object) const {
-  bind(ctxt, name, object, true);
+		    CORBA::Object_ptr object, const string& connect) const {
+  bind(ctxt, name, object, connect, true);
 }
 
 void ORBMgr::rebind(const string& ctxt, const string& name,
-                       const string& IOR) const {
+                       const string& IOR, const string& connect) const {
   CORBA::Object_ptr object = ORB->string_to_object(IOR.c_str());
   
-  rebind(ctxt, name, object);
+  rebind(ctxt, name, object, connect);
 }
 
 void ORBMgr::unbind(const string& ctxt, const string& name) const {
@@ -220,7 +220,7 @@ void ORBMgr::fwdsBind(const string& ctxt, const string& name,
     CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
     string objName = ctxt+"/"+name;
     try {
-      fwd->bind(objName.c_str(), ior.c_str());
+      fwd->bind(objName.c_str(), ior.c_str(), connectId.c_str());
     } catch (const CORBA::TRANSIENT& err) {
       continue;
     } catch (BadNameException& err) {

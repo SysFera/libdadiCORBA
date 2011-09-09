@@ -19,7 +19,7 @@ interface CorbaForwarder
   string getHostname(in string objName)
 		raises(UnknownObject, BadNameException);
 	/* CORBA remote management. */
-	void bind(in string objName, in string ior);
+  void bind(in string objName, in string ior, in string connector);
 	oneway void unbind(in string objName);
 	SeqString getBindings(in string ctxt);
 	

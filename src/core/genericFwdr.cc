@@ -90,7 +90,7 @@ int main(int argc, char* argv[], char* envp[]) {
   mgr->activate(forwarder);
   do {
     try {
-      mgr->bind(FWRDCTXT, cfg.getName(), forwarder->_this(), true);
+      mgr->bind(FWRDCTXT, cfg.getName(), forwarder->_this(), "log", true);
       break;
     } catch (CORBA::TRANSIENT& err) {
       if (count++<cfg.getNbRetry()) {

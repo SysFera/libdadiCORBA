@@ -106,7 +106,7 @@ public:
   void ping(const char* compoName, const char* objName);
 
   /* CORBA remote management implementation. */
-  void bind(const char* objName, const char* ior);
+  void bind(const char* objName, const char* ior, const char* connect);
   void unbind(const char* objName);
   //  SeqString* getBindings(const char* ctxt);
   

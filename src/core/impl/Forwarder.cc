@@ -80,7 +80,7 @@ char* Forwarder::getHostname(const char* objName)
 }
 
 
-void Forwarder::bind(const char* objName, const char* ior) {
+void Forwarder::bind(const char* objName, const char* ior, const char* connectId) {
   /* To avoid crashes when the peer forwarder is not ready: */
   /* If the peer was not initialized, the following call is blocking. */
   peerMutex.lock();
@@ -92,7 +92,7 @@ void Forwarder::bind(const char* objName, const char* ior) {
 
   if (!remoteCall(objString)) {
     std::cout << "Forward bind to peer (" << objName << ")" << std::endl;
-    return getPeer()->bind(objString.c_str(), ior);
+    return getPeer()->bind(objString.c_str(), ior, connectId);
   }
   ctxt = getCtxt(objString);
   name = getName(objString);
@@ -100,9 +100,9 @@ void Forwarder::bind(const char* objName, const char* ior) {
   /* NEW: Tag the object with the forwarder name. */
   string newIOR = ORBMgr::convertIOR(ior, string("@")+getName(), 0);
 
-  ORBMgr::getMgr()->bind(ctxt, name, newIOR, true);
+  ORBMgr::getMgr()->bind(ctxt, name, newIOR, connectId, true);
   // Broadcast the binding to all forwarders.
-  ORBMgr::getMgr()->fwdsBind(ctxt, name, newIOR, this->name);
+  ORBMgr::getMgr()->fwdsBind(ctxt, name, newIOR, connectId, this->name);
   std::cout << "Binded! (" << ctxt << "/" << name << ")" << std::endl;
 }
 

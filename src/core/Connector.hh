@@ -59,21 +59,22 @@ public :
 
   /* Bind the object using its ctxt/name */
   virtual void bind(const std::string& ctxt, const std::string& name,
-            CORBA::Object_ptr object, const bool rebind = false) const;
+		    CORBA::Object_ptr object, const std::string& connect, const bool rebind = false) const;
   /* Bind an object using its IOR. */
   virtual void bind(const std::string& ctxt, const std::string& name,
-            const std::string& IOR, const bool rebind = false) const;
+            const std::string& IOR, const std::string& connect, const bool rebind = false) const;
   /* Rebind objects. */
   virtual void rebind(const std::string& ctxt, const std::string& name,
-              CORBA::Object_ptr object) const;
+              CORBA::Object_ptr object, const std::string& connect) const;
   virtual void rebind(const std::string& ctxt, const std::string& name,
-              const std::string& IOR) const;
+              const std::string& IOR, const std::string& connect) const;
   /* Unbind an object. */
   virtual void unbind(const std::string& ctxt, const std::string& name) const;
 	
   /* Forwarders binding. */
   virtual void fwdsBind(const std::string& ctxt, const std::string& name,
-                const std::string& ior, const std::string& fwName = "") const;
+			const std::string& ior, const std::string& conectId, 
+			const std::string& fwName = "") const;
   /* Forwarders unbinding. */
   virtual void fwdsUnbind(const std::string& ctxt, const std::string& name,
                   const std::string& fwName = "") const;

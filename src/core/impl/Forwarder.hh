@@ -50,7 +50,7 @@ public:
   static bool remoteCall(std::string& objName);
   
   /* CORBA remote management implementation. */
-  virtual void bind(const char* objName, const char* ior);
+  virtual void bind(const char* objName, const char* ior, const char* connector);
   virtual void unbind(const char* objName);
   virtual SeqString* getBindings(const char* ctxt);
 	
