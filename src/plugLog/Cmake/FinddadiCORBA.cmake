@@ -21,6 +21,16 @@ find_library(DADICORBA_LIB
   /usr/local/lib64
 )
 
+find_library(FWDCORBA_LIB
+  NAMES fwdcorba
+  PATHS
+  ${DADICORBA_DIR}/lib
+  /usr/lib
+  /usr/lib64
+  /usr/local/lib
+  /usr/local/lib64
+)
+
 message("Z1")
 message("Z1D=${DADICORBA_INCLUDE_DIR}")
 message("Z1L=${DADICORBA_LIB}")

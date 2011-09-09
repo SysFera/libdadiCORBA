@@ -81,10 +81,10 @@ add_custom_target(CORBAFiles
   ${GENERATED_CXX_FILES}
   )
 
-add_library(corba SHARED
+add_library(fwdcorba SHARED
   ${GENERATED_CXX_FILES}
   )
 
-add_dependencies(corba ${TARGET_IDL_GENERATED_HEADER_FILES})
+add_dependencies(fwdcorba ${TARGET_IDL_GENERATED_HEADER_FILES})
 
-install (TARGETS corba DESTINATION lib/)
+install (TARGETS fwdcorba DESTINATION lib/)

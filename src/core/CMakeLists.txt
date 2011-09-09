@@ -77,6 +77,7 @@ add_library(dadicorba
 
 target_link_libraries(dadicorba
   ${OMNIORB4_LIBRARIES}
+  fwdcorba
 )
 
 install (FILES Connector.hh ORBMgr.hh Options.hh SSHTunnel.hh NetConfig.hh impl/Forwarder.hh FullLinkedList.hh DESTINATION include/)
@@ -93,7 +94,7 @@ add_executable(fwdr
 target_link_libraries(fwdr
   ${Boost_LIBRARIES}
   ${OMNIORB4_LIBRARIES}
-  corba
+  fwdcorba
   dadicorba
 )
 
