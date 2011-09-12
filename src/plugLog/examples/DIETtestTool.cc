@@ -114,7 +114,7 @@ public :
 
   MyMsgRecv(const char* name, ORBMgr* mgr){
     mcon = new LogConnector(mgr);
-    mcon->registrer("logtool");
+    mcon->registrer("log");
     this->name = CORBA::string_dup(name);
 
     filter.filterName = CORBA::string_dup("allFilter");//ADD
@@ -163,15 +163,15 @@ public :
     CORBA::Object_ptr myLCTptr;
 
     // Connexion to the LCT to get messages
-    myLCT = mcon->resolve<LogCentralTool, LogCentralTool_ptr>("LogServiceT", "LCT", "logtool");
+    myLCT = mcon->resolve<LogCentralTool, LogCentralTool_ptr>("LogServiceT", "LCT", "log");
     if (CORBA::is_nil(myLCT)){
       fprintf (stderr, "Failed to narrow the LCT ! \n");
     }
 
     try{
       mcon->bind("LogServiceT", name, _this(), "log", true);
-      mcon->fwdsBind("LogServiceT", name, "log",
-		     mcon->getIOR(_this()));
+      mcon->fwdsBind("LogServiceT", name,
+		     mcon->getIOR(_this()), "log");
     }
     catch (...){
       fprintf (stderr, "Bind failed  in the LogService context\n");
