@@ -46,5 +46,6 @@ LogConnector::getContext(std::string context) {
 
 void
 LogConnector::registrer(std::string id) {
+  mname = id;
   mmgr->addConnector(this, id);
 }
