@@ -76,7 +76,7 @@ PingThread::run_undetached(void* params)
   log_time_t lt;
   while (this->threadRunning) {
     try {
-      this->LCB->LCCref->ping(this->name);
+      //      this->LCB->LCCref->ping(this->name);
     } catch (...) {
     }
     if (counter == PINGTHREAD_SYNCHRO_FREQUENCY) {

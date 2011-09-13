@@ -103,5 +103,9 @@ add_library(dadiCORBAlog
 
 install (TARGETS dadiCORBAlog DESTINATION lib)
 
+add_subdirectory(libraries/LogToolBaseC++)
+add_subdirectory(libraries/LogComponentBaseC++)
+
+
 add_subdirectory(examples)
 
