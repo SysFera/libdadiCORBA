@@ -180,8 +180,33 @@ public :
     try{
       myLCT->connectTool (name, name);
       myLCT->addFilter(name, filter);
-    }
-    catch (...){
+    }catch (CORBA::BAD_CONTEXT& e){
+      fprintf (stderr, "ERROR: 1");
+    }catch (CORBA::BAD_INV_ORDER& e){
+      fprintf (stderr, "ERROR: 2");
+    }catch (CORBA::BAD_OPERATION& e){
+      fprintf (stderr, "ERROR: 3");
+    }catch (CORBA::BAD_PARAM& e){
+      fprintf (stderr, "ERROR: 4");
+    }catch (CORBA::BAD_TYPECODE& e){
+      fprintf (stderr, "ERROR: 5");
+    }catch (CORBA::COMM_FAILURE& e){
+      fprintf (stderr, "ERROR: 6");
+    }catch (CORBA::FREE_MEM& e){
+      fprintf (stderr, "ERROR: 7");
+    }catch (CORBA::IMP_LIMIT& e){
+      fprintf (stderr, "ERROR: 8");
+    }catch (CORBA::NO_IMPLEMENT& e){
+      fprintf (stderr, "ERROR: 9");
+    }catch (CORBA::NO_RESPONSE& e){
+      fprintf (stderr, "ERROR: 10");
+    }catch (CORBA::OBJECT_NOT_EXIST& e){
+      fprintf (stderr, "ERROR: 11");
+    }catch (CORBA::TRANSIENT& e){
+      fprintf (stderr, "ERROR: 12");
+    }catch (CORBA::UNKNOWN& e){
+      fprintf (stderr, "ERROR: 13");
+    }catch (...){
       fprintf (stderr, "Caught an unknown exception\n");
     }
   }
