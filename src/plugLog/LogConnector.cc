@@ -19,6 +19,12 @@ LogConnector::~LogConnector() {
 
 CORBA::Object_ptr
 LogConnector::getObject(std::string ctxt, std::string name) {
+  string ctxt2 = ctxt;
+  if (ctxt2 == LOGCOMPCONFCTXT) {
+    ctxt = LOGCOMPCTXT;
+  } else if (ctxt2==LOGTOOLMSGCTXT) {
+    ctxt = LOGTOOLCTXT;
+  }
   try {
     CorbaLogForwarder_var fwd = ORBMgr::getMgr()->resolve<CorbaLogForwarder, CorbaLogForwarder_var>(FWRDCTXT, name, mname);
     if (ctxt==LOGCOMPCTXT) {
@@ -32,7 +38,7 @@ LogConnector::getObject(std::string ctxt, std::string name) {
     }
     if (ctxt==LOGCOMPCONFCTXT) {
       return fwd->getCompoConf(name.c_str());
-    } 
+    }
   } catch(...) {
     return NULL;
   }
