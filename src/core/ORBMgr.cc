@@ -262,6 +262,8 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
     throw runtime_error("Bad connector");
   }
 
+  ctxt = c->getContext(context);
+
   /* Use object cache. */
   if (cache.find(ctxt+"/"+name)!=cache.end()) {
     CORBA::Object_ptr ptr = cache[ctxt+"/"+name];
