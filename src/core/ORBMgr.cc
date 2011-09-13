@@ -322,7 +322,7 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
       try {
         if (objHost.size()>0 && objHost.at(0)=='@') {
           objHost.erase(0,1); // Remove '@' before the forwarder name
-          CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, objHost);
+          CorbaForwarder_var fwd = c->resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, objHost, connectId);
 
 	  std::cout << "Object (" << ctxt << "/" << name << ")"
 		    << " is reachable through forwarder " << objHost << std::endl;
