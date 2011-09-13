@@ -61,7 +61,7 @@ public:
 		const std::string& fwName = "") const;
   /* Forwarders unbinding. */
   void fwdsUnbind(const std::string& ctxt, const std::string& name,
-                  const std::string& fwName = "") const;
+                  const string& connectId, const std::string& fwName = "") const;
 	
   /* Resolve an object using its IOR or ctxt/name. */
   CORBA::Object_ptr resolveObject(const std::string& IOR) const;
@@ -75,8 +75,8 @@ public:
   
   template <typename CORBA_object, typename CORBA_ptr>
   CORBA_ptr resolve(const std::string& ctxt, const std::string& name,
-		    const std::string& fwdName = "") const {
-    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject(ctxt, name, fwdName)));
+		    const string& connectId, const std::string& fwdName = "") const {
+    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject(ctxt, name, connectId, fwdName)));
   }
   template <typename CORBA_object, typename CORBA_ptr>
   CORBA_ptr resolve(const std::string& IOR) const {

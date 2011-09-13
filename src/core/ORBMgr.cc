@@ -229,13 +229,13 @@ void ORBMgr::fwdsBind(const string& ctxt, const string& name,
 }
 
 void ORBMgr::fwdsUnbind(const string& ctxt, const string& name,
-                           const string& fwName) const {
+			const string& connectId, const string& fwName) const {
   std::list<string> forwarders = ORBMgr::list(FWRDCTXT);
   std::list<string>::const_iterator it;
 	
   for (it=forwarders.begin(); it!=forwarders.end(); ++it) {
     if (fwName==*it) continue;
-    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it);
+    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
     string objName = ctxt+"/"+name;
     try {
       fwd->unbind(objName.c_str());
