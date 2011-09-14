@@ -257,7 +257,7 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
 
 
   Connector* c = getConnector(connectId);
-  if (c==NULL && connectId.compare("no-Forwarder")==0) {
+  if (c==NULL) {
     throw runtime_error("Bad connector");
   }
 
