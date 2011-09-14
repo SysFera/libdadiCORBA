@@ -261,10 +261,10 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
     throw runtime_error("Bad connector");
   }
 
-  if (connectId.compare("no-Forwarder")!=0) {
-    ctxt = c->getContext(context);
+  if (connectId.compare("no-Forwarder")==0) {
+    ctxt = "no-Forwarder";
   } else {
-    ctxt = FWRDCTXT;
+    ctxt = c->getContext(context);
   }
 
   cacheMutex.lock();
