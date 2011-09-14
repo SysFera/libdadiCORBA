@@ -18,20 +18,20 @@ LogConnector::~LogConnector() {
 }
 
 CORBA::Object_ptr
-LogConnector::getObject(std::string ctxt, std::string name) {
+LogConnector::getObject(std::string ctxt, std::string name, CorbaForwarder_var* fwdr) {
+  CorbaLogForwarder_var* fwd = (CorbaLogForwarder_var*)(fwdr);
   try {
-    CorbaLogForwarder_var fwd = ORBMgr::getMgr()->resolve<CorbaLogForwarder, CorbaLogForwarder_var>(ctxt, name, "no-Forwarder", "no-Forwarder");
     if (ctxt==LOGCOMPCTXT) {
-      return fwd->getLogCentralComponent(name.c_str());
+      return (*fwd)->getLogCentralComponent(name.c_str());
     }
     if (ctxt==LOGTOOLCTXT) {
-      return fwd->getLogCentralTool(name.c_str());
+      return (*fwd)->getLogCentralTool(name.c_str());
     }
     if (ctxt==LOGTOOLMSGCTXT) {
-      return fwd->getToolMsgReceiver(name.c_str());
+      return (*fwd)->getToolMsgReceiver(name.c_str());
     }
     if (ctxt==LOGCOMPCONFCTXT) {
-      return fwd->getCompoConf(name.c_str());
+      return (*fwd)->getCompoConf(name.c_str());
     }
   } catch(...) {
     return NULL;

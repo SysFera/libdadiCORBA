@@ -22,7 +22,7 @@ Connector::~Connector() {
 }
 
 CORBA::Object_ptr
-Connector::getObject(std::string ctxt, std::string name) {
+Connector::getObject(std::string ctxt, std::string name, CorbaForwarder_var* v) {
   return NULL;
 }
 
@@ -88,7 +88,7 @@ CORBA::Object_ptr
 Connector::resolveObject(const std::string& ctxt, const std::string& name,
 	      const string& connectId,
 	      const std::string& fwdName ) const {
-  return mmgr->resolveObject(ctxt, name, connectId, fwdName); 
+  return mmgr->resolveObject<CorbaForwarder, CorbaForwarder_var>(ctxt, name, connectId, fwdName); 
 }
 	
 std::list<std::string> 

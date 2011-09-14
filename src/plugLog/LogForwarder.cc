@@ -478,9 +478,9 @@ void LogForwarder::setTagFilter(const ::tag_list_t& tagList,
   name = getName(objString);
   
   ComponentConfigurator_var cfg =
-    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var>(LOGCOMPCTXT,
-                                                                                   name,
-                                                                                   this->name);
+    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
+															  name,
+															  this->name);
   return cfg->setTagFilter(tagList);
 }
 
@@ -497,7 +497,7 @@ void LogForwarder::addTagFilter(const ::tag_list_t& tagList,
   name = getName(objString);
   
   ComponentConfigurator_var cfg =
-    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                    name,
                                                                                    this->name);
   return cfg->addTagFilter(tagList);
@@ -517,7 +517,7 @@ void LogForwarder::removeTagFilter(const ::tag_list_t& tagList,
   name = getName(objString);
   
   ComponentConfigurator_var cfg =
-    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                    name,
                                                                                    this->name);
   return cfg->removeTagFilter(tagList);
@@ -532,7 +532,7 @@ void LogForwarder::test(const char* objName) {
   name = getName(objString);
   
   ComponentConfigurator_var cfg =
-    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<ComponentConfigurator, ComponentConfigurator_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                    name,
                                                                                    this->name);
   return cfg->test();
@@ -553,7 +553,7 @@ LogForwarder::sendMsg(const log_msg_buf_t& msgBuf, const char*  objName){
   name = getName(objString);
   
   ToolMsgReceiver_var cfg =
-    ORBMgr::getMgr()->resolve<ToolMsgReceiver, ToolMsgReceiver_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<ToolMsgReceiver, ToolMsgReceiver_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                        name,
                                                                        this->name);
   return cfg->sendMsg(msgBuf);
@@ -579,7 +579,7 @@ LogForwarder::connectTool(char*& toolName, const char* msgReceiver,  const char*
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->connectTool(toolName, msgReceiver);
@@ -605,7 +605,7 @@ LogForwarder::disconnectTool(const char* toolName, const char* objName){
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->disconnectTool(toolName);
@@ -631,7 +631,7 @@ LogForwarder::getDefinedTags(const char* objName){
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->getDefinedTags();
@@ -656,7 +656,7 @@ LogForwarder::getDefinedComponents(const char*  objName){
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->getDefinedComponents();
@@ -682,7 +682,7 @@ LogForwarder::addFilter(const char* toolName, const filter_t& filter, const char
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->addFilter(toolName, filter);
@@ -706,7 +706,7 @@ LogForwarder::removeFilter(const char* toolName, const char* filterName, const c
   name = getName(objString);
 	
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->removeFilter(toolName, filterName);
@@ -728,7 +728,7 @@ LogForwarder::flushAllFilters(const char* toolName, const char* objName){
   name = getName(objString);
   
   LogCentralTool_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var>(LOGTOOLCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGTOOLCTXT,
                                                                      name,
                                                                      this->name);
   return cfg->flushAllFilters(toolName);
@@ -758,7 +758,7 @@ LogForwarder::connectComponent(char*& componentName,
   name = getName(objString);
   
   LogCentralComponent_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                name,
                                                                                this->name);
   return cfg->connectComponent(componentName,
@@ -788,7 +788,7 @@ LogForwarder::disconnectComponent(const char* componentName,
   name = getName(objString);
   
   LogCentralComponent_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                name,
                                                                                this->name);
   return cfg->disconnectComponent(componentName,
@@ -813,7 +813,7 @@ LogForwarder::sendBuffer(const log_msg_buf_t &buffer,
   name = getName(objString);
   
   LogCentralComponent_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                name,
                                                                                this->name);
   return cfg->sendBuffer(buffer);
@@ -837,7 +837,7 @@ LogForwarder::synchronize(const char* componentName,
   name = getName(objString);
   
   LogCentralComponent_var cfg =
-    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var>(LOGCOMPCTXT,
+    ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_var, CorbaLogForwarder, CorbaLogForwarder_var>(LOGCOMPCTXT,
                                                                                name,
                                                                                this->name);
   return cfg->synchronize(componentName,
