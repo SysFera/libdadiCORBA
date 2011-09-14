@@ -310,7 +310,7 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
   CosNaming::Name cosName;
 
   cosName.length(2);
-  cosName[0].id   = ctxt.c_str();
+  cosName[0].id   = ctxt2.c_str();
   cosName[0].kind = "";
   cosName[1].id   = name.c_str();
   cosName[1].kind = "";
@@ -344,7 +344,7 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
       }
     }
   } catch (CosNaming::NamingContext::NotFound& err) {
-    std::cout << "Error resolving " << ctxt << "/" << name << std::endl;
+    std::cout << "Error resolving " << ctxt2 << "/" << name << std::endl;
     throw runtime_error("Error resolving "+ctxt+"/"+name);
   }
   cacheMutex.lock();
