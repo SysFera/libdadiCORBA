@@ -254,16 +254,20 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
 
   string ctxt = context;
   string ctxt2 = context;
-  cacheMutex.lock();
 
 
   Connector* c = getConnector(connectId);
-  if (c==NULL) {
+  if (c==NULL && connectId.compare("no-Forwarder")!=0) {
     throw runtime_error("Bad connector");
   }
 
-  ctxt = c->getContext(context);
+  if (connectId.compare("no-Forwarder")!=0) {
+    ctxt = c->getContext(context);
+  } else {
+    ctxt = FWRDCTXT;
+  }
 
+  cacheMutex.lock();
   /* Use object cache. */
   if (cache.find(ctxt+"/"+name)!=cache.end()) {
     CORBA::Object_ptr ptr = cache[ctxt+"/"+name];
