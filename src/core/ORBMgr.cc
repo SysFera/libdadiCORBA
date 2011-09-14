@@ -257,11 +257,11 @@ CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& nam
 
 
   Connector* c = getConnector(connectId);
-  if (c==NULL && connectId.compare("no-Forwarder")!=0) {
+  if (c==NULL && connectId.compare("no-Forwarder")==0) {
     throw runtime_error("Bad connector");
   }
 
-  if (connectId.compare("no-Forwarder")!=0) {
+  if (connectId.compare("no-Forwarder")==0) {
     ctxt = c->getContext(context);
   } else {
     ctxt = FWRDCTXT;
