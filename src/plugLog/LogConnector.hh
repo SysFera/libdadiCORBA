@@ -49,6 +49,10 @@ public :
   virtual std::string
   getContext(std::string context);
 
+  virtual CORBA::Object_ptr resolveObject(const std::string& ctxt, const std::string& name,
+				  const string& connectId,
+				  const std::string& fwdName = "") const;
+
 protected :
 private :
 

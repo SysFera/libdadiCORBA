@@ -53,3 +53,10 @@ LogConnector::registrer(std::string id) {
   mname = id;
   mmgr->addConnector(this, id);
 }
+
+CORBA::Object_ptr 
+LogConnector::resolveObject(const std::string& ctxt, const std::string& name,
+	      const string& connectId,
+	      const std::string& fwdName ) const {
+  return mmgr->resolveObject<CorbaLogForwarder, CorbaLogForwarder_var>(ctxt, name, connectId, fwdName); 
+}
