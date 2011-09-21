@@ -22,7 +22,7 @@ Connector::~Connector() {
 }
 
 CORBA::Object_ptr
-Connector::getObject(std::string ctxt, std::string name, CorbaForwarder_var* v) {
+Connector::getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId) {
   return NULL;
 }
 
@@ -84,12 +84,6 @@ Connector::resolveObject(const std::string& IOR) const {
   return mmgr->resolveObject(IOR);
 }
 
-CORBA::Object_ptr 
-Connector::resolveObject(const std::string& ctxt, const std::string& name,
-	      const string& connectId,
-	      const std::string& fwdName ) const {
-  return mmgr->resolveObject<CorbaForwarder, CorbaForwarder_var>(ctxt, name, connectId, fwdName); 
-}
 	
 std::list<std::string> 
 Connector::list(CosNaming::NamingContext_var& ctxt) const {

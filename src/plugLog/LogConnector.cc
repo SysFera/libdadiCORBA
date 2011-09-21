@@ -18,20 +18,21 @@ LogConnector::~LogConnector() {
 }
 
 CORBA::Object_ptr
-LogConnector::getObject(std::string ctxt, std::string name, CorbaForwarder_var* fwdr) {
-  CorbaLogForwarder_var* fwd = (CorbaLogForwarder_var*)(fwdr);
+LogConnector::getObject(std::string ctxt, std::string name/*, CorbaForwarder_var* fwdr*/, string connectId) {
+  //  CorbaLogForwarder_var* fwd = (CorbaLogForwarder_var*)(fwdr);
+  CorbaLogForwarder_var fwd = (CorbaLogForwarder_var)resolve<CorbaLogForwarder, CorbaLogForwarder_var>(FWRDCTXT, ctxt, connectId);
   try {
     if (ctxt==LOGCOMPCTXT) {
-      return (*fwd)->getLogCentralComponent(name.c_str());
+      return (fwd)->getLogCentralComponent(name.c_str());
     }
     if (ctxt==LOGTOOLCTXT) {
-      return (*fwd)->getLogCentralTool(name.c_str());
+      return (fwd)->getLogCentralTool(name.c_str());
     }
     if (ctxt==LOGTOOLMSGCTXT) {
-      return (*fwd)->getToolMsgReceiver(name.c_str());
+      return (fwd)->getToolMsgReceiver(name.c_str());
     }
     if (ctxt==LOGCOMPCONFCTXT) {
-      return (*fwd)->getCompoConf(name.c_str());
+      return (fwd)->getCompoConf(name.c_str());
     }
   } catch(...) {
     return NULL;
@@ -58,5 +59,9 @@ CORBA::Object_ptr
 LogConnector::resolveObject(const std::string& ctxt, const std::string& name,
 	      const string& connectId,
 	      const std::string& fwdName ) const {
-  return mmgr->resolveObject<CorbaLogForwarder, CorbaLogForwarder_var>(ctxt, name, connectId, fwdName); 
+  return mmgr->resolve<CorbaLogForwarder, 
+    CorbaLogForwarder_var>(ctxt, 
+			   name, 
+			   connectId, 
+			   fwdName); 
 }

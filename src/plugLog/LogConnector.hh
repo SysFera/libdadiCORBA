@@ -42,7 +42,7 @@ public :
    * \return The corresponding corba object
    */
   virtual CORBA::Object_ptr
-  getObject(std::string ctxt, std::string name, CorbaForwarder_var* fwdr);
+  getObject(std::string ctxt, std::string name/*, CorbaForwarder_var* fwdr*/, string connectId);
   /**
    * \brief To get the context from a given context (sometimes a change of context is needed)
    */

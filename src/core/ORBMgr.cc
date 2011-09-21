@@ -18,6 +18,7 @@
 
 #include "ORBMgr.hh"
 #include "CorbaForwarder.hh"
+#include "Connector.hh"
 
 using namespace std;
 
@@ -217,7 +218,7 @@ void ORBMgr::fwdsBind(const string& ctxt, const string& name,
 	
   for (it=forwarders.begin(); it!=forwarders.end(); ++it) {
     if (fwName==*it) continue;
-    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var, CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
+    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
     string objName = ctxt+"/"+name;
     try {
       fwd->bind(objName.c_str(), ior.c_str(), connectId.c_str());
@@ -235,7 +236,7 @@ void ORBMgr::fwdsUnbind(const string& ctxt, const string& name,
 	
   for (it=forwarders.begin(); it!=forwarders.end(); ++it) {
     if (fwName==*it) continue;
-    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var, CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
+    CorbaForwarder_var fwd = resolve<CorbaForwarder, CorbaForwarder_var>(FWRDCTXT, *it, connectId);
     string objName = ctxt+"/"+name;
     try {
       fwd->unbind(objName.c_str());
@@ -248,6 +249,119 @@ void ORBMgr::fwdsUnbind(const string& ctxt, const string& name,
 CORBA::Object_ptr ORBMgr::resolveObject(const string& IOR) const {
   return ORB->string_to_object(IOR.c_str());
 }
+
+CORBA::Object_ptr ORBMgr::resolveObject(const std::string& context, const std::string& name,
+				const string& connectId,
+				const std::string& fwdName ) const {
+  string ctxt = context;
+  string ctxt2 = context;
+
+
+  Connector* c = getConnector(connectId);
+  if (c==NULL) {
+    if (connectId.compare("no-Forwarder")!=0) {
+      throw runtime_error("Bad connector");
+    }
+  }
+
+  if (connectId.compare("no-Forwarder")==0) {
+    ctxt = "no-Forwarder";
+  } else {
+    ctxt = c->getContext(context);
+  }
+
+  cacheMutex.lock();
+  /* Use object cache. */
+  if (cache.find(ctxt+"/"+name)!=cache.end()) {
+    CORBA::Object_ptr ptr = cache[ctxt+"/"+name];
+    cacheMutex.unlock();
+    try {
+      if (ptr->_non_existent()) {
+	std::cout  << "Remove non existing object from cache (" << ctxt
+	      << "/" << name << ")" << std::endl;
+	removeObjectFromCache(name);
+      } else {
+	std::cout << "Use object from cache (" << ctxt
+		  << "/" << name << ")" << std::endl;
+	return CORBA::Object::_duplicate(ptr);
+      }
+    } catch (const CORBA::OBJECT_NOT_EXIST& err) {
+      std::cout << "Remove non existing object from cache (" << ctxt
+		<< "/" << name << ")" << std::endl;
+      removeObjectFromCache(name);
+    } catch (const CORBA::TRANSIENT& err) {
+      std::cout << "Remove unreachable object from cache (" << ctxt
+		<< "/" << name << ")" << std::endl;
+      removeObjectFromCache(name);
+    } catch (const CORBA::COMM_FAILURE& err) {
+      std::cout <<  "Remove unreachable object from cache (" << ctxt
+		<< "/" << name << ")" << std::endl;
+      removeObjectFromCache(name);
+    } catch (...) {
+      std::cout << "Remove unreachable object from cache (" << ctxt
+		<< "/" << name << ")" << std::endl;
+      removeObjectFromCache(name);
+    }
+
+  }
+  cacheMutex.unlock();
+  CORBA::Object_ptr object = ORB->resolve_initial_references("NameService");
+  CosNaming::NamingContext_var rootContext =
+    CosNaming::NamingContext::_narrow(object);
+  CosNaming::Name cosName;
+
+  cosName.length(2);
+  cosName[0].id   = ctxt.c_str();
+  cosName[0].kind = "";
+  cosName[1].id   = name.c_str();
+  cosName[1].kind = "";
+
+  try {
+    object = rootContext->resolve(cosName);
+    /* If the object is not a forwarder object, then
+     * search if we need to use a forwarder to reach it.
+     */
+    if (ctxt!=FWRDCTXT && fwdName!="no-Forwarder") { // MODIF
+      string objIOR = getIOR(object);
+      IOP::IOR ior;
+      makeIOR(objIOR, ior);
+
+      // Get the object host to check if it is a forwarder reference
+      string objHost = getHost(ior);
+      try {
+        if (objHost.size()>0 && objHost.at(0)=='@') {
+          objHost.erase(0,1); // Remove '@' before the forwarder name
+//          fwdCORBA_ptr fwd = c->resolve<fwdCORBA_object, fwdCORBA_ptr>(FWRDCTXT, objHost, connectId);
+//
+//	  if (CORBA::is_nil(fwd)) {
+//	    throw runtime_error("Could not resolve");
+//	  }
+//	  
+//
+//	  std::cout << "Object (" << ctxt << "/" << name << ")"
+//		    << " is reachable through forwarder " << objHost << std::endl;
+	  object = c->getObject(objHost, name/*, (CorbaForwarder_var*)&fwd*/, connectId);
+          
+        } else {
+	  std::cout <<  "Direct access to object " << ctxt << "/" << name << std::endl;
+        }
+      } catch (const CORBA::TRANSIENT& err) {
+	std::cout << "Unable to contact  forwarder \"" << objHost << "\"" << std::endl;
+      }
+    }
+  } catch (CosNaming::NamingContext::NotFound& err) {
+    std::cout << "Error resolving " << ctxt << "/" << name << std::endl;
+    throw runtime_error("Error resolving "+ctxt+"/"+name);
+  }
+  cacheMutex.lock();
+  cache[ctxt+"/"+name] = CORBA::Object::_duplicate(object);
+  cacheMutex.unlock();
+
+  return CORBA::Object::_duplicate(object);
+
+
+  }
+
 
 //CORBA::Object_ptr ORBMgr::resolveObject(const string& context, const string& name,
 //					const string& connectId, const string& fwdName) const {
@@ -423,7 +537,7 @@ string ORBMgr::getIOR(CORBA::Object_ptr object) const {
 }
 
 string ORBMgr::getIOR(const string& ctxt, const string& name, std::string id) const {
-  return ORB->object_to_string(resolveObject<CorbaForwarder, CorbaForwarder_var>(ctxt, name, id));
+  return ORB->object_to_string(resolveObject(ctxt, name, id));
 }
 
 void ORBMgr::activate(PortableServer::ServantBase* object) const {

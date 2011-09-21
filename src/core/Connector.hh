@@ -21,8 +21,9 @@
 
 #include "common_types.hh"
 #include "NetConfig.hh"
+#include "ORBMgr.hh"
 
-class ORBMgr;
+class Connector;
 
 using namespace std;
 
@@ -55,7 +56,7 @@ public :
    * \return The corresponding corba object
    */
   virtual CORBA::Object_ptr
-  getObject(std::string ctxt, std::string name, CorbaForwarder_var* v);
+  getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId);
 
   /* Bind the object using its ctxt/name */
   virtual void bind(const std::string& ctxt, const std::string& name,
@@ -81,9 +82,12 @@ public :
 	
   /* Resolve an object using its IOR or ctxt/name. */
   virtual CORBA::Object_ptr resolveObject(const std::string& IOR) const;
-  virtual CORBA::Object_ptr resolveObject(const std::string& ctxt, const std::string& name,
+  template <typename CORBA_object, typename CORBA_ptr>
+  CORBA::Object_ptr resolveObject(const std::string& ctxt, const std::string& name,
 				  const string& connectId,
-				  const std::string& fwdName = "") const;
+					  const std::string& fwdName = "") const {
+    return mmgr->resolve<CORBA_object, CORBA_ptr>(ctxt, name, connectId, fwdName); 
+  }
 	
   /* Get the list of the objects id binded in the omniNames server for a given context. */
   virtual std::list<std::string> list(CosNaming::NamingContext_var& ctxt) const;
@@ -93,7 +97,7 @@ public :
   CORBA_ptr resolve(const std::string& ctxt, const std::string& name,
 		    const std::string& connectId,
 		    const std::string& fwdName = "") const {
-    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject(ctxt, name, connectId, fwdName)));
+    return CORBA_object::_duplicate(CORBA_object::_narrow(resolveObject<CORBA_object, CORBA_ptr>(ctxt, name, connectId, fwdName)));
   }
   template <typename CORBA_object, typename CORBA_ptr>
   CORBA_ptr resolve(const std::string& IOR) const {
