@@ -120,7 +120,7 @@ SeqString* Forwarder::getBindings(const char* ctxt) {
 
   for (it=objects.begin(); it!=objects.end(); ++it) {
     try {
-      CORBA::Object_ptr obj = ORBMgr::getMgr()->resolveObject<CorbaForwarder, CorbaForwarder_var>(ctxt, it->c_str(),"no-Forwarder", "no-Forwarder");
+      CORBA::Object_ptr obj = ORBMgr::getMgr()->resolveObject(ctxt, it->c_str(),"no-Forwarder", "no-Forwarder");
       (*result)[cmpt++]=it->c_str();
       (*result)[cmpt++]=ORBMgr::getMgr()->getIOR(obj).c_str();
     } catch (const runtime_error& err) {
