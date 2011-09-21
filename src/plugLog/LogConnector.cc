@@ -41,6 +41,7 @@ LogConnector::getObject(std::string ctxt, std::string name/*, CorbaForwarder_var
 
 std::string
 LogConnector::getContext(std::string context) {
+  // Enables the user to get the right context althouth the call is made with a secondary context
   if (context.compare(LOGCOMPCONFCTXT)==0) {
     return LOGCOMPCTXT;
   } else if (context.compare(LOGTOOLMSGCTXT)== 0) {
@@ -51,6 +52,7 @@ LogConnector::getContext(std::string context) {
 
 void
 LogConnector::registrer(std::string id) {
+  // Register the connector in the log
   mname = id;
   mmgr->addConnector(this, id);
 }

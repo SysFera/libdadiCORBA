@@ -5,6 +5,14 @@
  * \date 03/08/11
  */
 
+
+/**
+ *
+ * Root class of the connector, connector play proxy between ORBMgr and calling classes/programs
+ *
+ */
+
+
 #ifndef CONNECTOR_HH
 #define CONNECTOR_HH
 

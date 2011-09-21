@@ -46,6 +46,22 @@
  * DIET 2.5 beta 1 - New ORB manager; dietForwarder application
  ****************************************************************************/
 
+
+
+
+
+
+
+
+/**
+ *
+ * HIGHLY BASED ON EXISTING FILE
+ *
+ */
+
+
+
+
 #ifndef LOGFORWARDER_HH
 #define LOGFORWARDER_HH 
 

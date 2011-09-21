@@ -36,9 +36,10 @@ public :
   void
   registrer(std::string id);
   /**
-   * \brief To get the object corresponding to a context and a name in the omninames
+   * \brief To get the object corresponding to a context and a name in the omninames, using the log forwarder item
    * \param ctxt: The context
    * \param name: The name of the object
+   * \param connectId: The id of the connector from the call
    * \return The corresponding corba object
    */
   virtual CORBA::Object_ptr
