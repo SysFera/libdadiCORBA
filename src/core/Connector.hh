@@ -64,7 +64,7 @@ public :
    * \return The corresponding corba object
    */
   virtual CORBA::Object_ptr
-  getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId);
+  getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId, std::string globContext);
 
   /* Bind the object using its ctxt/name */
   virtual void bind(const std::string& ctxt, const std::string& name,

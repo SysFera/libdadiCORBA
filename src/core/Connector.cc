@@ -22,7 +22,7 @@ Connector::~Connector() {
 }
 
 CORBA::Object_ptr
-Connector::getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId) {
+Connector::getObject(std::string ctxt, std::string name/*, /*CorbaForwarder_var* v*/, string connectId, std::string globContext) {
   return NULL;
 }
 
