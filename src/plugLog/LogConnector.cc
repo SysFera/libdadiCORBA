@@ -22,21 +22,22 @@ LogConnector::getObject(std::string ctxt, std::string name/*, CorbaForwarder_var
   //  CorbaLogForwarder_var* fwd = (CorbaLogForwarder_var*)(fwdr);
   CorbaLogForwarder_var fwd = (CorbaLogForwarder_var)resolve<CorbaLogForwarder, CorbaLogForwarder_var>(FWRDCTXT, ctxt, connectId);
   try {
-    if (ctxt==LOGCOMPCTXT) {
+    if (name==LOGCOMPCTXT) {
       return (fwd)->getLogCentralComponent(name.c_str());
     }
-    if (ctxt==LOGTOOLCTXT) {
+    if (name==LOGTOOLCTXT) {
       return (fwd)->getLogCentralTool(name.c_str());
     }
-    if (ctxt==LOGTOOLMSGCTXT) {
+    if (name==LOGTOOLMSGCTXT) {
       return (fwd)->getToolMsgReceiver(name.c_str());
     }
-    if (ctxt==LOGCOMPCONFCTXT) {
+    if (name==LOGCOMPCONFCTXT) {
       return (fwd)->getCompoConf(name.c_str());
     }
   } catch(...) {
     return NULL;
   }
+  return NULL;
 }
 
 std::string

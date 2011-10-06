@@ -340,8 +340,9 @@ CORBA::Object_ptr ORBMgr::resolveObject(const std::string& context, const std::s
 //
 //	  std::cout << "Object (" << ctxt << "/" << name << ")"
 //		    << " is reachable through forwarder " << objHost << std::endl;
+
+          // If the element is not found, a nil object is returned by getObject.
 	  object = c->getObject(objHost, name/*, (CorbaForwarder_var*)&fwd*/, connectId);
-          
         } else {
 	  std::cout <<  "Direct access to object " << ctxt << "/" << name << std::endl;
         }
