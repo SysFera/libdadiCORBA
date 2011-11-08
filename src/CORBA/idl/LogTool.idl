@@ -1,0 +1,156 @@
+/****************************************************************************/
+/* Defines the toolside interfaces needed by the new LogService             */
+/*                                                                          */
+/*  Author(s):                                                              */
+/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
+/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
+/*                                                                          */
+/* $LICENSE$                                                                */
+/****************************************************************************/
+/* $Id$
+ * $Log$
+ * Revision 1.2  2010/11/10 02:27:44  kcoulomb
+ * Update the log to use the forwarder.
+ * Programm run without launching forwarders but fails with forwarder.
+ *
+ * Revision 1.1  2004/01/09 11:07:12  ghoesch
+ * Restructured the whole LogService source tree.
+ * Added autotools make process. Cleaned up code.
+ * Removed some testers. Ready to release.
+ *
+ ****************************************************************************/
+
+#ifndef _LOGTOOL_IDL_
+#define _LOGTOOL_IDL_
+
+#include "LogTypes.idl"
+
+/**
+ * This file defines everything needed to attach a tool
+ * to the core
+ */
+
+
+/**
+ * Errorlevel constants for connectTool, disconnectTool,
+ * addFilter and removeFilter
+ */
+// const short LS_OK = 0; defined in the LogTypes.idl
+const short LS_TOOL_CONNECT_ALREADYEXISTS = 1;
+
+const short LS_TOOL_DISCONNECT_NOTEXISTS = 1;
+
+const short LS_TOOL_ADDFILTER_TOOLNOTEXISTS = 1;
+const short LS_TOOL_ADDFILTER_ALREADYEXISTS = 2;
+
+const short LS_TOOL_REMOVEFILTER_TOOLNOTEXISTS = 1;
+const short LS_TOOL_REMOVEFILTER_NOTEXISTS = 2;
+
+const short LS_TOOL_FLUSHFILTERS_TOOLNOTEXISTS = 1;
+
+/**
+ * complete configuration of a filter
+ */
+struct filter_t
+{
+  string filterName;
+  tag_list_t tagList;
+  component_list_t componentList;
+};
+
+/**
+ * define callback functions the tool has to implement so 
+ * that the monitor can actively forward messages to the
+ * tool. Active MessagePulling from the tool is not possible
+ * in the moment.
+ */
+interface ToolMsgReceiver
+{
+  /**
+   * Receive a buffer of messages. The messages are ordered in the
+   * sequence. Older messages will be at the beginning of the sequence,
+   * younger(newer) messages at the end. 
+   */
+  oneway void
+  sendMsg(in log_msg_buf_t msgBuf);
+};
+
+/**
+ * methods offered by the core to allow tools to attach
+ * and configure filters
+ */
+interface LogCentralTool
+{
+  /**
+   * Do nothing but usefull to be sure that the object is reachable
+   */
+  //  void
+  //  test();
+
+  /**
+   * Connect a Tool with its toolName, which must be unique among all
+   * tools. The return value indicates the success of the connection.
+   * If ALREADYEXISTS is returned, the tool could not be attached, as
+   * the specified toolName already exists. In this case the tool must
+   * reconnect with another name before specifying any filters. If the 
+   * tool sends an empty toolName, the LogCentral will provide a unique
+   * toolName and pass it back to the tool.
+   */
+  short
+  connectTool(inout string toolName, in string msgReceiver);
+
+  /**
+   * Disconnects a connected tool from the monitor. No further 
+   * filterconfigurations should be sent after this call. The 
+   * toolMsgReceiver will not be used by the monitor any more 
+   * after this call. Returns NOTCONNECTED if the calling tool
+   * was not connected.
+   */
+  short
+  disconnectTool(in string toolName);
+
+  /**
+   * Returns a list of possible tags. This is just a convenience
+   * functions and returns the values that are specified in a
+   * configuration file. If the file is not up to date, the 
+   * application may generate more tags than defined in this
+   * list.
+   */
+  tag_list_t
+  getDefinedTags();
+
+  /**
+   * Returns a list of actually connected Components. This is just
+   * a convenience function, as the whole state of the system will
+   * be sent to the tool right after connection (in the form of
+   * messages)
+   */  
+  component_list_t
+  getDefinedComponents();
+
+  /**
+   * Create a filter for this tool on the monitor. Messages matching
+   * this filter will be forwarded to the tool. The filter will be
+   * identified by its name, which is a part of filter_t. A tool
+   * can have as much filters as it wants. Returns ALREADYEXISTS if
+   * another filter with this name is already registered.
+   */
+  short
+  addFilter(in string toolName, in filter_t filter);
+
+  /**
+   * Removes a existing filter from the tools filterList. The filter
+   * will be identified by its name in the filter_t. If the specified
+   * filter does not exist, NOTEXISTS is returned.
+   */
+  short
+  removeFilter(in string toolName, in string filterName);
+
+  /**
+   * Removes all defined filters.
+   */
+  short
+  flushAllFilters(in string toolName);
+};
+
+#endif

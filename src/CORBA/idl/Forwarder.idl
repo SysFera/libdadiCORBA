@@ -1,0 +1,106 @@
+/****************************************************************************/
+/* DIET forwarder IDL description                                           */
+/*                                                                          */
+/*  Author(s):                                                              */
+/*    - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)                         */
+/*                                                                          */
+/* $LICENSE$                                                                */
+/****************************************************************************/
+
+#ifndef FORWARDER_IDL
+#define FORWARDER_IDL
+
+#include "common_types.idl"
+#include "response.idl"
+
+#include "LogComponentFwdr.idl"
+#include "LogToolFwdr.idl"
+
+#include "AgentFwdr.idl"
+#include "CallbackFwdr.idl"
+#include "LocalAgentFwdr.idl"
+//#include "LogComponentFwdr.idl"
+#include "MasterAgentFwdr.idl"
+#include "SeDFwdr.idl"
+
+#include "DagdaFwdr.idl"
+
+#if HAVE_WORKFLOW
+#include "CltManFwdr.idl"
+#include "MaDagFwdr.idl"
+#include "WfLogServiceFwdr.idl"
+#endif
+
+interface Forwarder :
+  ComponentConfiguratorForwarder
+, LogCentralComponentForwarder
+  , ToolMsgReceiverForwarder
+  , LogCentralToolForwarder
+  , MasterAgentForwarder
+  , CallbackForwarder
+  , SeDForwarder
+  //	, ComponentConfiguratorForwader
+#if HAVE_WORKFLOW
+  , CltManForwarder
+  , MaDagForwarder
+  , WfLogServiceForwarder
+#endif
+  , DagdaForwarder
+  , AgentForwarder
+{	
+  /* Get objects from the Forwarder. */
+  Agent getAgent(in string name);
+  Callback getCallback(in string name);
+  LocalAgent getLocalAgent(in string name);
+  //ComponentConfigurator getComponentConfigurator(in string name);
+  //LogCentralComponent getLogCentralComponent(in string name);
+  MasterAgent getMasterAgent(in string name);
+  SeD getSeD(in string name);
+	
+  //  Dagda getDagda(in string name);
+
+#if HAVE_WORKFLOW
+  CltMan getCltMan(in string name);
+  MaDag getMaDag(in string name);
+  WfLogService getWfLogService(in string name);
+#endif
+
+
+  /* Get objects from the Forwarder. */
+  //	ComponentConfigurator getComponentConfigurator (in string name);
+  LogCentralComponent   getLogCentralComponent   (in string name);
+  LogCentralTool getLogCentralTool(in string name);
+  //        ToolMsgReceiver       getToolMsgReceiver       (in string name);
+  //	LogCentralTool        getLogCentralTool        (in string name);
+
+  /* Common methods. */
+  long ping(in string objName);
+  // raises(UnknownObject, BadNameException);
+  oneway void getRequest(in corba_request_t req, in string objName);
+  string getHostname(in string objName)
+    raises(UnknownObject, BadNameException);
+
+  /* CORBA remote management. */
+  void bind(in string objName, in string ior);
+  oneway void unbind(in string objName);
+  SeqString getBindings(in string ctxt);
+	
+  /* Peer connection. */
+  void connectPeer(in string ior, in string host, in long port);
+  string getIOR();
+	
+  /* Obtain informations about this forwarder. */
+  string getName();
+  string getPeerName();
+  string getHost();
+  string getPeerHost();
+	
+  SeqString routeTree();
+
+
+  /* Forwarders management. */
+  /* traceRoute, ping, topology, ... */
+	
+};
+
+#endif

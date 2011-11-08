@@ -1,0 +1,180 @@
+/****************************************************************************/
+/* DIET master agent IDL description                                        */
+/*                                                                          */
+/*  Author(s):                                                              */
+/*    - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)                   */
+/*                                                                          */
+/* $LICENSE$                                                                */
+/****************************************************************************/
+/* $Id$
+ * $Log$
+ * Revision 1.18  2011/05/09 13:10:10  bdepardo
+ * Added method diet_get_SeD_services to retreive the services of a SeD given
+ * its name
+ *
+ * Revision 1.17  2010/11/24 15:12:56  bdepardo
+ * searchData is now available on all agents. SeDs are now able to retrieve
+ * a DAGDA data from an alias specified by a client.
+ * Currently a SeD cannot declare an alias.
+ *
+ * Revision 1.16  2010/07/12 15:54:11  glemahec
+ * DIET 2.5 beta 1 - Forwarder IDL files
+ *
+ * Revision 1.15  2009/08/26 09:27:30  bisnard
+ * allow Dagda exception forwarding in get_data_arg
+ *
+ * Revision 1.14  2008/06/25 09:55:57  bisnard
+ * removed unused parameter in submit_pb_set & corrected bug with ReqIDs
+ *
+ * Revision 1.13  2008/04/29 22:22:01  glemahec
+ * DAGDA improvements :
+ *   - Asynchronous API.
+ *   - Data ID alias managing.
+ *   - Data manager state backup and restore.
+ *
+ * Revision 1.12  2008/04/28 07:08:28  glemahec
+ * The DAGDA API.
+ *
+ * Revision 1.11  2008/04/14 13:44:30  bisnard
+ * - Parameter 'used' obsoleted in MultiWfScheduler::submit_wf & submit_pb_set
+ *
+ * Revision 1.10  2008/04/10 08:17:14  bisnard
+ * New version of the MaDag where workflow node execution is triggered by the MaDag agent and done by a new CORBA object CltWfMgr located in the client
+ *
+ * Revision 1.9  2007/07/13 16:44:40  ecaron
+ * Remove deprecated code (ALTPREDICT part)
+ *
+ * Revision 1.8  2006/11/06 15:45:53  aamar
+ * Workflow support: modify submit_pb_set prototype to manage the reqID.
+ *
+ * Revision 1.7  2006/10/20 08:11:27  aamar
+ * Remove the submit_wf function from Master Agent interface.
+ * Changing the submit_pb_set prototype by adding the set size to handle
+ * the request id in workflow submission.
+ *
+ * Revision 1.6  2006/04/14 14:13:10  aamar
+ * Interface extension for workflow support.
+ * Adding two methods : submit_wf (TO REMOVE) and submit_pb_set.
+ *
+ * Revision 1.5  2005/09/05 15:59:48  hdail
+ * Addition of client hostname and location information to submit call
+ * (experimental and protected by HAVE_ALTPREDICT).
+ *
+ * Revision 1.4  2004/10/06 16:39:14  rbolze
+ * add function to get the profile available on its hierarchy
+ *
+ * Revision 1.3  2004/09/29 13:35:31  sdahan
+ * Add the Multi-MAs feature.
+ *
+ * Revision 1.2  2004/02/27 10:19:50  bdelfabr
+ * description of all methods for data persistency
+ *
+ * Revision 1.1  2003/04/10 12:31:10  pcombes
+ * Replace masterAgent.idl. submit returns only a response.
+ *
+ ****************************************************************************/
+
+#ifndef _MASTER_AGENT_IDL_
+#define _MASTER_AGENT_IDL_
+
+#include "Agent.idl"
+#include "Dagda.idl"
+
+interface MasterAgent : Agent {
+
+  /** Submission function: called by the clients to submit a problem. */
+  corba_response_t submit(in corba_pb_desc_t pb_profile,
+			  in unsigned long maxServers);
+
+  /** get number of the current session */
+  long get_session_num();
+
+  /** get id of the data :  aggregation of numsession and numdata */
+  string get_data_id();
+
+  /** look up of data identified by id */
+  unsigned long dataLookUp(in string id);
+
+  /** get data descriptor */
+  corba_data_desc_t get_data_arg(in string argID) raises(Dagda::DataNotFound);
+
+  /**
+   * invoked by client : removal from the platform of the data identified by argID
+   */
+  long diet_free_pdata(in string argID);
+
+  /**
+   * get the list of Profile available.
+   */
+  SeqCorbaProfileDesc_t getProfiles(out long length);
+
+#ifdef HAVE_MULTI_MA
+
+  /** MAs federation management */
+  boolean handShake(in string masterAgentName, in string myName);
+
+  /** returns the address of the MA's bind service */
+  string getBindName();
+
+  /**
+   * send a new request to the MA.
+   */
+  oneway void searchService(in string masterAgentName,
+			    in string myName,
+			    in corba_request_t request) ;
+
+  /** ask to the MA to stop the flooding */
+  oneway void stopFlooding(in long reqId, in string senderId) ;
+
+  /** response which saids that the service is not found and a new step
+      of flooding can be achive */
+  oneway void serviceNotFound(in long reqId, in string senderId) ;
+
+  /** launchs a new step of flooding */
+  oneway void newFlood(in long reqId, in string senderId) ;
+
+  /** response which saids that no new server can be found via this MA. */
+  oneway void floodedArea(in long reqId, in string senderId) ;
+
+  /** response which saids that the MA was already contacted for this
+      request. */
+  oneway void alreadyContacted(in long reqId,
+			       in string senderId) ;
+
+  /** response which saids that some servers was found. */
+  oneway void serviceFound(in long reqId, in corba_response_t decision) ;
+
+#endif // HAVE_MULTI_MA
+
+#ifdef HAVE_WORKFLOW
+  /**
+   * Workflow submission function. *
+   * called by the MA_DAG or a client to submit a set of problems *
+   */
+  wf_response_t submit_pb_set (in corba_pb_desc_seq_t seq_pb);
+
+   /**
+    * A submission function used to submit a set of problem to the MA
+    *
+    * @param pb_seq     sequence of problems
+    * @param reqCount   number of requests of the client. The request number is at least
+    *                   equal to sequence problem length but it can be greater if a problem
+    *                   has to be executed more than one time
+    * @param complete   indicates if the response is complete. The function return at the first problem
+    *                   that cannot be solved
+    * @param firstReqId the first request identifier to be used by the client
+    * @param seqReqId   an identifier to the submission (each sequence submission
+    *                   has a unique identifier)
+    */
+    response_seq_t
+    submit_pb_seq(in corba_pb_desc_seq_t pb_seq,
+                  in long reqCount,
+                  out boolean complete,
+                  out long firstReqId,
+                  out long seqReqId);
+#endif // HAVE_WORKFLOW
+
+  long insertData(in string key, in SeqString values);
+};
+
+#endif // _MASTER_AGENT_IDL_

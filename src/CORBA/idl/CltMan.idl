@@ -1,0 +1,90 @@
+/****************************************************************************/
+/* CLIENT Manager Interface (used in workflow support)                     */
+/*                                                                          */
+/*  Author(s):                                                              */
+/*    - Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)                       */
+/*                                                                          */
+/* $LICENSE$                                                                */
+/****************************************************************************/
+/* $Id$
+ * $Log$
+ * Revision 1.8  2010/07/12 15:54:11  glemahec
+ * DIET 2.5 beta 1 - Forwarder IDL files
+ *
+ * Revision 1.7  2008/12/02 14:17:48  bisnard
+ * manage multi-dag cancellation when one dag fails
+ *
+ * Revision 1.6  2008/12/02 10:18:37  bisnard
+ * added exception
+ *
+ * Revision 1.5  2008/06/25 09:59:40  bisnard
+ * new params in execNodeOnSeD to provide ReqId and estimation vector
+ * to client for solve request
+ *
+ * Revision 1.4  2008/06/02 08:34:23  bisnard
+ * Execute method (for wf node) now returns an error code in case of
+ * communication failure with the SeD
+ *
+ * Revision 1.3  2008/06/01 09:20:37  rbolze
+ * the remote method release now return a string which contains
+ * feedback on the dag execution
+ *
+ * Revision 1.2  2008/04/15 14:20:19  bisnard
+ * - Postpone sed mapping until wf node is executed
+ *
+ * Revision 1.1  2008/04/10 08:17:14  bisnard
+ * New version of the MaDag where workflow node execution is triggered by the MaDag agent and done by a new CORBA object CltWfMgr located in the client
+ *
+ ****************************************************************************/
+
+#ifndef _CLTMAN_IDL_
+#define _CLTMAN_IDL_
+
+#include "response.idl"
+
+interface CltMan {
+
+  exception DagNotFound {
+    string dagId;
+  };
+
+  /**
+   * Request node execution on a given SeD
+   * @param node_id node identifier (string)
+   * @param dag_id  dag identifier (string)
+   * @param sed_ref the SeD CORBA object reference
+   * @param reqID   the DIET request ID of the previous submit request
+   * @param ev  the estimation vector (from previous submit request used to
+   * choose the SeD) - this param is inout to avoid const as the pointer is
+   * stored in the Node object
+   */
+  long
+  execNodeOnSed(in string node_id,
+                in string dag_id,
+                in string seDName,
+                in unsigned long reqID,
+                inout corba_estimation_t ev);
+
+  /**
+   * Request node execution on the best SeD available
+   * (delegates SeD choice to default scheduler)
+   * @param node_id node identifier (string)
+   * @param dag_id  dag identifier (string)
+   */
+  long
+  execNode(in string node_id,
+           in string dag_id);
+
+  /**
+   * Release the manager after dag execution is either completed or
+   * cancelled
+   * @param dag_id  dag identifier (string)
+   * @param successful  true if dag execution was successful
+   */
+  string
+  release(in string dag_id, in boolean successful);
+
+  long ping();
+};
+
+#endif // _CLTMAN_IDL_
