@@ -145,6 +145,8 @@ add_custom_target(CORBAFiles
 )
 
 # Compile the main static CORBA library
-add_library(dadiCORBA STATIC ${CORBA_SOURCES})
+add_library(dadiCORBA SHARED ${CORBA_SOURCES})
 add_dependencies(dadiCORBA ${IDL_GENERATED_HEADERS})
 
+install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR})
+install(TARGETS dadiCORBA DESTINATION ${LIB_INSTALL_DIR})

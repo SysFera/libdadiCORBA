@@ -132,8 +132,8 @@ public:
   virtual void
   unlockData(const char* dataID);
 
-  virtual Dagda::dataStatus
-  getDataStatus(const char* dataID);
+//  virtual Dagda::dataStatus
+//  getDataStatus(const char* dataID);
 
   /* ------------ */
 

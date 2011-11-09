@@ -1,16 +1,22 @@
-project( CORBA )
+project( FWD )
 cmake_minimum_required( VERSION 2.8 )
 
-set(CORBA_MAJOR_VERSION 1)
-set(CORBA_MINOR_VERSION 0)
-set(CORBA_REVISION_VERSION 0)
+set(FWD_MAJOR_VERSION 1)
+set(FWD_MINOR_VERSION 0)
+set(FWD_REVISION_VERSION 0)
 
-set(CORBA_VERSION ${CORBA_MAJOR_VERSION}.${CORBA_MINOR_VERSION}.${CORBA_REVISION_VERSION})
+set(FWD_VERSION ${FWD_MAJOR_VERSION}.${FWD_MINOR_VERSION}.${FWD_REVISION_VERSION})
 
-set( CMAKE_MODULE_PATH ${CORBA_SOURCE_DIR}/Cmake )
+set( CMAKE_MODULE_PATH ${FWD_SOURCE_DIR}/Cmake )
 
 set( BIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin"
   CACHE INTERNAL "Directory where binary will be installed" )
+
+set( LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+  CACHE INTERNAL "Directory where libraries will be installed" )
+
+set( INC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include"
+  CACHE INTERNAL "Directory where include will be installed" )
 
 # OmniORB is mandatory:
 find_package(OmniORB)
@@ -39,17 +45,18 @@ endif (OMNIORB4_FOUND)
 
 include_directories(
   ${OMNIORB4_INCLUDE_DIR}
-  ${CORBA_BINARY_DIR}/idl    
-  ${CORBA_SOURCE_DIR}/impl
-  ${CORBA_SOURCE_DIR}/
+  ${FWD_BINARY_DIR}/idl    
+  ${FWD_SOURCE_DIR}/impl
+  ${FWD_SOURCE_DIR}/
 )
 
 add_subdirectory(idl)
 
 
 # Compile CorbaCommon static library
-add_library(CorbaCommon STATIC
+add_library(CorbaCommon SHARED
   ORBMgr.cc
+  CorbaForwarder.cc
   impl/SeDImpl.cc
   impl/CallbackImpl.cc
   impl/AgentImpl.cc
@@ -66,6 +73,11 @@ add_library(CorbaCommon STATIC
   monitor/StateManager.cc
   monitor/ReadConfig.cc
   utils/LocalTime.cc
+  forwarders/Dagda.cc
+  forwarders/MasterAgent.cc
+  forwarders/Agent.cc
+  forwarders/SeD.cc
+  forwarders/Callback.cc
 )
 
 # CorbaCommon library depends on CORBA files
@@ -194,6 +206,24 @@ endif (DIET_USE_USERSCHED)
 
   
 install(TARGETS corbaForwarder DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS CorbaCommon DESTINATION ${LIB_INSTALL_DIR})
+
+
+install(FILES ORBMgr.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/LogCentralTool_impl.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/LogCentralComponent_impl.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES CorbaForwarder.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/ToolList.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/ComponentList.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/FilterManagerInterface.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/LogOptions.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/StateManager.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/ReadConfig.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/TimeBuffer.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES FullLinkedList.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR})
+install(FILES LocalTime.hh DESTINATION ${INC_INSTALL_DIR})
+
 
 
 if (DIET_USE_LOG)
