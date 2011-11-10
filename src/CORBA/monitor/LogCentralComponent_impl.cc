@@ -135,14 +135,21 @@ LogCentralComponent_impl::connectComponent(char*& componentName,
     fprintf(stderr, "Bad name componnent. Cannot connect component. \n");
     return LS_COMPONENT_CONNECT_BADNAME;
   }
-  ComponentConfigurator_ptr compoConf =
-    ORBMgr::getMgr()->resolve<ComponentConfigurator,
-                                 ComponentConfigurator_ptr>(LOGCOMPCONFCTXT,
-                                                            compConfigurator);
+
+  ComponentConfigurator_ptr compoConf;
+
+  try{
+    compoConf =
+      ORBMgr::getMgr()->resolve<ComponentConfigurator,
+      ComponentConfigurator_ptr>(LOGCOMPCONFCTXT,
+                                 compConfigurator);
 
   if (CORBA::is_nil(compoConf)) {
     fprintf(stderr, "Bad component configurator **** \n");
     return LS_COMPONENT_CONNECT_BADCOMPONENTCONFIGURATOR;
+  }
+  } catch (...){
+    fprintf(stderr,"Z1111 \n");
   }
 
   // Put this here to be synchronised
