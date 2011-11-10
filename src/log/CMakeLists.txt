@@ -53,6 +53,12 @@ add_library(LogCommon
   SimpleFilterManager.cc
   CoreThread.cc
 )
+add_subdirectory(
+  libraries
+)
+add_subdirectory(
+  examples
+)
 
 add_executable(LogCentral LogCentral.cc)
 target_link_libraries(LogCentral
