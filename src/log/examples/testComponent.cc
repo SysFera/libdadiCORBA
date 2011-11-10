@@ -26,7 +26,8 @@
 #include <iostream>
 
 #include "LogComponentBase.hh"
-#include "LogORBMgr.hh"
+#include "ORBMgr.hh"
+#include <stdio.h>
 
 using namespace std;
 
@@ -37,7 +38,7 @@ main(int argc, char** argv)
   bool success = false;
   cout << "Init \n" << endl;
   try {
-    LogORBMgr::init(argc, argv, false);
+    ORBMgr::init(argc, argv);
 	} catch (...) {
     fprintf (stderr, "ORB initialization failed");
   }

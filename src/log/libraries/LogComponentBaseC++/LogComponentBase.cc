@@ -50,7 +50,7 @@
 
 #include "LogComponentBase.hh"
 #include "ORBTools.hh"
-#include "../LogORBMgr.hh"
+#include "ORBMgr.hh"
 
 using namespace std;
 
@@ -85,12 +85,12 @@ LogComponentBase::LogComponentBase(bool* success, int argc, char** argv,
   this->pingThread = NULL;
   this->flushBufferThread = NULL;
 
-  LogORBMgr::getMgr()->bind("LogServiceC", getName(), this->CCref, true);
-  LogORBMgr::getMgr()->fwdsBind("LogServiceC", getName(),
-				LogORBMgr::getMgr()->getIOR(this->CCref));
+  ORBMgr::getMgr()->bind("LogServiceC", getName(), this->CCref, true);
+  ORBMgr::getMgr()->fwdsBind("LogServiceC", getName(),
+                             ORBMgr::getMgr()->getIOR(this->CCref));
   // Comment because test is empty
   //  try { // To make sure that the object is callable
-  //    //    this->LCCref->test(); 
+  //    //    this->LCCref->test();
   //  } catch (...) {
   //    return;
   //  }

@@ -18,14 +18,17 @@ TARGET_LINK_LIBRARIES( DIETtestTool
 INSTALL( TARGETS DIETtestTool DESTINATION bin )
 
 #########
-#INCLUDE_DIRECTORIES(
-#  ${LOGS_SOURCE_DIR}/libraries/LogComponentBaseC++
-#)
-#ADD_EXECUTABLE( testComponent testComponent.cc )
-#TARGET_LINK_LIBRARIES( testComponent
-#  LogForwarderUtils
-#  LogServiceComponentBase
-#)
-#INSTALL_TARGETS( /bin/ testComponent )
-##
+INCLUDE_DIRECTORIES(
+  ${LOGS_SOURCE_DIR}/libraries/LogComponentBaseC++
+)
+ADD_EXECUTABLE( testComponent testComponent.cc )
+TARGET_LINK_LIBRARIES( testComponent
+  ${OMNIORB4_LIBRARIES}
+  pthread
+  ${FWD_LIBRARY}
+  LogCommon
+  LogServiceComponentBase
+)
+INSTALL( TARGETS testComponent DESTINATION bin )
+#
 ###########
