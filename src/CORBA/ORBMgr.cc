@@ -284,6 +284,7 @@ CORBA::Object_ptr
 ORBMgr::resolveObject(const std::string& context, const std::string& name,
                       const std::string& fwdName) const {
   std::string ctxt = context;
+  std::string ctxt2 = context;
   bool localAgent = false;
 
   /* The object to resolve is it a local agent ?*/
@@ -293,6 +294,11 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
   }
   if (ctxt == MASTERAGENT) {
     ctxt = AGENTCTXT;
+  }
+  if (ctxt2 == LOGCOMPCONFCTXT) {
+    ctxt = LOGCOMPCTXT;
+  } else if (ctxt2 == LOGTOOLMSGCTXT) {
+    ctxt = LOGTOOLCTXT;
   }
   cacheMutex.lock();
   /* Use object cache. */
@@ -368,7 +374,7 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
 
           TRACE_TEXT(TRACE_ALL_STEPS, "Object (" << ctxt << "/" << name << ")"
                      << " is reachable through forwarder " << objHost << "\n");
-#ifdef CORBA_DIET
+//#ifdef CORBA_DIET
           if (ctxt == AGENTCTXT) {
             if (!localAgent) {
               object = fwd->getMasterAgent(name.c_str());
@@ -390,9 +396,9 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
             object = fwd->getSeD(name.c_str());
           }
 
-          if (ctxt == DAGDACTXT) {
-            object = fwd->getDagda(name.c_str());
-          }
+  //        if (ctxt == DAGDACTXT) {
+  //          object = fwd->getDagda(name.c_str());
+  //        }
 #ifdef HAVE_WORKFLOW
           if (ctxt == WFMGRCTXT) {
             object = fwd->getCltMan(name.c_str());
@@ -401,21 +407,21 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
             object = fwd->getMaDag(name.c_str());
           }
 #endif // have workflow
-#endif  // CORBA_DIET
-#ifdef CORBA_LOG
+//#endif  // CORBA_DIET
+//#ifdef CORBA_LOG
           if (ctxt2==LOGCOMPCTXT) {
             object = fwd->getLogCentralComponent(name.c_str());
           }
           if (ctxt2==LOGTOOLCTXT) {
             object = fwd->getLogCentralTool(name.c_str());
           }
-          if (ctxt2==LOGTOOLMSGCTXT) {
-            object = fwd->getToolMsgReceiver(name.c_str());
-          }
-          if (ctxt2==LOGCOMPCONFCTXT) {
-            object = fwd->getCompoConf(name.c_str());
-          }
-#endif  // CORBA_LOG
+//          if (ctxt2==LOGTOOLMSGCTXT) {
+//            object = fwd->getToolMsgReceiver(name.c_str());
+//          }
+//          if (ctxt2==LOGCOMPCONFCTXT) {
+//            object = fwd->getCompoConf(name.c_str());
+//          }
+//#endif  // CORBA_LOG
         } else {
           TRACE_TEXT(TRACE_ALL_STEPS,
                      "Direct access to object " << ctxt << "/" << name << "\n");
