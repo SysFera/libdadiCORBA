@@ -415,12 +415,12 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
           if (ctxt2==LOGTOOLCTXT) {
             object = fwd->getLogCentralTool(name.c_str());
           }
-//          if (ctxt2==LOGTOOLMSGCTXT) {
-//            object = fwd->getToolMsgReceiver(name.c_str());
-//          }
-//          if (ctxt2==LOGCOMPCONFCTXT) {
-//            object = fwd->getCompoConf(name.c_str());
-//          }
+          if (ctxt2==LOGTOOLMSGCTXT) {
+            object = fwd->getToolMsgReceiver(name.c_str());
+          }
+          if (ctxt2==LOGCOMPCONFCTXT) {
+            object = fwd->getCompoConf(name.c_str());
+          }
 //#endif  // CORBA_LOG
         } else {
           TRACE_TEXT(TRACE_ALL_STEPS,
