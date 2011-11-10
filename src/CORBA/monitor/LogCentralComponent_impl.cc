@@ -170,7 +170,6 @@ LogCentralComponent_impl::connectComponent(char*& componentName,
     catch (...) {
       lost = true;
     }
-    lost = true;
 
     if (!lost) {
       TRACE_TEXT(TRACE_MAIN_STEPS,
