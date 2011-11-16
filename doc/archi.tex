@@ -101,6 +101,7 @@
 \renewcommand{\SFrevhistory}{
 \begin{SFrevtable}
   \SFrevitem{02/08/2011}{First draft of the document}{K. COULOMB}
+  \SFrevitem{16/11/2011}{New version with functionnal POC}{K. COULOMB}
 \end{SFrevtable}
 }
 % \renewcommand{\SFrevhistory}{} % disable this table
@@ -184,8 +185,13 @@ This is a list of identified changes needed
 \item Remove the CORBA aspects from the (Log/Diet)Forwarder classes
 \end{itemize}
 
-\subsection*{Tricky}
-The tricky part is how to totally hide the specific forwarder function to the generic forwarder. The solution will be based on a factory, that will, if the plugins are available, be able to create an object of this kind of plugin. The remaining problem is to make sure this solution is valid by implementing a prototype.
+\section*{Failure}
+This solution was a total failure. The problem was that it was impossible to resolve
+a CORBA object throught a generic forwarder with the IDL. Moreover, the cast from
+a generic forwarder to a forwarder implementation was impossible because the real object
+was generic so it could not be cast. This caused the real solution to be less ambitious,
+the IDL (and their implementation) are needed in the libdadiCORBA.
+
 
 \section*{Figures}
 \subsection*{Components}
@@ -216,6 +222,7 @@ The tricky part is how to totally hide the specific forwarder function to the ge
 \label{sequence}
 \end{figure}
 
+
 \chapter*{Other possibilities}
 \section*{The CORBA interceptor}
 Haikel presented an idea based on CORBA interceptor. \\
@@ -225,4 +232,54 @@ The idea would be to use interceptors to route to the right component that posse
 \section*{Share the ORBMgr, not the tunnels}
 Similar to the presented idea, but the forwarder with the main function are kept separated.
 
+\chapter*{The real solution}
+\section*{The degraded version}
+Because the version objective is impossible, the implemented solution is a degraded version of the previous one.
+The specificities of the solution are the following ones:
+\begin{itemize}
+\item One ORBMgr to rule them all
+\item One tunnel to find them 
+\item One lib to bring them and in the linker bind them
+\end{itemize}
+These modifications imply to have all the IDL and the forwarder class implementations in the generic library.
+
+\section*{Implementation}
+The POC implementation is based on 2 parts, the core library and the log implementation.
+
+\subsection*{The core (in the CORBA directory)}
+The core contains various main elements, it represents the generic lib.
+\begin{itemize}
+\item The IDL repository that contains all the CORBA IDL
+\item The tools and utils repositories that contain common classes (like the root directory)
+\item The monitor repository that contains the LogCentral implementation
+\item The forwarder repository that contains the CORBAForwarder class implementation
+\item The impl repository that contains the forwarder implementation of the DIET IDL stubs
+\item The log repository that contains the CORBAForwarder class implementation for the log functions
+\item The diet repository that contains the CORBAForwarder class implementation for the diet functions
+\item The Cmake repository that contains the files for cmake to find the dependencies
+\item The Fwdr.cc file that is the source for the binary forwarder program
+\end{itemize}
+
+\subsection*{The log}
+The log is a project example using the core lib to use the forwarders. It contains the following elements
+\begin{itemize}
+\item The Cmake repository that contains the files for cmake to find the dependencies
+\item The example repository that contains a tool and a component example
+\item The libraries repository that contains a lib (may be deprecated but currently kept)
+\item Log specific files
+\end{itemize}
+
+\section*{Function}
+This POC works the same way the previous forwarder were working, the only difference is that the ORBMgr and
+the tunnel are reunited. But all the basis mechanisms are kept. The ORBMgr was practically not touched 
+(only the resolveObject function was modified to be able to return different kind of objects). And the
+CORBAForwarder class is nothing but a merge of the DIETForwarder class and the LogForwarder class.
+
+
+\section*{Known issues}
+\begin{itemize}
+\item Modify an IDL means recompile all the depending projects
+\item Tools and Components are the only item really tested
+\item POC based on both old and dirty codes
+\end{itemize}
 \end{document}

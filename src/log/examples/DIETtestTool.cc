@@ -78,7 +78,7 @@
  *
  ****************************************************************************/
 
-#include "LogToolBase.hh"
+//#include "LogToolBase.hh"
 #include "stdio.h"
 #include <iostream>
 #include <string>
