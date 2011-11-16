@@ -55,6 +55,7 @@ public:
 
 
   MyMsgSender(const char* name){
+    this->lastPings = new LastPings();
     this->name = CORBA::string_dup(name);
     myLCC = ORBMgr::getMgr()->resolve<LogCentralComponent, LogCentralComponent_ptr>("LogServiceC", "LCC");
     if (CORBA::is_nil(myLCC)){
@@ -62,8 +63,8 @@ public:
     }
 
     try{
-      ORBMgr::getMgr()->bind("LogServiceC", name, _this(), true);
-      ORBMgr::getMgr()->fwdsBind("LogServiceC", name,
+      ORBMgr::getMgr()->bind("LogServiceC", this->name, _this(), true);
+      ORBMgr::getMgr()->fwdsBind("LogServiceC", this->name,
                                     ORBMgr::getMgr()->getIOR(_this()));
     }
     catch (...){
@@ -74,50 +75,7 @@ public:
 
   void
   sendMsg(const log_msg_buf_t& buffer){
-
-    // for each message, correction of its time and the message is sent to the
-    // TimeBuffer.
-    log_time_t td;
-
-    LastPing* lp = NULL;
-    if (buffer.length() != 0) {
-      const char* name = buffer[0].componentName;
-      LastPings::ReadIterator* it = this->lastPings->getReadIterator();
-
-      bool compExists = false;
-      while (it->hasCurrent()) {
-        lp = it->nextRef();
-        if (strcmp(lp->name, name) == 0) {
-          td = lp->timeDifference;
-          compExists = true;
-          break;
-        }
-      }
-      delete it;
-
-      if (compExists == false) {
-        std::cout << "Discarded messageBuffer from unknown component "
-                  << name << std::endl;
-        return;
-      }
-
-      for (unsigned int i = 0; i < buffer.length(); i++) {
-        log_msg_t msg = buffer[i];
-        // Correct the time derivation
-        msg.time.sec += td.sec;
-        msg.time.msec += td.msec;
-        while (msg.time.msec < 0) {
-          msg.time.msec += 1000;
-          msg.time.sec -= 1;
-        }
-        while (msg.time.msec >= 1000) {
-          msg.time.msec -= 1000;
-          msg.time.sec += 1;
-        }
-        // FIXME: manage overflows here
-        this->timeBuffer->put(&msg);
-      }
-    }
+    myLCC->sendBuffer(buffer);
   }
 
 
