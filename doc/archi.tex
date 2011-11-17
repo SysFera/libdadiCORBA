@@ -164,7 +164,7 @@ The aim of this document is to present a new architecture that will fix these pr
 \item The peer call of specific objects (IDL functions calls)
 \end{itemize}
 
-\chapter*{The architecture}
+\chapter*{The first try}
 
 \section*{Overview}
 The diagram \ref{component} shows on a single domain a plugin decomposition of the solution. A plugin will contain the IDL, the generated subclasses (headers and stubs), their implementation and the implementation of a connector. This connector will inherit from the Connector root class that will be defined with the ORBMgr and not in a plugin. \\
@@ -282,4 +282,73 @@ CORBAForwarder class is nothing but a merge of the DIETForwarder class and the L
 \item Tools and Components are the only item really tested
 \item POC based on both old and dirty codes
 \end{itemize}
+
+\section*{Industrialization}
+The following section will present the different element to transform the POC into a real functionnal library. 
+These transformation will be for both DIET and the log service current repository.
+
+\subsection*{Modification}
+\begin{itemize}
+\item Extract and install the following headers 
+\begin{itemize}
+\item ComponentList.hh
+\item FilterManagerInterface.hh
+\item FullLinkedList.hh
+\item FullLinkedList.cc (included in FullLinkedList.hh)
+\item LocalTime.hh
+\item LogOptions.hh
+\item ORBMgr.hh
+\item ReadConfig.hh
+\item response.hh
+\item StateManager.hh
+\item common\_types.hh
+\item CorbaForwarder.hh
+\item Forwarder.hh
+\item LogTypes.hh
+\item TimeBuffer.hh
+\item ToolList.hh
+\item Options.hh ? (not sure)
+\end{itemize}
+\item Install the generated stubs header
+\begin{itemize}
+\item Agent(Fwdr).hh
+\item Callback(Fwdr).hh
+\item LocalAgent(Fwdr).hh
+\item LogComponent(Fwdr).hh
+\item LogTool(Fwdr).hh
+\item MasterAgent(Fwdr).hh
+\item SeD(Fwdr).hh
+\end{itemize}
+\item Extract forwarder implementation from basic stubs implementations for each kind of IDL
+\item Extract internal utilitaries files
+\begin{itemize}
+\item debug.(cc/hh)
+\item DIET\_data.hh)
+\item Options.(cc/hh)
+\item FullLinkedList.(cc/hh)
+\item ORBTools.(cc/hh)
+\item SSHTunnels.(cc/hh)
+\item LocalTime.(cc/hh)
+\item LogOptions.(cc/hh)
+\item ReadConfig.(cc/hh)
+\item StateManager.(cc/hh)
+\item TimeBuffer.(cc/hh)
+\item ToolList.hh
+\item dietObject.cc
+\item The LogCentralImplementation for tools and components
+\end{itemize}
+\item Récupérer le findOmniORB
+\item Récupérer et les merger dans une même classe CORBAForwarder les classes DIETForwarder et LogForwarder
+\item Clean the code/includes (lots of dirty things are in the code, starting from an already cleaned version by Haikel is great but may not be enought)
+\end{itemize}
+
+\section*{Tests}
+Various tests have been made between graal and a local laptop. The biggest test was between karadoc, ukalerk and graal. The figure \ref{test} presents the deployment. There was 3 omninames (one per machine), 2 forwarders (one between karadoc and ukalerk, and one between graal and ukalerk). The LogCentral was on ukalerk, the tool was on karadoc, the component was on graal. The tool displayed what the component sent.
+
+\begin{figure}[h!]
+\includegraphics[scale=0.4]{fig/test_dadiCORBA.png}
+\caption{Diagram showing the deployement for the test}
+\label{test}
+\end{figure}
+
 \end{document}
