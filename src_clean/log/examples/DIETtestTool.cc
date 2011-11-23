@@ -89,7 +89,7 @@
 #include "ORBMgr.hh"
 #include "LogCentralTool_impl.hh"
 
-#include "LogToolBase.hh"
+//#include "LogToolBase.hh"
 
 
 #ifdef HAVE_BACKGROUND

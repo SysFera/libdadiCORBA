@@ -36,7 +36,7 @@ else (OMNIORB4_FOUND)
 endif (OMNIORB4_FOUND)
 
 ## setup Boost
-find_package(Boost 1.47 REQUIRED
+find_package(Boost 1.46.1 REQUIRED
   date_time
   iostreams
   filesystem
@@ -154,8 +154,6 @@ set(Forwarder_Libs
   CorbaCommon
 )
 
-message("omnilib:   ${OMNIORB4_LIBRARIES}")
-
 set(Forwarder_Libs
   ${Forwarder_Libs}
   CorbaCommon
@@ -191,7 +189,7 @@ install(FILES monitor/LogOptions.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES monitor/StateManager.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES monitor/ReadConfig.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES monitor/TimeBuffer.hh DESTINATION ${INC_INSTALL_DIR})
-install(FILES utils/FullLinkedList.hh DESTINATION ${INC_INSTALL_DIR})
-install(FILES utils/FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR})
-install(FILES utils/LocalTime.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES utils/FullLinkedList.hh DESTINATION ${INC_INSTALL_DIR}/utils)
+install(FILES utils/FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR}/utils)
+install(FILES utils/LocalTime.hh DESTINATION ${INC_INSTALL_DIR}/utils)
 

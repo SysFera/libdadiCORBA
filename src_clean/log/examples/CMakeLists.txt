@@ -13,7 +13,7 @@ TARGET_LINK_LIBRARIES( DIETtestTool
   pthread
   ${FWD_LIBRARY}
   LogCommon
-  LogServiceToolBase
+#  LogServiceToolBase
   ${DADI_LIBRARIES}
 )
 INSTALL( TARGETS DIETtestTool DESTINATION bin )
@@ -28,7 +28,7 @@ TARGET_LINK_LIBRARIES( testComponent
   pthread
   ${FWD_LIBRARY}
   LogCommon
-  LogServiceComponentBase
+#  LogServiceComponentBase
   ${DADI_LIBRARIES}
 )
 INSTALL( TARGETS testComponent DESTINATION bin )
