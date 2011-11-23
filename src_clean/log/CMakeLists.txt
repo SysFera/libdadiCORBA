@@ -50,9 +50,6 @@ add_library(LogCommon
   CoreThread.cc
 )
 add_subdirectory(
-  libraries
-)
-add_subdirectory(
   examples
 )
 
