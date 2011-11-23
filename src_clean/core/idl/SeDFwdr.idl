@@ -1,0 +1,48 @@
+/**
+ * @file SeDFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description    
+ *
+ * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef SEDFWDR_IDL
+#define SEDFWDR_IDL
+
+#include "SeD.idl"
+
+interface SeDFwdr : SeD {
+
+};
+
+interface SeDForwarder {
+  long checkContract(inout corba_estimation_t estimation,
+                     in corba_pb_desc_t pb,
+                     in string objName)
+    raises(UnknownObject);
+
+  void updateTimeSinceLastSolve(in string objName)
+    raises(UnknownObject);
+
+  long solve(in string path, inout corba_profile_t pb,
+             in string objName)
+    raises(UnknownObject);
+
+  oneway void solveAsync(in string path, in corba_profile_t pb,
+                         in string volatileclientPtr,
+                         in string objName);
+
+  string getDataMgrID(in string objName)
+    raises(UnknownObject);
+
+  SeqCorbaProfileDesc_t getSeDProfiles(out long length,
+                                       in string objName)
+    raises(UnknownObject);
+
+};
+
+#endif

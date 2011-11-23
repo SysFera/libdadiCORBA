@@ -1,0 +1,74 @@
+/**
+ * @file WfLogService.idl
+ *
+ * @brief  Workflow monitoring interface    
+ *
+ * @author  Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+#ifndef _WFLOGSERVICE_IDL_
+#define _WFLOGSERVICE_IDL_
+
+interface WfLogService {
+
+  oneway void
+  initWorkflow(in string wfId, in string name, in string parentWfId);
+
+  void
+  updateWorkflow(in string wfId, in string wfState, in string data);
+
+  void
+  createDag(in string dagId, in string wfId);
+
+  void
+  updateDag(in string dagId, in string wfId, in string dagState, in string data);
+  
+  void
+  createDagNode(in string dagNodeId, in string dagId, in string wfId);
+
+  void
+  createDagNodePort(in string dagNodePortId, in string portDirection,
+		    in string dagNodeId, in string wfId);
+
+  void
+  setInPortDependencies(in string dagNodePortId, in string dagNodeId, in string wfId,
+                        in string dependencies);
+  
+  void
+  createDagNodeLink(in string srcNodeId, in string srcWfId,
+		    in string destNodeId, in string destWfId);
+		    
+  void
+  createDagNodeData(in string dagNodeId, in string wfId,
+		    in string dagNodePortId, in string dataId);
+
+  void
+  createDataElements(in string dataId, in string elementIdList);
+
+  void
+  createSourceDataTree(in string sourceId, in string wfId, in string dataIdTree);
+
+  void
+  createSinkData(in string sinkId, in string wfId, in string dataId);
+
+  void
+  nodeIsReady(in string dagNodeId, in string wfId);
+
+  void
+  nodeIsStarting(in string dagNodeId, in string wfId, in string pbName, in string hostname);
+		    
+  void
+  nodeIsRunning(in string dagNodeId, in string wfId);
+
+  void
+  nodeIsDone(in string dagNodeId, in string wfId);
+
+  void
+  nodeIsFailed(in string dagNodeId, in string wfId);
+
+};
+
+#endif // _WFLOGSERVICE_IDL_

@@ -1,0 +1,115 @@
+/**
+ * @file MasterAgent.idl
+ *
+ * @brief  DIET master agent IDL description    
+ *
+ * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+#ifndef _MASTER_AGENT_IDL_
+#define _MASTER_AGENT_IDL_
+
+#include "Agent.idl"
+#include "Dagda.idl"
+
+interface MasterAgent : Agent {
+
+  /** Submission function: called by the clients to submit a problem. */
+  corba_response_t submit(in corba_pb_desc_t pb_profile,
+			  in unsigned long maxServers);
+
+  /** get number of the current session */
+  long get_session_num();
+
+  /** get id of the data :  aggregation of numsession and numdata */
+  string get_data_id();
+
+  /** look up of data identified by id */
+  unsigned long dataLookUp(in string id);
+
+  /** get data descriptor */
+  corba_data_desc_t get_data_arg(in string argID) raises(Dagda::DataNotFound);
+
+  /**
+   * invoked by client : removal from the platform of the data identified by argID
+   */
+  long diet_free_pdata(in string argID);
+
+  /**
+   * get the list of Profile available.
+   */
+  SeqCorbaProfileDesc_t getProfiles(out long length);
+
+#ifdef HAVE_MULTI_MA
+
+  /** MAs federation management */
+  boolean handShake(in string masterAgentName, in string myName);
+
+  /** returns the address of the MA's bind service */
+  string getBindName();
+
+  /**
+   * send a new request to the MA.
+   */
+  oneway void searchService(in string masterAgentName,
+			    in string myName,
+			    in corba_request_t request) ;
+
+  /** ask to the MA to stop the flooding */
+  oneway void stopFlooding(in long reqId, in string senderId) ;
+
+  /** response which saids that the service is not found and a new step
+      of flooding can be achive */
+  oneway void serviceNotFound(in long reqId, in string senderId) ;
+
+  /** launchs a new step of flooding */
+  oneway void newFlood(in long reqId, in string senderId) ;
+
+  /** response which saids that no new server can be found via this MA. */
+  oneway void floodedArea(in long reqId, in string senderId) ;
+
+  /** response which saids that the MA was already contacted for this
+      request. */
+  oneway void alreadyContacted(in long reqId,
+			       in string senderId) ;
+
+  /** response which saids that some servers was found. */
+  oneway void serviceFound(in long reqId, in corba_response_t decision) ;
+
+#endif // HAVE_MULTI_MA
+
+#ifdef HAVE_WORKFLOW
+  /**
+   * Workflow submission function. *
+   * called by the MA_DAG or a client to submit a set of problems *
+   */
+  wf_response_t submit_pb_set (in corba_pb_desc_seq_t seq_pb);
+
+   /**
+    * A submission function used to submit a set of problem to the MA
+    *
+    * @param pb_seq     sequence of problems
+    * @param reqCount   number of requests of the client. The request number is at least
+    *                   equal to sequence problem length but it can be greater if a problem
+    *                   has to be executed more than one time
+    * @param complete   indicates if the response is complete. The function return at the first problem
+    *                   that cannot be solved
+    * @param firstReqId the first request identifier to be used by the client
+    * @param seqReqId   an identifier to the submission (each sequence submission
+    *                   has a unique identifier)
+    */
+    response_seq_t
+    submit_pb_seq(in corba_pb_desc_seq_t pb_seq,
+                  in long reqCount,
+                  out boolean complete,
+                  out long firstReqId,
+                  out long seqReqId);
+#endif // HAVE_WORKFLOW
+
+  long insertData(in string key, in SeqString values);
+};
+
+#endif // _MASTER_AGENT_IDL_

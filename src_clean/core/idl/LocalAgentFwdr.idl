@@ -1,0 +1,33 @@
+/**
+ * @file LocalAgentFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description  
+ *
+ * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef LOCALAGENTFWDR_IDL
+#define LOCALAGENTFWDR_IDL
+
+#include "LocalAgent.idl"
+#include "AgentFwdr.idl"
+
+interface LocalAgentFwdr : LocalAgent {
+
+};
+
+interface LocalAgentForwarder : AgentForwarder {
+//  long bindParent(in string parentName,
+//                  in string objName)
+//    raises(UnknownObject);
+//  long disconnect(in string objName)
+//    raises(UnknownObject);
+//  long removeElement(in boolean recursive,in string objName)
+//    raises(UnknownObject);
+};
+
+#endif

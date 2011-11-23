@@ -1,0 +1,41 @@
+/**
+ * @file CltManFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description 
+ *
+ * @author Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+#ifndef CLTMANFWDR_IDL
+#define CLTMANFWDR_IDL
+
+#include "CltMan.idl"
+
+interface CltManFwdr : CltMan {
+
+};
+
+interface CltManForwarder {
+	long execNodeOnSed(in string node_id,
+										 in string dag_id,
+										 in string seDName,
+										 in unsigned long reqID,
+										 inout corba_estimation_t ev,
+										 in string objName)
+		raises(UnknownObject);
+
+  long execNode(in string node_id,
+								in string dag_id,
+								in string objName)
+		raises(UnknownObject);
+
+  string release(in string dag_id,
+								 in boolean successful,
+								 in string objName)
+		raises(UnknownObject);
+};
+
+#endif

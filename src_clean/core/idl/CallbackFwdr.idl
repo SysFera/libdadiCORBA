@@ -1,0 +1,34 @@
+/**
+ * @file callbackFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description
+ *
+ * @author Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+
+#ifndef CALLBACKFWDR_IDL
+#define CALLBACKFWDR_IDL
+
+#include "Callback.idl"
+#include "common_types.idl"
+
+interface CallbackFwdr : Callback {
+
+};
+
+interface CallbackForwarder {
+  long notifyResults(in string path, in corba_profile_t pb,
+										 in long reqID, in string objName)
+		raises(UnknownObject);
+  long solveResults(in string path, in corba_profile_t pb,
+										in long reqID, in long result,
+										in string objName)
+		raises(UnknownObject);
+};
+
+#endif

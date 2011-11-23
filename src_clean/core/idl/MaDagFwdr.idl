@@ -1,0 +1,50 @@
+/**
+ * @file MaDagFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description    
+ *
+ * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef MADAGFWDR_IDL
+#define MADAGFWDR_IDL
+
+#include "MaDag.idl"
+
+interface MaDagFwdr : MaDag {
+
+};
+
+interface MaDagForwarder {
+  long processDagWf(in corba_wf_desc_t dag_desc,
+										in string cltMgrRef,
+										in long wfReqId,
+										in string objName)
+      raises(MaDag::InvalidDag, MaDag::ServiceNotFound,
+						 MaDag::CommProblem, UnknownObject);
+
+  long processMultiDagWf(in corba_wf_desc_t dag_desc,
+												 in string cltMgrRef,
+                         in long wfReqId,
+                         in boolean release,
+												 in string objName)
+      raises(MaDag::InvalidDag, MaDag::ServiceNotFound,
+						 MaDag::CommProblem, UnknownObject);
+
+  long getWfReqId(in string objName);
+
+  void releaseMultiDag(in long wfReqId, in string objName)
+      raises(MaDag::InvalidRequest, UnknownObject);
+
+  void cancelDag(in long dagId, in string objName)
+      raises(MaDag::InvalidDag, UnknownObject);
+
+  void setPlatformType(in MaDag::pfmType_t pfmType, in string objName)
+		raises(UnknownObject);
+};
+
+#endif

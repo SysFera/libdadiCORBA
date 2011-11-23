@@ -1,0 +1,98 @@
+/**
+ * @file WfLogServiceFwdr.idl
+ *
+ * @brief  DIET forwarder IDL description    
+ *
+ * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef WFLOGSERVICEFWDR_IDL
+#define WFLOGSERVICEFWDR_IDL
+
+#include "WfLogService.idl"
+#include "common_types.idl"
+
+interface WfLogServiceFwdr : WfLogService {
+
+};
+
+interface WfLogServiceForwarder {
+
+  oneway void
+  initWorkflow(in string wfId, in string name, in string parentWfId, in string objName);
+
+  void
+  updateWorkflow(in string wfId, in string wfState, in string data, in string objName)
+		raises(UnknownObject);
+
+  void
+  createDag(in string dagId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  updateDag(in string dagId, in string wfId, in string dagState, in string data, in string objName)
+		raises(UnknownObject);
+  
+  void
+  createDagNode(in string dagNodeId, in string dagId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  createDagNodePort(in string dagNodePortId, in string portDirection,
+		    in string dagNodeId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  setInPortDependencies(in string dagNodePortId, in string dagNodeId, in string wfId,
+                        in string dependencies, in string objName)
+		raises(UnknownObject);
+  
+  void
+  createDagNodeLink(in string srcNodeId, in string srcWfId,
+		    in string destNodeId, in string destWfId, in string objName)
+		raises(UnknownObject);
+		    
+  void
+  createDagNodeData(in string dagNodeId, in string wfId,
+		    in string dagNodePortId, in string dataId, in string objName)
+		raises(UnknownObject);
+
+  void
+  createDataElements(in string dataId, in string elementIdList, in string objName)
+		raises(UnknownObject);
+
+  void
+  createSourceDataTree(in string sourceId, in string wfId, in string dataIdTree, in string objName)
+		raises(UnknownObject);
+
+  void
+  createSinkData(in string sinkId, in string wfId, in string dataId, in string objName)
+		raises(UnknownObject);
+
+  void
+  nodeIsReady(in string dagNodeId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  nodeIsStarting(in string dagNodeId, in string wfId, in string pbName, in string hostname, in string objName)
+		raises(UnknownObject);
+		    
+  void
+  nodeIsRunning(in string dagNodeId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  nodeIsDone(in string dagNodeId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+  void
+  nodeIsFailed(in string dagNodeId, in string wfId, in string objName)
+		raises(UnknownObject);
+
+};
+
+#endif

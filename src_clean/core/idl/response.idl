@@ -1,0 +1,131 @@
+/**
+ * @file response.idl
+ *
+ * @brief  DIET IDL types for the responses to requests    
+ *
+ * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef _RESPONSE_IDL_
+#define _RESPONSE_IDL_
+
+#include "common_types.idl"
+#include "SeD.idl"
+
+/**
+ * Full reference to a server
+ */
+
+struct corba_server_t {
+  string SeDName;
+  string hostName;
+  long   port;
+#ifdef HAVE_ALT_BATCH
+  // To add the following, SeDStructures.idl which contains shared structures
+  // between SeD and DIET_server.h has to be created
+  //diet_server_status_t serverType ; /* batch, seq, etc. */
+  long serverType ;
+
+  // Make client know he has to submit parallel or non-parallel
+  long parallel_flag ;
+#endif
+};
+
+
+/**
+ * Localization and transfer time of a parameter
+ */
+struct corba_data_loc_t {
+  string idNumber;
+  string hostName;
+  string locationID;
+  unsigned long bytes;
+  //corba_server_t loc;
+  //double         timeToMe;
+};
+typedef sequence <corba_data_loc_t> SeqDataLoc_t;
+
+
+/**
+ * The server estimation structure
+ */
+
+struct corba_server_estimation_t{
+  corba_server_t     loc;
+  corba_estimation_t estim;
+};
+
+typedef sequence <corba_server_estimation_t> SeqServerEstimation_t;
+
+
+/****************************************************************************/
+/* RESPONSE                                                                 */
+/****************************************************************************/
+/**
+ * The servers are sorted as follows:
+ *   the first part of the servers sequence consists of all servers where the
+ *   computation could be estimated,
+ *   whereas the second part consists of all the ones that provide only an
+ *   estimation of their free resources.
+ * Actually the servers are not sorted in the "servers" sequence itself :
+ *   it is far cheaper to maintain sorted a sequence of indexes, with an apart
+ *   long field that stores the number of servers where the computation could be
+ *   estimated (nbComp).
+ * Thus, for each i between 0 and nbComp, the computation on the server
+ *   servers[sortedServers[i]] was estimated and the result is stored in
+ *   servers[sortedServers[i]].perf().tComp
+ * For i between nbComp and servers.length(), free resources on the server
+ *   servers[sortedServers[i]] was estimated and the results are stored in
+ *   servers[sortedServers[i]].perf.feeCpu and freeMem
+ */
+
+struct corba_response_t {
+  unsigned long reqID;
+  long myID;
+  // The available servers
+  SeqServerEstimation_t servers;
+};
+
+#ifdef HAVE_WORKFLOW
+/*************************************************************************/
+/* for workflow support                                                  */
+/*************************************************************************/
+typedef sequence<corba_pb_desc_t> corba_pb_desc_seq_t;
+
+struct corba_extended_response_t {
+    corba_pb_desc_t       problem;
+    SeqServerEstimation_t servers;
+};
+
+typedef sequence<corba_extended_response_t> response_seq_t;
+
+struct node_response_t {
+    string node_id;
+    double node_priority;
+    corba_server_estimation_t server;
+};
+
+typedef sequence<node_response_t> dag_response_t;
+
+struct wf_node_response_t {
+  string node_id;
+  double node_priority;
+  corba_response_t response;
+};
+
+typedef sequence <wf_node_response_t> wfn_seq_resp_t;
+
+struct wf_response_t {
+  boolean complete;
+  long    idxError;
+  wfn_seq_resp_t wfn_seq_resp;
+};
+
+#endif // HAVE_WORKFLOW
+
+#endif // _RESPONSE_IDL_

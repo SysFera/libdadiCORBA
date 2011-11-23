@@ -1,0 +1,34 @@
+/**
+ * @file LocalAgent.idl
+ *
+ * @brief  DIET local agent IDL description 
+ *
+ * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENCE|
+ */
+
+
+#ifndef _LOCAL_AGENT_IDL_
+#define _LOCAL_AGENT_IDL_
+
+#include "Agent.idl"
+
+interface LocalAgent : Agent {
+
+  /**
+   * Message posting function:<br>
+   * This call is asynchronous. The request message REQ is kept
+   * in an internal list and processed as soon as possible.
+   */
+  oneway void getRequest(in corba_request_t req);
+
+//  /** Send an order for the agent to connect to a new parent */
+//  long bindParent(in string parentName);
+//  /** Send an order for the agent to disconnect from its parent */
+//  long disconnect();
+//  long removeElement(in boolean recursive);
+};
+
+#endif // _LOCAL_AGENT_IDL_
