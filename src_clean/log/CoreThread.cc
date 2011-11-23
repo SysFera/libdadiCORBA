@@ -25,7 +25,7 @@
 
 #include "CoreThread.hh"
 #include "LogTypes.hh"
-#include "LocalTime.hh"
+#include "utils/LocalTime.hh"
 #include "LogOptions.hh"
 #include <iostream>
 

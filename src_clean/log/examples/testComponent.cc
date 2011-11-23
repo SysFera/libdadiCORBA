@@ -33,7 +33,7 @@
 #include "ComponentList.hh"
 #include "FilterManagerInterface.hh"
 #include "TimeBuffer.hh"
-#include "LocalTime.hh"
+#include "utils/LocalTime.hh"
 #include "LogOptions.hh"
 
 //#include "LogComponentBase.hh"

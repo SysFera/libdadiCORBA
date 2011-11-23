@@ -65,7 +65,7 @@
 #include "StateManager.hh"
 #include "LogOptions.hh"
 #include "ReadConfig.hh"
-#include "LocalTime.hh"
+#include "utils/LocalTime.hh"
 #include "TimeBuffer.hh"
 
 // threads
