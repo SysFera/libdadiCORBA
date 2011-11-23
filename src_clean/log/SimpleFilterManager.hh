@@ -24,7 +24,7 @@
 #include "ToolList.hh"
 #include "ComponentList.hh"
 #include "FilterManagerInterface.hh"
-#include "FullLinkedList.hh"
+#include "utils/FullLinkedList.hh"
 
 /**
  * Define an internal datastructure
