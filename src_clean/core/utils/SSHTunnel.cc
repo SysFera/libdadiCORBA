@@ -99,6 +99,11 @@ SSHConnection::userKey() {
 
 SSHConnection::SSHConnection() {
   setSshPath("/usr/bin/ssh");
+// Init logger
+  mlogger = dadi::Logger::getLogger("org.dadicorba");
+  mlogger->setLevel(dadi::Message::PRIO_TRACE);
+  mcc = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  mlogger->setChannel(mcc);
 }
 
 SSHConnection::SSHConnection(const std::string &sshHost,
@@ -112,7 +117,7 @@ SSHConnection::SSHConnection(const std::string &sshHost,
   setSshKeyPath(keyPath);
   setSshPath(sshPath);
 // Init logger
-  mlogger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  mlogger = dadi::Logger::getLogger("org.dadicorba");
   mlogger->setLevel(dadi::Message::PRIO_TRACE);
   mcc = dadi::ChannelPtr(new dadi::ConsoleChannel);
   mlogger->setChannel(mcc);
