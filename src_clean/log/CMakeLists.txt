@@ -18,10 +18,16 @@ if (FWD_FOUND)
   message("founded")
 endif(FWD_FOUND)
 
+option(BUILD_SHARED_LIBS "Build libraries as shared libraries." ON)
 # OmniORB is mandatory:
 find_package(OmniORB)
 if (OMNIORB4_FOUND)
   add_definitions(-D__OMNIORB4__)
+  if(BUILD_SHARED_LIBS)
+    set(OMNIORB4_LIBRARIES ${OMNIORB4_LIBRARIES_sh})
+  else()
+    set(OMNIORB4_LIBRARIES ${OMNIORB4_LIBRARIES_st})
+  endif()
 else (OMNIORB4_FOUND)
   message("omniORB installation was not found. Please provide OMNIORB4_DIR:")
   message("  - through the GUI when working with ccmake, ")
@@ -57,9 +63,7 @@ add_executable(LogCentral LogCentral.cc)
 target_link_libraries(LogCentral
   ${FWD_LIBRARY}
   ${OMNIORB4_LIBRARIES}
-  pthread
   LogCommon
   ${DADI_LIBRARIES}
-  ${Boost_LIBRARIES}
   )
 install(TARGETS LogCentral DESTINATION ${BIN_INSTALL_DIR})
