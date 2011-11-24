@@ -12,6 +12,9 @@ set( CMAKE_MODULE_PATH ${LOGS_SOURCE_DIR}/Cmake )
 set( BIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin"
   CACHE INTERNAL "Directory where binary will be installed" )
 
+set( LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+  CACHE INTERNAL "Directory where libraries will be installed" )
+
 find_package(FWD)
 
 if (FWD_FOUND)
@@ -67,3 +70,4 @@ target_link_libraries(LogCentral
   ${DADI_LIBRARIES}
   )
 install(TARGETS LogCentral DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS LogCommon DESTINATION ${LIB_INSTALL_DIR})
