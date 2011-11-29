@@ -22,44 +22,102 @@
 #include "response.hh"
 #include "dadi/Logging/Logger.hh"
 
+/**
+ * @brief The corba forwarder class that defines all the methods that can pass throught the forwarder
+ * @class CorbaForwarder
+ */
 class CorbaForwarder : public POA_Forwarder,
-                      public PortableServer::RefCountServantBase {
+                       public PortableServer::RefCountServantBase {
 public:
+/**
+ * @brief Constructor
+ * @param name: Name of the forwarder
+ */
   explicit CorbaForwarder(const std::string& name);
 
-//#ifdef CORBA_DIET
   /* DIET object factory methods. */
+
+/**
+ * @brief To get an agent object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   Agent_ptr
   getAgent(const char* name);
 
+/**
+ * @brief To get a client object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   Callback_ptr
   getCallback(const char* name);
 
+/**
+ * @brief To get a local agent object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   LocalAgent_ptr
   getLocalAgent(const char* name);
 
+/**
+ * @brief To get a master agent object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   MasterAgent_ptr
   getMasterAgent(const char* name);
 
+/**
+ * @brief To get a sed object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   SeD_ptr
   getSeD(const char* name);
 
+/**
+ * @brief To get a dagda object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   Dagda_ptr
   getDagda(const char* name);
 
 #ifdef HAVE_WORKFLOW
+/**
+ * @brief To get a workflow manager object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   CltMan_ptr
   getCltMan(const char* name);
 
+/**
+ * @brief To get a MA Dag object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   MaDag_ptr
   getMaDag(const char* name);
 
+/**
+ * @brief To get a workflow log service object
+ * @param name: The name of the object to get
+ * @return A pointer to the object
+ */
   WfLogService_ptr
   getWfLogService(const char* name);
 #endif  // WORKFLOW
-//#endif  //CORBA_DIET
 
   /* Common methods implementations. */
+
+/**
+ * @brief To ping a CORBA object
+ * @param The object to ping
+ * @return A long value
+ */
   ::CORBA::Long
   ping(const char* objName);
 
