@@ -25,23 +25,13 @@
 
 /* Default constructor. */
 Configuration::Configuration() {
-  pgName = "unknown";
 }
 
-/* Standard constructor. Get the program name as parameter. */
-Configuration::Configuration(const std::string &pgName) {
-  this->pgName = pgName;
-}
 
 /* Generic program configuration accessors. */
 const std::string &
 Configuration::getConfigFile() const {
   return configFile;
-}
-
-const std::string &
-Configuration::getPgName() const {
-  return pgName;
 }
 
 void

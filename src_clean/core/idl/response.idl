@@ -6,8 +6,8 @@
  * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
  *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 
@@ -18,9 +18,8 @@
 #include "SeD.idl"
 
 /**
- * Full reference to a server
+ * @brief Full reference to a server
  */
-
 struct corba_server_t {
   string SeDName;
   string hostName;
@@ -38,7 +37,7 @@ struct corba_server_t {
 
 
 /**
- * Localization and transfer time of a parameter
+ * @brief Localization and transfer time of a parameter
  */
 struct corba_data_loc_t {
   string idNumber;
@@ -48,18 +47,23 @@ struct corba_data_loc_t {
   //corba_server_t loc;
   //double         timeToMe;
 };
+/**
+ * @brief A set of corba data
+ */
 typedef sequence <corba_data_loc_t> SeqDataLoc_t;
 
 
 /**
- * The server estimation structure
+ * @brief The server estimation structure
  */
-
 struct corba_server_estimation_t{
   corba_server_t     loc;
   corba_estimation_t estim;
 };
 
+/**
+ * @brief A set of estimation server
+ */
 typedef sequence <corba_server_estimation_t> SeqServerEstimation_t;
 
 

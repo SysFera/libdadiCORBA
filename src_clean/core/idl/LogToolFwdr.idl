@@ -1,25 +1,13 @@
-/****************************************************************************/
-/* Defines the toolside interfaces needed by the new LogService             */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.1  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
-
+/**
+ * @file LogToolFwdr.idl
+ * @brief Defines the toolside interfaces needed by the new LogService 
+ *                                                              
+ *  @author Georg Hoesch (hoesch@in.tum.de)                         
+ *          Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *  
+ * @section License                                                            
+ * |LICENSE|                                                    
+ */
 #ifndef _LOGTOOLFWDR_IDL_
 #define _LOGTOOLFWDR_IDL_
 
@@ -27,34 +15,19 @@
 
 #include "LogTool.idl"
 
-/**
- * This file defines everything needed to attach a tool
- * to the core
- */
-
-
-/**
- * Errorlevel constants for connectTool, disconnectTool,
- * addFilter and removeFilter
- */
 
 interface ToolMsgReceiverFwdr : ToolMsgReceiver {
 
 };
 
 /**
- * define callback functions the tool has to implement so 
- * that the monitor can actively forward messages to the
- * tool. Active MessagePulling from the tool is not possible
- * in the moment.
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref ToolMsgReceiverIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
  */
 interface ToolMsgReceiverForwarder
 {
-  /**
-   * Receive a buffer of messages. The messages are ordered in the
-   * sequence. Older messages will be at the beginning of the sequence,
-   * younger(newer) messages at the end. 
-   */
   oneway void
   sendMsg(in log_msg_buf_t msgBuf, in string objName);
 };
@@ -64,74 +37,25 @@ interface LogCentralToolFwdr : LogCentralTool{
 };
 
 /**
- * methods offered by the core to allow tools to attach
- * and configure filters
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref LogCentralToolIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
  */
 interface LogCentralToolForwarder
 {
-
-  /**
-   * Connect a Tool with its toolName, which must be unique among all
-   * tools. The return value indicates the success of the connection.
-   * If ALREADYEXISTS is returned, the tool could not be attached, as
-   * the specified toolName already exists. In this case the tool must
-   * reconnect with another name before specifying any filters. If the 
-   * tool sends an empty toolName, the LogCentral will provide a unique
-   * toolName and pass it back to the tool.
-   */
   short
   connectTool(inout string toolName, in string msgReceiver, in string objName);
-
-  /**
-   * Disconnects a connected tool from the monitor. No further 
-   * filterconfigurations should be sent after this call. The 
-   * toolMsgReceiver will not be used by the monitor any more 
-   * after this call. Returns NOTCONNECTED if the calling tool
-   * was not connected.
-   */
   short
   disconnectTool(in string toolName, in string objName);
-
-  /**
-   * Returns a list of possible tags. This is just a convenience
-   * functions and returns the values that are specified in a
-   * configuration file. If the file is not up to date, the 
-   * application may generate more tags than defined in this
-   * list.
-   */
   tag_list_t
   getDefinedTags(in string objName);
-
-  /**
-   * Returns a list of actually connected Components. This is just
-   * a convenience function, as the whole state of the system will
-   * be sent to the tool right after connection (in the form of
-   * messages)
-   */  
   component_list_t
   getDefinedComponents(in string objName);
-
-  /**
-   * Create a filter for this tool on the monitor. Messages matching
-   * this filter will be forwarded to the tool. The filter will be
-   * identified by its name, which is a part of filter_t. A tool
-   * can have as much filters as it wants. Returns ALREADYEXISTS if
-   * another filter with this name is already registered.
-   */
   short
   addFilter(in string toolName, in filter_t filter, in string objName);
-
-  /**
-   * Removes a existing filter from the tools filterList. The filter
-   * will be identified by its name in the filter_t. If the specified
-   * filter does not exist, NOTEXISTS is returned.
-   */
   short
   removeFilter(in string toolName, in string filterName, in string objName);
-
-  /**
-   * Removes all defined filters.
-   */
   short
   flushAllFilters(in string toolName, in string objName);
 };

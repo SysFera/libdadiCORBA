@@ -6,7 +6,7 @@
  * @author Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 #ifndef CLTMANFWDR_IDL
@@ -18,6 +18,12 @@ interface CltManFwdr : CltMan {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref CltManIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface CltManForwarder {
 	long execNodeOnSed(in string node_id,
 										 in string dag_id,

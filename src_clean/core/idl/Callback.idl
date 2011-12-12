@@ -6,7 +6,7 @@
  * @author Christophe PERA   (christophe.pera@ens-lyon.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 
@@ -16,28 +16,36 @@
 
 #include "common_types.idl"
 
+/**
+ * @brief The client interface
+ * @section CallbackIDL
+ */
 interface Callback {
-
-  /*--------------------------------------------------------------*/
-  /* Dummy function returning its first parameter.                */
-  /* Allows to check if the server is alive.                      */
-  /*--------------------------------------------------------------*/
-
+  
+  /**
+   * @brief Dummy function returning its first parameter.                
+   * Allows to check if the server is alive.                      
+   */
   long ping();
   
-  /*--------------------------------------------------------------*/
-  /* resultsNotify function:                                      */
-  /*   announce end of solve and results available              */
-  /*--------------------------------------------------------------*/
-
+  /**
+   * @brief resultsNotify function:                                      
+   *   announce end of solve and results available
+   * @param path
+   * @param pb
+   * @param reqID
+   */
   long notifyResults(in string path, in corba_profile_t pb, in long reqID);
 
-  /*--------------------------------------------------------------*/
-  /* solveResults function:                                        */
-  /*   put results of solve operation on client...              */
-  /*--------------------------------------------------------------*/
-
-  long solveResults(in string path, in corba_profile_t pb, in long reqID,
+  /**
+   * @brief solveResults function:                                       
+   *   put results of solve operation on client...              
+   * @param pb: The problem profile
+   * @param reqID: The request ID
+   * @param result: The result of the solve call
+   * @return An error code
+   */
+  long solveResults(in corba_profile_t pb, in long reqID,
 		    in long result);
 };
 

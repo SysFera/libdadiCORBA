@@ -6,7 +6,7 @@
  * @author Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 #ifndef _CLTMAN_IDL_
@@ -14,8 +14,14 @@
 
 #include "response.idl"
 
+/**
+ * @brief The workflow interface
+ * @section CltManIDL
+ */
 interface CltMan {
-
+  /**
+   * @brief The exception type for DAG error
+   */
   exception DagNotFound {
     string dagId;
   };
@@ -29,6 +35,7 @@ interface CltMan {
    * @param ev  the estimation vector (from previous submit request used to
    * choose the SeD) - this param is inout to avoid const as the pointer is
    * stored in the Node object
+   * @return An error code
    */
   long
   execNodeOnSed(in string node_id,
@@ -42,6 +49,7 @@ interface CltMan {
    * (delegates SeD choice to default scheduler)
    * @param node_id node identifier (string)
    * @param dag_id  dag identifier (string)
+   * @return An error code
    */
   long
   execNode(in string node_id,
@@ -56,6 +64,9 @@ interface CltMan {
   string
   release(in string dag_id, in boolean successful);
 
+  /** 
+   * @brief Used to test if this dag is alive. 
+   */
   long ping();
 };
 

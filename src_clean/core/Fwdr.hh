@@ -5,7 +5,7 @@
 *
 * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
 *
-* @section Licence
+* @section License
 *   |LICENSE|
 */
 
@@ -16,28 +16,50 @@
 #include <string>
 #include "utils/Options.hh"
 
+/**
+ * @brief Class that handle the configuration for the forwarders
+ * @class FwrdConfig
+ */
 class FwrdConfig : public Configuration {
 public:
-  explicit FwrdConfig(const std::string& pgName);
+/**
+ * @brief Constructor
+ */
+  FwrdConfig();
 
+/**
+ * @brief To get the name
+ */
   const std::string&
   getName() const;
-
+/**
+ * @brief To get the peer name
+ */
   const std::string&
   getPeerName() const;
-
+/**
+ * @brief To get the IOR
+ */
   const std::string&
   getPeerIOR() const;
-
+/**
+ * @brief To get the ssh host
+ */
   const std::string&
   getSshHost() const;
-
+/**
+ * @brief To get the remote hostname
+ */
   const std::string&
   getRemoteHost() const;
-
+/**
+ * @brief To get the remote port to where sending
+ */
   const std::string&
   getRemotePortTo() const;
-
+/**
+ * @brief To get the remote port from where receiving
+ */
   const std::string&
   getRemotePortFrom() const;
 

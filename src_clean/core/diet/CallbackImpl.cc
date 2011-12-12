@@ -23,9 +23,8 @@ CORBA::Long CallbackFwdrImpl::notifyResults(const char * path,
   return mforwarder->notifyResults(path, pb, reqID, mobjName);
 }
 
-CORBA::Long CallbackFwdrImpl::solveResults(const char * path,
-                                           const corba_profile_t& pb,
+CORBA::Long CallbackFwdrImpl::solveResults(const corba_profile_t& pb,
                                            CORBA::Long reqID,
                                            CORBA::Long solve_res) {
-  return mforwarder->solveResults(path, pb, reqID, solve_res, mobjName);
+  return mforwarder->solveResults(pb, reqID, solve_res, mobjName);
 }

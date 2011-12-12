@@ -6,8 +6,8 @@
  * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
  *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 
@@ -16,54 +16,92 @@
 
 #include "common_types.idl"
 
+/**
+ * @brief The SeD interface
+ * @section SeDIDL
+ */
 interface SeD {
 
-  /** Let check if this server is alive. */
+  /** 
+   * @brief Let check if this server is alive. 
+   * @return An error code
+   */
   long ping();
 
-  /** Send an order for the SeD to connect to a new parent */
+  /** 
+   * @brief Send an order for the SeD to connect to a new parent 
+   * @param parentName: The name of the parent of the SeD
+   * @return An error code
+   */
   long bindParent(in string parentName);
-  /** Send an order for the SeD to disconnect from its parent */
+  /** 
+   * @brief Send an order for the SeD to disconnect from its parent 
+   * @return An error code
+   */
   long disconnect();
-  /** Send an order for the SeD to kill itself */
+  /**
+   * @brief Send an order for the SeD to kill itself 
+   * @return An error code
+   */
   long removeElement();
 
-  /** Message posting function: the request is proceeded immediately. */
+  /** 
+   * @brief Message posting function: the request is proceeded immediately. 
+   * @param The request to set in the list
+   */
   oneway void getRequest(in corba_request_t req);
 
   /**
-   * Re-evaluate the total computation time and commnunication
+   * @brief Re-evaluate the total computation time and commnunication
    * for persistent data (since it is not possible to re-evaluate
    * the communication time between the client and the server).
    * Return non NULL if it was impossible to evaluate.
+   * @param estimation: An estimation vector
+   * @param pb: The description of the problem
+   * @return An error code
    */
   long checkContract(inout corba_estimation_t estimation,
 		     in corba_pb_desc_t pb);
 
- /** update TIME_SINCE_LAST_SOLVE before client sends data */
+  /**
+   * @brief Update TIME_SINCE_LAST_SOLVE before client sends data 
+   */
   void updateTimeSinceLastSolve() ;
 
-  /** Solve function: all arguments are inout for "const" reasons. */
+  /**
+   * @brief Solve function: all arguments are inout for "const" reasons. 
+   * @param path: TODO
+   * @param pb: The profile of the problem
+   * @return An error code
+   */
   long solve(in string path, inout corba_profile_t pb);
 
-  /*--------------------------------------------------------------*/
-  /* asyncSolve function:                                         */
-  /*   all arguments are in for asynchronous reasons              */
-  /*   We can use persistent IOR rather callback ref in futur which */
-  /*   will allow fault tolerance on if client dies               */
-  /*--------------------------------------------------------------*/
+
+  /**
+   * @brief asyncSolve function:
+   *   all arguments are in for asynchronous reasons              
+   *   We can use persistent IOR rather callback ref in futur which 
+   *   will allow fault tolerance on if client dies               
+   * @param path: TODO
+   * @param pb: The profile of the problem
+   * @param volatileclientPtr: TODO
+   */
 
   oneway void solveAsync(in string path, in corba_profile_t pb,
                       in string volatileclientPtr);
 
 // modif bisnard_logs_1
-  /** get the DataMgr ID **/
+  /**
+  /**
+   * @brief get the DataMgr ID 
+   * @return The data manager ID
+   */
   string getDataMgrID();
 // end modif bisnard_logs_1
 
 
   /**
-   * get the list of available profiles.
+   * @brief get the list of available profiles.
    */
   SeqCorbaProfileDesc_t getSeDProfiles(out long length);
 

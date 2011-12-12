@@ -5,8 +5,8 @@
  *
  * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 #ifndef _MASTER_AGENT_IDL_
@@ -15,76 +15,138 @@
 #include "Agent.idl"
 #include "Dagda.idl"
 
+/**
+ * @brief The master agent interface
+ * @section MasterAgentIDL
+ */
 interface MasterAgent : Agent {
 
-  /** Submission function: called by the clients to submit a problem. */
+  /**
+   * @brief Submission function: called by the clients to submit a problem. 
+   * @param pb_profile: The profile of the problem
+   * @param maxServers: The max number of server
+   * @return An error code
+   */
   corba_response_t submit(in corba_pb_desc_t pb_profile,
 			  in unsigned long maxServers);
 
-  /** get number of the current session */
+  /** 
+   * @brief Get number of the current session 
+   * @return A session num
+   */
   long get_session_num();
 
-  /** get id of the data :  aggregation of numsession and numdata */
+  /**
+   * @brief get id of the data :  aggregation of numsession and numdata 
+   * @return The id of the data
+   */
   string get_data_id();
 
-  /** look up of data identified by id */
+  /** 
+   * @brief look up of data identified by id 
+   * @param id: The id of the data
+   * @return TODO
+   */
   unsigned long dataLookUp(in string id);
 
-  /** get data descriptor */
+  /** 
+   * @brief get data descriptor 
+   * @param argID: ID of the data
+   * @return TODO
+   */
   corba_data_desc_t get_data_arg(in string argID) raises(Dagda::DataNotFound);
 
   /**
-   * invoked by client : removal from the platform of the data identified by argID
+   * @brief Invoked by client : removal from the platform of the data identified by argID
+   * @param argID: ID of the data
+   * @return An error code
    */
   long diet_free_pdata(in string argID);
 
   /**
-   * get the list of Profile available.
+   * @brief Get the list of Profile available.
+   * @param length: TODO
+   * @return TODO
    */
   SeqCorbaProfileDesc_t getProfiles(out long length);
 
 #ifdef HAVE_MULTI_MA
 
-  /** MAs federation management */
+  /**
+   * @brief MAs federation management 
+   * @param masterAgentName: The name of the MA
+   * @param myName: TODO
+   */
   boolean handShake(in string masterAgentName, in string myName);
 
-  /** returns the address of the MA's bind service */
+  /** 
+   * @brief Returns the address of the MA's bind service 
+   * @return The address of the bind
+   */
   string getBindName();
 
   /**
-   * send a new request to the MA.
+   * @brief Send a new request to the MA.
+   * @param masterAgentName: The name of the MA
+   * @param myName: TODO
+   * @param request: The request submitted
    */
   oneway void searchService(in string masterAgentName,
 			    in string myName,
 			    in corba_request_t request) ;
 
-  /** ask to the MA to stop the flooding */
+  /** 
+   * @brief Ask to the MA to stop the flooding 
+   * @param reqId: TODO
+   * @param senderId: TODO
+   */
   oneway void stopFlooding(in long reqId, in string senderId) ;
 
-  /** response which saids that the service is not found and a new step
-      of flooding can be achive */
+  /** 
+   * @brief Response which saids that the service is not found and a new step
+   *    of flooding can be achive 
+   * @param reqId: TODO
+   * @param senderId: TODO
+   */
   oneway void serviceNotFound(in long reqId, in string senderId) ;
 
-  /** launchs a new step of flooding */
+  /** 
+   * @brief Launchs a new step of flooding 
+   * @param reqId: TODO
+   * @param senderId: TODO
+   */
   oneway void newFlood(in long reqId, in string senderId) ;
 
-  /** response which saids that no new server can be found via this MA. */
+  /** 
+   * @brief Response which saids that no new server can be found via this MA. 
+   * @param reqId: TODO
+   * @param senderId: TODO
+   */
   oneway void floodedArea(in long reqId, in string senderId) ;
 
-  /** response which saids that the MA was already contacted for this
-      request. */
+  /**
+   * @brief response which saids that the MA was already contacted for this
+      request. 
+   * @param reqId: TODO
+   * @param senderId: TODO
+   */
   oneway void alreadyContacted(in long reqId,
 			       in string senderId) ;
 
-  /** response which saids that some servers was found. */
+  /** 
+   * @brief Response which saids that some servers was found. 
+   * @param reqId: TODO
+   * @param decision: TODO
+   */
   oneway void serviceFound(in long reqId, in corba_response_t decision) ;
 
 #endif // HAVE_MULTI_MA
 
 #ifdef HAVE_WORKFLOW
   /**
-   * Workflow submission function. *
+   * @brief Workflow submission function. *
    * called by the MA_DAG or a client to submit a set of problems *
+   * @param seq_pb:
    */
   wf_response_t submit_pb_set (in corba_pb_desc_seq_t seq_pb);
 
@@ -100,6 +162,7 @@ interface MasterAgent : Agent {
     * @param firstReqId the first request identifier to be used by the client
     * @param seqReqId   an identifier to the submission (each sequence submission
     *                   has a unique identifier)
+    * @return TODO
     */
     response_seq_t
     submit_pb_seq(in corba_pb_desc_seq_t pb_seq,
@@ -108,7 +171,12 @@ interface MasterAgent : Agent {
                   out long firstReqId,
                   out long seqReqId);
 #endif // HAVE_WORKFLOW
-
+  /**
+   * @brief TODO
+   * @param key: TODO
+   * @param values: TODO
+   * @return TODO
+   */
   long insertData(in string key, in SeqString values);
 };
 

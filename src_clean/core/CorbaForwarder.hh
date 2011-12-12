@@ -23,8 +23,10 @@
 #include "dadi/Logging/Logger.hh"
 
 /**
- * @brief The corba forwarder class that defines all the methods that can pass throught the forwarder
+ * @brief The corba forwarder class that defines all the methods that can pass
+ * throught the forwarder
  * @class CorbaForwarder
+ * For non documented methods, please see the \ref ForwarderIDL and its parents idl interfaces.
  */
 class CorbaForwarder : public POA_Forwarder,
                        public PortableServer::RefCountServantBase {
@@ -37,107 +39,47 @@ public:
 
   /* DIET object factory methods. */
 
-/**
- * @brief To get an agent object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   Agent_ptr
   getAgent(const char* name);
-
-/**
- * @brief To get a client object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   Callback_ptr
   getCallback(const char* name);
-
-/**
- * @brief To get a local agent object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   LocalAgent_ptr
   getLocalAgent(const char* name);
-
-/**
- * @brief To get a master agent object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   MasterAgent_ptr
   getMasterAgent(const char* name);
-
-/**
- * @brief To get a sed object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   SeD_ptr
   getSeD(const char* name);
-
-/**
- * @brief To get a dagda object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   Dagda_ptr
   getDagda(const char* name);
 
 #ifdef HAVE_WORKFLOW
-/**
- * @brief To get a workflow manager object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   CltMan_ptr
   getCltMan(const char* name);
-
-/**
- * @brief To get a MA Dag object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   MaDag_ptr
   getMaDag(const char* name);
-
-/**
- * @brief To get a workflow log service object
- * @param name: The name of the object to get
- * @return A pointer to the object
- */
   WfLogService_ptr
   getWfLogService(const char* name);
 #endif  // WORKFLOW
 
   /* Common methods implementations. */
-
-/**
- * @brief To ping a CORBA object
- * @param The object to ping
- * @return A long value
- */
   ::CORBA::Long
   ping(const char* objName);
-
   void
   getRequest(const ::corba_request_t& req, const char* objName);
-
   char*
   getHostname(const char* objName);
-
   ::CORBA::Long
   bindParent(const char* parentName, const char* objName);
-
   ::CORBA::Long
   disconnect(const char* objName);
-
   ::CORBA::Long
   removeElement(::CORBA::Boolean recursive, const char* objName);
 
-  /* To determine if the call is from another forwarder and
+  /*
+   * @brief To determine if the call is from another forwarder and
    * modify the object name.
+   * @param objName: The name of the object to check if local
+   * @return If the call is remote = true
    */
   static bool
   remoteCall(std::string& objName);
@@ -145,56 +87,64 @@ public:
   /* CORBA remote management implementation. */
   void
   bind(const char* objName, const char* ior);
-
   void
   unbind(const char* objName);
-
   SeqString*
   getBindings(const char* ctxt);
-
-  /* Connect the peer forwarder. */
   void
   connectPeer(const char* ior, const char* host, const ::CORBA::Long port);
-
-  /* Set this forwarder peer object (not CORBA). */
-  void
-  setPeer(Forwarder_ptr peer);
-
-  Forwarder_var
-  getPeer();
-
   char*
   getIOR();
-
+  char*
+  getName();
+  char*
+  getPeerName();
+  char*
+  getHost();
+  char*
+  getPeerHost();
+  /**
+   * @brief Set this forwarder peer object (not CORBA).
+   * @param peer: The peer to set
+   */
+  void
+  setPeer(Forwarder_ptr peer);
+  /**
+   * @brief To get the corresponding peer
+   * @return The corresponding peer
+   */
+  Forwarder_var
+  getPeer();
   /* Object caches management functions. */
+/**
+ * @brief To remove the object name from the cache
+ * @param name: The object to remove from the cache
+ */
   void
   removeObjectFromCache(const std::string& name);
-
+/**
+ * @brief To clean the caches
+ */
   void
   cleanCaches();
 
-  char*
-  getName();
-
-  char*
-  getPeerName();
-
-  char*
-  getHost();
-
-  char*
-  getPeerHost();
-
-  SeqString*
-  routeTree();
-
   /* Utility function. */
+
+/**
+ * @brief To get the other forwarders on this domain
+ * @return A set of forwarder name
+ */
   std::list<std::string>
   otherForwarders() const;
 
 //#ifdef CORBA_DIET
 
   /* AgentFwdr implementation. */
+
+/**
+ * @brief To subscribe to an agent
+ * @param
+ */
   ::CORBA::Long
   agentSubscribe(const char* agentName,
                  const char* hostname,
@@ -236,8 +186,7 @@ public:
                 const char* objName);
 
   ::CORBA::Long
-  solveResults(const char* path,
-               const ::corba_profile_t& pb,
+  solveResults(const ::corba_profile_t& pb,
                ::CORBA::Long reqID,
                ::CORBA::Long result,
                const char* objName);
@@ -675,119 +624,85 @@ public:
                     const char* objName);
   void removeTagFilter(const ::tag_list_t& tagList,
                        const char* objName);
-  /**
-   * Disconnects a connected tool from the monitor. No further
-   * filterconfigurations should be sent after this call. The
-   * toolMsgReceiver will not be used by the monitor any more
-   * after this call. Returns NOTCONNECTED if the calling tool
-   * was not connected.
-   */
   short
   disconnectTool(const char* toolName, const char* objName);
-
-  /**
-   * Returns a list of possible tags. This is just a convenience
-   * functions and returns the values that are specified in a
-   * configuration file. If the file is not up to date, the
-   * application may generate more tags than defined in this
-   * list.
-   */
   tag_list_t*
   getDefinedTags(const char* objName);
-
-  /**
-   * Returns a list of actually connected Components. This is just
-   * a convenience function, as the whole state of the system will
-   * be sent to the tool right after connection (in the form of
-   * messages)
-   */
   component_list_t*
   getDefinedComponents(const char*  objName);
-
-
-  /**
-   * Create a filter for this tool on the monitor. Messages matching
-   * this filter will be forwarded to the tool. The filter will be
-   * identified by its name, which is a part of filter_t. A tool
-   * can have as much filters as it wants. Returns ALREADYEXISTS if
-   * another filter with this name is already registered.
-   */
   short
   addFilter(const char* toolName, const filter_t& filter, const char* objName);
-
-
   void
   sendMsg(const log_msg_buf_t& msgBuf, const char*  objName);
-
-  /**
-   * Connect a Tool with its toolName, which must be unique among all
-   * tools. The return value indicates the success of the connection.
-   * If ALREADYEXISTS is returned, the tool could not be attached, as
-   * the specified toolName already exists. In this case the tool must
-   * reconnect with another name before specifying any filters. If the
-   * tool sends an empty toolName, the LogCentral will provide a unique
-   * toolName and pass it back to the tool.
-   */
   short
   connectTool(char*& toolName, const char* msgReceiver,  const char* objName);
-
   short
   flushAllFilters(const char* toolName, const char* objName);
-
   short
   removeFilter(const char* toolName,
                const char* filterName,
                const char* objName);
-
   short connectComponent(char*&, const char*, const char*, const char*,
                          const log_time_t&, tag_list_t&, const char*);
-
-
   short
   disconnectComponent(const char* componentName,
                       const char* message,
                       const char* objName);
-
-
   void
   sendBuffer(const log_msg_buf_t &buffer,
              const char* objName);
-
-
   void
   synchronize(const char* componentName,
               const log_time_t& componentTime,
               const char* objName);
-
 //#endif
-
 private:
-  /* When a new forwarder object is created, we cache it.
+  /**
+   * @brief When a new forwarder object is created, we cache it.
    * Because this kind of object contains only the object
    * name and a reference to this forwarder, there is no
    * risk to cache it, even if the object is restarted or
    * disappear.
    */
   std::map<std::string, ::CORBA::Object_ptr> mobjectCache;
-  /* We also maintain a list of activated servant objects. */
+  /**
+   * @brief We also maintain a list of activated servant objects.
+   */
   std::map<std::string, PortableServer::ServantBase*> mservants;
 
   ::CORBA::Object_ptr
   getObjectCache(const std::string& name);
 
-  /* The forwarder associated to this one. */
+  /**
+   * @brief The forwarder associated to this one.
+   */
   Forwarder_var mpeer;
   /* Mutexes */
+/**
+ * @brief Mutex to handle the peer
+ */
   omni_mutex mpeerMutex;   // To wait for the peer initialization
+/**
+ * @brief Mutex to handle the cache
+ */
   omni_mutex mcachesMutex;  // Protect access to caches
 
-//  std::string mpeerName; // Commented while cleaning code, remove if really uselless
+/**
+ * @brief Forwarder name
+ */
   std::string mname;
+/**
+ * @brief Forwarder machine hostname
+ */
   std::string mhost;
 
-// Logger
+/**
+ * @brief Logger
+ */
   dadi::LoggerPtr mlogger;
-// Channel for logger
+/**
+ * @brief Channel for logger
+ */
   dadi::ChannelPtr mcc;
 };
 

@@ -6,7 +6,7 @@
  * @author  Gael Le Mahec (lemahec@clermont.in2p3.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 
@@ -19,6 +19,12 @@ interface DagdaFwdr : Dagda {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref DagdaIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface DagdaForwarder {
   boolean lclIsDataPresent(in string dataID,
 													 in string objName)

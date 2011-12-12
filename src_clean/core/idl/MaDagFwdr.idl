@@ -5,8 +5,8 @@
  *
  * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 
@@ -19,6 +19,12 @@ interface MaDagFwdr : MaDag {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref MaDagIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface MaDagForwarder {
   long processDagWf(in corba_wf_desc_t dag_desc,
 										in string cltMgrRef,

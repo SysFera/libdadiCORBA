@@ -1,3 +1,13 @@
+/**
+ * @file commonLogTypes.idl
+ * @brief DIET IDL types for SeD registration and client request (init steps)     
+ *                                                                          
+ *  @author                                                             
+ *    Philippe COMBES (Philippe.Combes@ens-lyon.fr)                       
+ *    Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)             
+ *                                                                          
+ * |LICENSE|
+ */
 
 
 #ifndef _COMMON_TYPES_IDL_

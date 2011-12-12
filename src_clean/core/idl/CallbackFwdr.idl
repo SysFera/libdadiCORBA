@@ -6,7 +6,7 @@
  * @author Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 
@@ -21,11 +21,17 @@ interface CallbackFwdr : Callback {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref CallbackIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface CallbackForwarder {
   long notifyResults(in string path, in corba_profile_t pb,
 										 in long reqID, in string objName)
 		raises(UnknownObject);
-  long solveResults(in string path, in corba_profile_t pb,
+  long solveResults(in corba_profile_t pb,
 										in long reqID, in long result,
 										in string objName)
 		raises(UnknownObject);

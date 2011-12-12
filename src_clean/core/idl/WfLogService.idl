@@ -5,67 +5,172 @@
  *
  * @author  Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 #ifndef _WFLOGSERVICE_IDL_
 #define _WFLOGSERVICE_IDL_
 
+/**
+ * @brief The workflow interface for log service
+ * @section WfLogServiceIDL
+ */
 interface WfLogService {
-
+  /**
+   * @brief To init the workflow
+   * @param wfId: THe id of the workflow
+   * @param name: The name of the workflow
+   * @param parentWfId: The id of the parent workflow
+   */
   oneway void
   initWorkflow(in string wfId, in string name, in string parentWfId);
 
+  /**
+   * @brief To update the workflow
+   * @param wfId: The id of the workflow
+   * @param wfState: TODO
+   * @param data: TODO
+   */
   void
   updateWorkflow(in string wfId, in string wfState, in string data);
 
+  /**
+   * @brief To create a dag
+   * @param dagId: The id of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   createDag(in string dagId, in string wfId);
 
+  /**
+   * @brief To update the dag
+   * @param dagId: The id of the dag
+   * @param wfId: The id of the workflow
+   * @param dagState: TODO
+   * @param data: TODO
+   */
   void
   updateDag(in string dagId, in string wfId, in string dagState, in string data);
   
+  /**
+   * @brief To create a node in a dag
+   * @param dagNodeId: The id of the node
+   * @param dagId: The id of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   createDagNode(in string dagNodeId, in string dagId, in string wfId);
 
+  /**
+   * @brief To create a port in a node in a dag
+   * @param dagNodePortId: The id of the port node in the dag
+   * @param: portDirection: The direction of the port
+   * @param dagId: The id of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   createDagNodePort(in string dagNodePortId, in string portDirection,
 		    in string dagNodeId, in string wfId);
 
+  /**
+   * @brief To set the depencies for input on a port
+   * @param dagNodePortId: The id of the port node in the dag
+   * @param dagId: The id of the dag
+   * @param wfId: The id of the workflow
+   * @param dependencies: TODO
+   */
   void
   setInPortDependencies(in string dagNodePortId, in string dagNodeId, in string wfId,
                         in string dependencies);
   
+  /**
+   * @brief TODO
+   * @param srcNodeId: The id of the source node
+   * @param srcWfId: The id of the source workflow
+   * @param destNodeId: The id of the destination node
+   * @param destWfId: The id of the destination workflow
+   */
   void
   createDagNodeLink(in string srcNodeId, in string srcWfId,
 		    in string destNodeId, in string destWfId);
 		    
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   * @param dagNodePortId: The id of the port node in the dag
+   * @param dataId: The id of the data
+   */
   void
   createDagNodeData(in string dagNodeId, in string wfId,
 		    in string dagNodePortId, in string dataId);
 
+  /**
+   * @brief TODO
+   * @param dataId: The id of the data
+   * @param elementIdList: TODO
+   */
   void
   createDataElements(in string dataId, in string elementIdList);
 
+  /**
+   * @brief TODO
+   * @param sourceId: The id of the source
+   * @param wfId: The id of the workflow
+   * @param dataIdTree: The id of the tree of data
+   */
   void
   createSourceDataTree(in string sourceId, in string wfId, in string dataIdTree);
 
+  /**
+   * @brief TODO
+   * @param sinkId: TODO
+   * @param wfId: The id of the workflow
+   * @param dataId: The id of the data
+   */
   void
   createSinkData(in string sinkId, in string wfId, in string dataId);
 
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   nodeIsReady(in string dagNodeId, in string wfId);
 
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   * @param pbName: TODO
+   * @param hostname: TODO
+   */
   void
   nodeIsStarting(in string dagNodeId, in string wfId, in string pbName, in string hostname);
 		    
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   nodeIsRunning(in string dagNodeId, in string wfId);
 
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   nodeIsDone(in string dagNodeId, in string wfId);
 
+  /**
+   * @brief TODO
+   * @param: dagNodeId: The id of the node of the dag
+   * @param wfId: The id of the workflow
+   */
   void
   nodeIsFailed(in string dagNodeId, in string wfId);
 

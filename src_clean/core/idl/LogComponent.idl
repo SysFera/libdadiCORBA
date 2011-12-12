@@ -1,34 +1,14 @@
-/****************************************************************************/
-/* Defines the componentside interfaces needed by the new LogService        */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.4  2010/12/13 12:21:14  kcoulomb
- * Clean types
- *
- * Revision 1.3  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
- *
- * Revision 1.2  2007/08/31 16:41:16  bdepardo
- * When trying to add a new component, we check if the name of the component exists and if the component is reachable
- * - it the name already exists:
- *    - if the component is reachable, then we do not connect the new component
- *    - else we consider that the component is lost, and we delete the old component ant add the new one
- * - else add the component
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+/**
+ * @file LogComponent.idl
+ * @brief Defines the componentside interfaces needed by the new LogService 
+ *                                                                   
+ *  @author Georg Hoesch (hoesch@in.tum.de)                              
+ *          Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)     
+ *                                                                   
+ * @section License
+ * |LICENSE|
+ */
+
 
 #ifndef _LOGCOMPONENT_IDL_
 #define _LOGCOMPONENT_IDL_
@@ -43,41 +23,59 @@
 /**
  * Errorlevel constants for connectComponent
  */
+/**
+ * @brief Error when the name of the component is bad
+ */
 const short LS_COMPONENT_CONNECT_BADNAME = 1;
+/**
+ * @brief Error when a component with the same name is already connected
+ */
 const short LS_COMPONENT_CONNECT_ALREADYEXISTS = 2;
+/**
+ * @brief Error when the component configurator is bad
+ */
 const short LS_COMPONENT_CONNECT_BADCOMPONENTCONFIGURATOR = 3;
+/**
+ * @brief Internal error
+ */
 const short LS_COMPONENT_CONNECT_INTERNALERROR = 4;
-
+/**
+ * @brief Error when disconnecting an already existing component
+ */
 const short LS_COMPONENT_DISCONNECT_NOTEXISTS = 1;
 
 /**
- * defines functions that the component has to implement 
+ * @brief defines functions that the component has to implement 
  * to allow dynamic configuration.
+ * @section ComponentConfiguratorIDL
  */
 interface ComponentConfigurator {
   /**
-   * Set the component filter to the specified taglist. All tags
+   * @brief Set the component filter to the specified taglist. All tags
    * in the list have to be forwarded, all others not.
+   * @param taglist: The list of tag to set
    */
   void
   setTagFilter(in tag_list_t tagList);
 
   /**
-   * Add the specified taglist to the internal filter and merge them.
+   * @brief Add the specified taglist to the internal filter and merge them.
+   * @param tagList: The list of tag to add
    */
   void
   addTagFilter(in tag_list_t tagList);
 
   /**
-   * Remove all tags from the taglist from the internal filter. The
+   * @Remove all tags from the taglist from the internal filter. The
    * given tagList may contain tags that the internal filter does
    * not contain.
+   * @param tagList: The list of tag to remove
    */
   void
   removeTagFilter(in tag_list_t tagList);
 
   /**
-   * Do nothing. Useful to be sure that the object is reachable
+   * @brief Do nothing. Useful to be sure that the object is reachable
    */
   void
   test();
@@ -85,17 +83,18 @@ interface ComponentConfigurator {
 };
 
 /**
- * defines the interface the core offers to components
+ * @brief Defines the interface the core offers to components
+ * @section LogCentralComponentIDL
  */
 interface LogCentralComponent {
   /**
-   * Do nothing. Useful to be sure that the object is reachable
+   * @brief Do nothing. Useful to be sure that the object is reachable
    */
   void
   test();
 
   /**
-   * Connect a component to the LogCentral. The component attaches with its
+   * @brief Connect a component to the LogCentral. The component attaches with its
    * name, which must be unique (among all components) and its hostname (no
    * need to be unique). If the name is an empty string, a name is generated.
    * The return value indicates if the component could be connected.
@@ -103,6 +102,13 @@ interface LogCentralComponent {
    * registered. In this case, the connection was not successful, and the tool
    * must connect with a diferent name before invoking other functions of the
    * LogCentralComponent interface.
+   * @param componentName: The name of the component to connect (automatically created if it is an empty string)
+   * @param componentHostname: The hostname of the machine
+   * @param message: The connexion message
+   * @param compConfigurator: The component configurator
+   * @param componentTime: The time
+   * @param initialConfig: The initial tag list to use
+   * @return An error code
    */
   short
   connectComponent(inout string componentName,
@@ -114,32 +120,39 @@ interface LogCentralComponent {
 
 
   /**
-   * Disconnect a connected component from the LogCentral.
+   * @brief Disconnect a connected component from the LogCentral.
    * No further messages should be sent after disconnection.
    * The componentConfigurator will no longer be used by the LogCentral after
    * this call. Returns NOTCONNECTED if the calling component was not
    * registered.
+   * @param componentName: The name of the component to disconnect
+   * @param message: The disconnexion message
+   * @return An error code
    */
   short
   disconnectComponent(in string componentName, in string message);
 
 
   /**
-   * Send a buffer of log_msg_t to the LogCentral.
+   * @brief Send a buffer of log_msg_t to the LogCentral.
+   * @param buffer: The message to send
    */
   oneway void
   sendBuffer(in log_msg_buf_t buffer);
 
   /**
-   * To be called by a thread for saying that the component is still alive.
+   * @brief To be called by a thread for saying that the component is still alive.
    * If the last ping is too old, the component is considered dead and
    * generate a disconnect message (OUT).
+   * @param componentName: The component to ping
    */
   oneway void
   ping(in string componentName);
 
   /**
-   * To be called by a thread for clock synchronisation.
+   * @brief To be called by a thread for clock synchronisation.
+   * @param: componentName: The component to ping
+   * @componentTime: The time for the synchro
    */
   oneway void
   synchronize(in string componentName, in log_time_t componentTime);

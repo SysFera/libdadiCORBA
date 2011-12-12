@@ -6,7 +6,7 @@
  * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 
@@ -15,6 +15,10 @@
 
 #include "Agent.idl"
 
+/**
+ * @brief The agent interface
+ * @section LocalAgentIDL
+ */
 interface LocalAgent : Agent {
 
   /**
@@ -24,11 +28,6 @@ interface LocalAgent : Agent {
    */
   oneway void getRequest(in corba_request_t req);
 
-//  /** Send an order for the agent to connect to a new parent */
-//  long bindParent(in string parentName);
-//  /** Send an order for the agent to disconnect from its parent */
-//  long disconnect();
-//  long removeElement(in boolean recursive);
 };
 
 #endif // _LOCAL_AGENT_IDL_

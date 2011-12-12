@@ -6,8 +6,8 @@
  * @author  Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
  *          Benjamin Isnard (Benjamin.Isnard@ens-lyon.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 #ifndef _MADAG_IDL_
@@ -15,32 +15,43 @@
 
 #include "common_types.idl"
 
-/****************************************************************************/
-/* MA DAG interface                                                          */
-/****************************************************************************/
-
+/**
+ * @brief MA DAG interface
+ * @section MaDagIDL
+ */
 interface MaDag {
-
+  /**
+   * @brief Exception when a service is not found
+   */
   exception ServiceNotFound {
     string nodeId;
     string pbName;
     string pbParams;
   };
 
+  /**
+   * @brief Exception when a dag is invalid
+   */
   exception InvalidDag {
     string info;
   };
 
+  /**
+   * @brief Exception when a request is invalid
+   */
   exception InvalidRequest {
     string info;
   };
 
+  /**
+   * @brief Exception when there is a communication problem
+   */
   exception CommProblem {
     string info;
   };
 
  /**
-  * DAG processing
+  * @brief DAG processing
   *
   * @param  dag_desc   dag textual description
   * @param  cltMgrRef  client workflow manager reference
@@ -54,7 +65,7 @@ interface MaDag {
       raises(InvalidDag, ServiceNotFound, CommProblem);
 
   /**
-   * Multi DAG processing
+   * @brief Multi DAG processing
    * (when submitted DAG is linked to other DAGs)
    *
    * @param  dag_desc     dag textual description
@@ -72,23 +83,27 @@ interface MaDag {
       raises(InvalidDag, ServiceNotFound, CommProblem);
 
   /**
-   * Get a new workflow request identifier
+   * @brief Get a new workflow request identifier
+   * @return TODO
    */
   long getWfReqId();
 
 
-  /** Used to test if this process is alive. */
+  /** 
+   * @brief Used to test if this process is alive. 
+   */
   long ping();
 
   /**
-   * Release a multi-dag
+   * @brief Release a multi-dag
+   * @param wfReqId: The id of the multi dag to release
    */
   void
       releaseMultiDag(in long wfReqId)
       raises(InvalidRequest);
 
   /**
-   * Cancel the execution of a dag
+   * @brief Cancel the execution of a dag
    * (execution of running tasks is not stopped)
    */
   void
@@ -96,9 +111,14 @@ interface MaDag {
       raises(InvalidDag);
 
   /**
-   * Select type of platform connected to MaDag
+   * @brief Select type of platform connected to MaDag
    */
   enum pfmType_t { DISTINCT_SERVICES, SAME_SERVICES };
+
+  /**
+   * @brief To set the platform type
+   *@param pfmType: The type of the platform
+   */
   void setPlatformType(in pfmType_t pfmType);
 
 };

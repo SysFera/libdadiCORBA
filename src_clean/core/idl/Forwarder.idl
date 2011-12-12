@@ -6,7 +6,7 @@
  * @author  Gael Le Mahec (lemahec@clermont.in2p3.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 #ifndef FORWARDER_IDL
 #define FORWARDER_IDL
@@ -31,6 +31,10 @@
 #include "WfLogServiceFwdr.idl"
 #endif
 
+/**
+ * @brief The whole forwarder interface
+ * @section ForwarderIDL
+ */
 interface Forwarder :
   ComponentConfiguratorForwarder
 , LogCentralComponentForwarder
@@ -48,57 +52,197 @@ interface Forwarder :
   , AgentForwarder
 {	
   /* Get objects from the Forwarder. */
+/**
+ * @brief To get an agent object
+ * @param name: The name of the object to get
+ * @return An agent
+ */
   Agent getAgent(in string name);
+/**
+ * @brief To get a client object
+ * @param name: The name of the object to get
+ * @return A callback
+ */
   Callback getCallback(in string name);
+/**
+ * @brief To get a local agent object
+ * @param name: The name of the object to get
+ * @return A local agent
+ */
   LocalAgent getLocalAgent(in string name);
+/**
+ * @brief To get a master agent object
+ * @param name: The name of the object to get
+ * @return A master agent
+ */
   MasterAgent getMasterAgent(in string name);
+/**
+ * @brief To get a sed object
+ * @param name: The name of the object to get
+ * @return A sed
+ */
   SeD getSeD(in string name);
 	
+/**
+ * @brief To get a dagda object
+ * @param name: The name of the object to get
+ * @return A dagda
+ */
   Dagda getDagda(in string name);
 
 #if HAVE_WORKFLOW
+/**
+ * @brief To get a workflow manager object
+ * @param name: The name of the object to get
+ * @return A workflow manager
+ */
   CltMan getCltMan(in string name);
+/**
+ * @brief To get a MA Dag object
+ * @param name: The name of the object to get
+ * @return A MA DAG object
+ */
   MaDag getMaDag(in string name);
+/**
+ * @brief To get a workflow log service object
+ * @param name: The name of the object to get
+ * @return A workflow log service object
+ */
   WfLogService getWfLogService(in string name);
 #endif
 
   /* Get objects from the Forwarder. */
+/**
+ * @brief To get a log central component object
+ * @param name: The name of the object to get
+ * @return A log central component
+ */
   LogCentralComponent   getLogCentralComponent   (in string name);
+/**
+ * @brief To get a log central tool object
+ * @param name: The name of the object to get
+ * @return A log central tool
+ */
   LogCentralTool getLogCentralTool(in string name);
+/**
+ * @brief To get a component configurator
+ * @param name: The name of the object to get
+ * @return A component configurator
+ */
   ComponentConfigurator getCompoConf   (in string name);
+/**
+ * @brief To get a tool message receiver object
+ * @param name: The name of the object to get
+ * @return A tool message receiver
+ */
   ToolMsgReceiver getToolMsgReceiver(in string name);
 
 
   /* Common methods. */
+/**
+ * @brief To ping a CORBA object
+ * @param The object to ping
+ * @return A long value
+ */
   long ping(in string objName)
     raises(UnknownObject, BadNameException);
+/**
+ * @brief To get the request that was sent by the parent
+ * @param req: The request
+ * @param objName: The name of the object we want to know the request he
+ * received from hist parents
+ */
   oneway void getRequest(in corba_request_t req, in string objName);
+/**
+ * @brief To get the hostname of the machine an object is over
+ * @param The name of the object we want to ask
+ * @return The hostname
+ */
   string getHostname(in string objName)
     raises(UnknownObject, BadNameException);
 
+/**
+ * @brief Method to dynamically change the parent of an object
+ * @param parentName: The name of the new parent
+ * @param objName: The name of the object to change its parent
+ * @return An error code
+ */
   long bindParent(in string parentName, in string objName)
     raises(UnknownObject, BadNameException);
+/**
+ * @brief To disconnect an element from a hierarchie.
+ * A disconnection makes the object unreachable but still alive
+ * @param objName: The name of the object to disconnect
+ * @return An error code
+ */
   long disconnect(in string objName)
     raises(UnknownObject, BadNameException);
+/**
+ * @brief To remove an element from a hierarchie.
+ * A removal deletes the object from a hierarchy
+ * @param objName: The name of the object to remove
+ * @return An error code
+ */
   long removeElement(in boolean recursive, in string objName)
     raises(UnknownObject, BadNameException);
 
   /* CORBA remote management. */
+/**
+ * @brief To bind an object in the omniNames
+ * @param objName: The name of the object to bind
+ * @param ior: The IOR of the object to bind
+ */
   void bind(in string objName, in string ior);
+/**
+ * @brief To unbind an object in the omniNames
+ * @param objName: The name of the object to unbind
+ */
   oneway void unbind(in string objName);
+/**
+ * @brief Return the objects locally binded
+ * @param ctxt: The context where to get the objects
+ * @return A set of couples (object name, object ior)
+ */
   SeqString getBindings(in string ctxt);
 	
   /* Peer connection. */
+  /**
+   * @brierConnect the peer forwarder.
+   * @param ior: The IOR of the ORBMgr
+   * @param host: The remote hostname
+   * @param port: The remote port from
+   */
   void connectPeer(in string ior, in string host, in long port);
+/**
+ * @brief To get the IOR
+ * @return The IOR
+ */
   string getIOR();
 	
   /* Obtain informations about this forwarder. */
+/**
+ * @brief To get the name of the corba forwarder object
+ * @return The name
+ */
   string getName();
+/**
+ * @brief To get the name of the peer
+ * @return The name of the peer
+ */
   string getPeerName();
+/**
+ * @brief To get the hostname
+ * Warning this attribute is deprecated because the C gethostname function
+ * is used
+ * @return The hostname
+ */
   string getHost();
+/**
+ * @brief To get the hostname of the peer
+ * @return The hostname of the peer
+ */
   string getPeerHost();
 
-  SeqString routeTree();
 };
 
 #endif

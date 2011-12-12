@@ -6,7 +6,7 @@
  * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 
@@ -20,14 +20,13 @@ interface LocalAgentFwdr : LocalAgent {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref AgentIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface LocalAgentForwarder : AgentForwarder {
-//  long bindParent(in string parentName,
-//                  in string objName)
-//    raises(UnknownObject);
-//  long disconnect(in string objName)
-//    raises(UnknownObject);
-//  long removeElement(in boolean recursive,in string objName)
-//    raises(UnknownObject);
 };
 
 #endif

@@ -52,8 +52,7 @@ public:
                 CORBA::Long reqID);
 
   virtual CORBA::Long
-  solveResults(const char * path,
-               const corba_profile_t& pb,
+  solveResults(const corba_profile_t& pb,
                CORBA::Long reqID,
                CORBA::Long solve_res);
 

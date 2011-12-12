@@ -46,8 +46,7 @@ CorbaForwarder::notifyResults(const char* path, const ::corba_profile_t& pb,
   }
 
 ::CORBA::Long
-CorbaForwarder::solveResults(const char* path,
-                            const ::corba_profile_t& pb,
+CorbaForwarder::solveResults(const ::corba_profile_t& pb,
                             ::CORBA::Long reqID,
                             ::CORBA::Long result,
                             const char* objName) {
@@ -55,7 +54,7 @@ CorbaForwarder::solveResults(const char* path,
   std::string name;
 
   if (!remoteCall(objString)) {
-    return getPeer()->solveResults(path, pb, reqID, result, objString.c_str());
+    return getPeer()->solveResults(pb, reqID, result, objString.c_str());
   }
 
   name = getName(objString);
@@ -63,5 +62,5 @@ CorbaForwarder::solveResults(const char* path,
   Callback_var cb =
     ORBMgr::getMgr()->resolve<Callback, Callback_var>(CLIENTCTXT, name,
                                                       this->mname);
-  return cb->solveResults(path, pb, reqID, result);
+  return cb->solveResults(pb, reqID, result);
   }

@@ -560,12 +560,6 @@ CorbaForwarder::getPeerHost() {
   return CORBA::string_dup(getPeer()->getHost());
 }
 
-SeqString*
-CorbaForwarder::routeTree() {
-  SeqString* result = new SeqString();
-  return result;
-}
-
 
 std::list<std::string>
 CorbaForwarder::otherForwarders() const {

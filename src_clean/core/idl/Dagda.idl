@@ -6,7 +6,7 @@
  * @author  Gael Le Mahec (lemahec@clermont.in2p3.fr)
  *
  * @section Licence
- *   |LICENCE|
+ *   |LICENSE|
  */
 
 #ifndef _DAGDA_IDL_
@@ -29,50 +29,113 @@
    capabilities.
 */
 
+/**
+ * @brief The Dagda interface
+ * @section DagdaIDL
+ */
 interface Dagda {
+  /**
+   * @brief Exception when a data is not found
+   */
   exception DataNotFound {
     string dataID;
   };
+  /**
+   * @brief Exception when the path name is invalid
+   */
   exception InvalidPathName {
     string dataID;
     string path;
   };
+  /**
+   * @brief Exception when there is an error reading 
+   */
   exception ReadError {
     long error;
   };
+  /**
+   * @brief Exception when there is an error writting
+   */
   exception WriteError {
     long error;
   };
+  /**
+   * @brief Exception when no space left on device
+   */
   exception NotEnoughSpace {
     long available;
   };
+  /**
+   * @brief Exception when a file is unreachable
+   */
   exception UnreachableFile {
     string path;
   };
+  /**
+   * @brief Exception when the access permission is denied
+   */
   exception PermissionDenied {
 	long error;
   };
+  /**
+   * @brief Exception when the data is unavailable
+   */
   exception UnavailableData {
     string dataID;
   };
   /* Is the data using dataID is present. */
+  /**
+   * @brief If the data is locally present
+   * @param dataId: The ID of the data
+   * @return True if present
+   */
   boolean lclIsDataPresent(in string dataID);
+  /**
+   * @brief If the data is present from this level
+   * @param dataId: The ID of the data
+   * @return True if present
+   */
   boolean lvlIsDataPresent(in string dataID);
+  /**
+   * @brief If the data is present in the platform
+   * @param dataId: The ID of the data
+   * @return True if present
+   */
   boolean pfmIsDataPresent(in string dataID);
 
   /* Add a data. */
+  /**
+   * @brief Add a local data
+   * @param srcDagda: The source of the data
+   * @param data: The data to add
+   */
   void lclAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
+  /**
+   * @brief Add a data from this level
+   * @param srcDagda: The source of the data
+   * @param data: The data to add
+   */
   void lvlAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
+  /**
+   * @brief Add a data from the platform
+   * @param srcDagda: The source of the data
+   * @param data: The data to add
+   */
   void pfmAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
-  /* Register a file. (without copying it. Used to declare a file present at
-     launching time or shared by SeDs.) */
+  /**
+   * @brief Register a file. (without copying it. Used to declare a file present at
+   * launching time or shared by SeDs.) 
+   * @param data: The data (file) to add
+   */
   void registerFile(in corba_data_t data)
     raises(InvalidPathName, UnreachableFile);
 
-  /* Add a container-element relationship */
+  /**
+   * @brief Add a container-element relationship 
+   */
   void lclAddContainerElt(in string containerID,
                           in string dataID,
                           in long index,

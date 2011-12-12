@@ -5,8 +5,8 @@
  *
  * @author  Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
  *
- * @section Licence
- *   |LICENCE|
+ * @section License
+ *   |LICENSE|
  */
 
 
@@ -21,6 +21,12 @@ interface MasterAgentFwdr : MasterAgent {
 
 };
 
+/**
+ * @brief The forwarder version. For the documentation
+ * of the class see @ref MasterAgentIDL. All methods have
+ * an objName param that represents the name of the
+ * object, to know if it is local or distant
+ */
 interface MasterAgentForwarder : AgentForwarder {
   corba_response_t submit(in corba_pb_desc_t pb_profile,
                           in unsigned long maxServers,

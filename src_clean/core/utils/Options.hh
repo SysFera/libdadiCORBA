@@ -26,12 +26,6 @@ class Configuration {
 public:
   Configuration();
 
-  explicit
-  Configuration(const std::string &pgName);
-
-  const std::string &
-  getPgName() const;
-
   const std::string &
   getConfigFile() const;
 
@@ -39,7 +33,6 @@ public:
   setConfigFile(const std::string &configFile);
 
 private:
-  std::string pgName;
   std::string configFile;
 };
 
