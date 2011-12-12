@@ -330,7 +330,7 @@ main(int argc, char* argv[], char* envp[]) {
   /* Manage the peer IOR. */
 //  if (config.getPeerIOR().empty() && createFrom) {
   std::cout << "NOTIFIED12 " << std::endl;
-  if (createFrom) {
+  if (createFrom && config.get<std::string>("peer-ior")=="") {
     /* Try to retrieve the peer IOR. */
     SSHCopy copy(config.get<std::string>("ssh-host"),
                  "/tmp/DIET-forwarder-ior-" + config.get<std::string>("peer-name") + ".tmp",
@@ -366,7 +366,8 @@ main(int argc, char* argv[], char* envp[]) {
     }
   }
   std::cout << "NOTIFIED15 " << std::endl;
-  if (config.get<std::string>("peer-ior").find("IOR:") == 0) {
+  if (config.get<std::string>("peer-ior")!="" &&
+      config.get<std::string>("peer-ior").find("IOR:") != 0) {
     std::cout << "NOTIFIED16 " << std::endl;
     /* Extract the IOR from a file. */
     std::ifstream file(config.get<std::string>("peer-ior").c_str());
