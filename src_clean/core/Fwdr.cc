@@ -193,32 +193,6 @@ main(int argc, char* argv[], char* envp[]) {
   }
   std::cout << "NOTIFIED2 " << std::endl;
 
-
-//  opt.processOptions();
-//  if (config.getSshHost() != "") {
-//    config.createTo(true);
-//    config.createFrom(true);
-//  }
-
-
-//  if (!config.get_optional<std::string>("name") config.get<std::string>("name") == "") {
-//    std::cout << "NOTIFIED3 " << std::endl;
-//    std::ostringstream name;
-//    char host[256];
-//
-//    gethostname(host, 256);
-//    host[255]='\0';
-//
-//    std::transform(host, host+strlen(host), host, change);
-//    name << "Forwarder-" << host << "-" << getpid();
-//
-//    logger->log(dadi::Message("Fwdr",
-//                              "Missing parameter: name (use --name to fix it) \n Use default name: " + name.str() + "\n",
-//                               dadi::Message::PRIO_DEBUG));
-
-//    config.setName(name.str());
-//  }
-
   if (createFrom) {
     std::cout << "NOTIFIED3 " << std::endl;
     if (config.get<std::string>("peer-name")==""
@@ -286,22 +260,14 @@ main(int argc, char* argv[], char* envp[]) {
     if (createFrom) {  // Creating tunnel(s)
       std::string tmp;
       std::cout << "NOTIFIED8 " << std::endl;
-//      if (config.get<std::string>("remote-port")!="") {
-        tmp = config.get<std::string>("remote-port");
-//      } else {
-//        tmp = "";
-//      }
+      tmp = config.get<std::string>("remote-port");
       std::istringstream is(tmp);
 
       int port;
 
       is >> port;
       std::cout << "NOTIFIED9 " << std::endl;
-//      if (config.get_optional<std::string>("remote-host")) {
-        tmp = config.get<std::string>("remote-host");
-//      } else {
-//        tmp = "";
-//      }
+      tmp = config.get<std::string>("remote-host");
       of << ORBMgr::convertIOR(ior, "", port);
     } else {  // Waiting for connexion.
       of << ior;
@@ -320,15 +286,10 @@ main(int argc, char* argv[], char* envp[]) {
   tunnel.setRemoteHost(config.get<std::string>("remote-host"));
   std::cout << "NOTIFIED11 " << std::endl;
 
-//  tunnel.setSshPath(config.get<std::string>SshPath());
   tunnel.setSshPort(config.get<std::string>("remote-port"));
   tunnel.setSshLogin(config.get<std::string>("ssh-login"));
-//  tunnel.setSshKeyPath(config.get<std::string>SshKeyPath());
-
-//  tunnel.setWaitingTime(config.getWaitingTime());
 
   /* Manage the peer IOR. */
-//  if (config.getPeerIOR().empty() && createFrom) {
   std::cout << "NOTIFIED12 " << std::endl;
   if (createFrom && config.get<std::string>("peer-ior")=="") {
     /* Try to retrieve the peer IOR. */
@@ -342,14 +303,14 @@ main(int argc, char* argv[], char* envp[]) {
     std::cout << "NOTIFIED13-2 " << std::endl;
     copy.setSshLogin(config.get<std::string>("ssh-login"));
     std::cout << "NOTIFIED14 " << std::endl;
-//    copy.setSshKeyPath(config.getSshKeyPath());
+
     copy.setSshKeyPath("");
     try {
       if (copy.getFile()) {
         logger->log(dadi::Message("Fwdr",
                                   "Got remote IOR file",
                                   dadi::Message::PRIO_DEBUG));
-//        config.setPeerIOR("/tmp/DIET-forwarder-ior-" + config.getPeerName() + ".tmp");
+        config.put<std::string>("peer-ior", "/tmp/DIET-forwarder-ior-" + config.get<std::string>("peer-name") + ".tmp");
       } else {
         logger->log(dadi::Message("Fwdr",
                                   "Could not get remote IOR file.\n" \
@@ -388,8 +349,10 @@ main(int argc, char* argv[], char* envp[]) {
   }
 
   if (config.get<std::string>("peer-ior") != "") {
+    std::cout << "Setting portA: " << ORBMgr::getPort(config.get<std::string>("peer-ior")) << std::endl;
     tunnel.setRemotePortTo(ORBMgr::getPort(config.get<std::string>("peer-ior")));
   } else {
+    std::cout << "Setting portB: " << config.get<std::string>("peer-ior") << std::endl;
     tunnel.setRemotePortTo(config.get<std::string>("peer-ior"));
   }
   if (config.get<std::string>("remote-host") == "auto") {
@@ -406,8 +369,9 @@ main(int argc, char* argv[], char* envp[]) {
     }
   }
 
+  std::cout << "Setting portC: " << config.get<std::string>("remote-port") << std::endl;
+  std::cout << "Setting portD: " << config.get<std::string>("peer-ior") << std::endl;
   tunnel.setRemotePortFrom(config.get<std::string>("remote-port"));
-  //    tunnel.setLocalPortFrom(config.getLocalPortFrom());
   if (createFrom) {
     if (config.get<std::string>("remote-port") == "") {
       logger->log(dadi::Message("Fwdr",
@@ -415,7 +379,6 @@ main(int argc, char* argv[], char* envp[]) {
                                 " You need to specify the remote port:\n" \
                                 "\t - Remote port (--remote-port <port>)",
                                 dadi::Message::PRIO_DEBUG));
-      return EXIT_FAILURE;
     }
   }
 
@@ -426,16 +389,20 @@ main(int argc, char* argv[], char* envp[]) {
     tunnel.createTunnelTo(createTo);
     tunnel.createTunnelFrom(createFrom);
   }
+  std::cout << "Openning" << std::endl;
   tunnel.open();
+  std::cout << "Openned" << std::endl;
 
   /* Try to find the peer. */
   bool canLaunch = true;
   if (config.get<std::string>("peer-ior")!="") {
     try {
+      std::cout << "connecting" << std::endl;
       if (connectPeer(ior, config.get<std::string>("peer-ior"),
                       "localhost", tunnel.getRemoteHost(),
                       tunnel.getLocalPortFrom(), tunnel.getRemotePortFrom(),
                       forwarder, mgr)) {
+        std::cout << "connected1" << std::endl;
         /* In this case it seems that there is a problem with
          * the alias 'localhost', thus try to use 127.0.0.1
          */

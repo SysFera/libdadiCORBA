@@ -333,17 +333,21 @@ SSHTunnel::~SSHTunnel() {
 
 void
 SSHTunnel::open() {
+  std::cout << "In open 1" << std::endl;
   if (!createTo && !createFrom) {
     return;
   }
+  std::cout << "In open 2" << std::endl;
 
   std::vector<std::string> tokens;
   std::string command = makeCmd();
   std::istringstream is(command);
+  std::cout << "In open 3" << std::endl;
 
   std::copy(std::istream_iterator<std::string>(is),
             std::istream_iterator<std::string>(),
             std::back_inserter<std::vector<std::string> >(tokens));
+  std::cout << "In open 4" << std::endl;
 
   char *argv[tokens.size() + 1];
   argv[tokens.size()] = NULL;
@@ -351,21 +355,32 @@ SSHTunnel::open() {
   for (unsigned int i = 0; i < tokens.size(); ++i) {
     argv[i] = strdup(tokens[i].c_str());
   }
+  std::cout << "In open 5" << std::endl;
 
   pid = fork();
   if (pid == -1) {
     throw std::runtime_error("Error forking process.");
   }
   if (pid == 0) {
+    std::cout << "In open 6" << std::endl;
+    std::cout << "Command: " << argv[0] << std::endl;
+    int i = 1;
+    while (argv[i] != "\0") {
+      std::cout << "Opt: " << argv[i] << std::endl;
+      i++;
+    }
     if (execvp(argv[0], argv)) {
+      std::cout << "In open 7" << std::endl;
       mlogger->log(dadi::Message("SSHTunnel",
                                  "Error executing command " + command,
                                  dadi::Message::PRIO_DEBUG));
     }
   }
+  std::cout << "In open 8" << std::endl;
   for (unsigned int i = 0; i < tokens.size(); ++i) {
     free(argv[i]);
   }
+  std::cout << "In open 9" << std::endl;
 
   std::ostringstream intval;
   intval << this->waitingTime;
