@@ -1,4 +1,4 @@
-/**
+ /**
 * @file Fwdr.cc
 *
 * @brief   DIET forwarder implementation - Forwarder executable
@@ -173,11 +173,8 @@ main(int argc, char* argv[], char* envp[]) {
   opt.addOption("peer-ior,i", "to use a specific ior for the peer", fpior)->default_value("");
   opt.addOption("nb-retry,a", "the number of time to retry again", fret)->default_value("");
 
-  std::cout << "PARSING " << std::endl;
   opt.parseCommandLine(argc, argv);
-  std::cout << "PARSED " << std::endl;
   opt.notify();
-  std::cout << "NOTIFIED " << std::endl;
   bool createTo = false;
   bool createFrom = false;
 
@@ -191,10 +188,8 @@ main(int argc, char* argv[], char* envp[]) {
     createTo = true;
     createFrom = true;
   }
-  std::cout << "NOTIFIED2 " << std::endl;
 
   if (createFrom) {
-    std::cout << "NOTIFIED3 " << std::endl;
     if (config.get<std::string>("peer-name")==""
         || config.get<std::string>("ssh-host")=="") {
       logger->log(dadi::Message("Fwdr",
@@ -204,13 +199,10 @@ main(int argc, char* argv[], char* envp[]) {
     }
   }
 
-  std::cout << "NOTIFIED4 " << std::endl;
   SSHTunnel tunnel;
   CorbaForwarder* forwarder;
   try {
-    std::cout << "NOTIFIED5 " << std::endl;
     forwarder = new CorbaForwarder(config.get<std::string>("name"));
-    std::cout << "NOTIFIED6 " << std::endl;
   } catch (std::exception &e) {
       logger->log(dadi::Message("Fwdr",
                                 e.what(),
@@ -225,7 +217,6 @@ main(int argc, char* argv[], char* envp[]) {
   mgr->activate(forwarder);
   do {
     try {
-      std::cout << "NOTIFIED7 " << std::endl;
       mgr->bind(FWRDCTXT, config.get<std::string>("name"), forwarder->_this(), true);
       break;
     } catch (CORBA::TRANSIENT& err) {
@@ -259,14 +250,12 @@ main(int argc, char* argv[], char* envp[]) {
                               dadi::Message::PRIO_DEBUG));
     if (createFrom) {  // Creating tunnel(s)
       std::string tmp;
-      std::cout << "NOTIFIED8 " << std::endl;
       tmp = config.get<std::string>("remote-port");
       std::istringstream is(tmp);
 
       int port;
 
       is >> port;
-      std::cout << "NOTIFIED9 " << std::endl;
       tmp = config.get<std::string>("remote-host");
       of << ORBMgr::convertIOR(ior, "", port);
     } else {  // Waiting for connexion.
@@ -281,28 +270,21 @@ main(int argc, char* argv[], char* envp[]) {
                             "Forwarder: " + ior + " \n",
                             dadi::Message::PRIO_DEBUG));
 
-  std::cout << "NOTIFIED10 " << std::endl;
   tunnel.setSshHost(config.get<std::string>("ssh-host"));
   tunnel.setRemoteHost(config.get<std::string>("remote-host"));
-  std::cout << "NOTIFIED11 " << std::endl;
 
   tunnel.setSshPort(config.get<std::string>("remote-port"));
   tunnel.setSshLogin(config.get<std::string>("ssh-login"));
 
   /* Manage the peer IOR. */
-  std::cout << "NOTIFIED12 " << std::endl;
   if (createFrom && config.get<std::string>("peer-ior")=="") {
     /* Try to retrieve the peer IOR. */
     SSHCopy copy(config.get<std::string>("ssh-host"),
                  "/tmp/DIET-forwarder-ior-" + config.get<std::string>("peer-name") + ".tmp",
                  "/tmp/DIET-forwarder-ior-" + config.get<std::string>("peer-name") + ".tmp");
-    std::cout << "NOTIFIED13 " << std::endl;
     copy.setSshPath("/usr/bin/scp");
-    std::cout << "NOTIFIED13-1 " << std::endl;
     copy.setSshPort(config.get<std::string>("ssh-port"));
-    std::cout << "NOTIFIED13-2 " << std::endl;
     copy.setSshLogin(config.get<std::string>("ssh-login"));
-    std::cout << "NOTIFIED14 " << std::endl;
 
     copy.setSshKeyPath("");
     try {
@@ -326,10 +308,8 @@ main(int argc, char* argv[], char* envp[]) {
                                   dadi::Message::PRIO_DEBUG));
     }
   }
-  std::cout << "NOTIFIED15 " << std::endl;
   if (config.get<std::string>("peer-ior")!="" &&
       config.get<std::string>("peer-ior").find("IOR:") != 0) {
-    std::cout << "NOTIFIED16 " << std::endl;
     /* Extract the IOR from a file. */
     std::ifstream file(config.get<std::string>("peer-ior").c_str());
     std::string peerIOR;
@@ -349,10 +329,8 @@ main(int argc, char* argv[], char* envp[]) {
   }
 
   if (config.get<std::string>("peer-ior") != "") {
-    std::cout << "Setting portA: " << ORBMgr::getPort(config.get<std::string>("peer-ior")) << std::endl;
     tunnel.setRemotePortTo(ORBMgr::getPort(config.get<std::string>("peer-ior")));
   } else {
-    std::cout << "Setting portB: " << config.get<std::string>("peer-ior") << std::endl;
     tunnel.setRemotePortTo(config.get<std::string>("peer-ior"));
   }
   if (config.get<std::string>("remote-host") == "auto") {
@@ -369,8 +347,6 @@ main(int argc, char* argv[], char* envp[]) {
     }
   }
 
-  std::cout << "Setting portC: " << config.get<std::string>("remote-port") << std::endl;
-  std::cout << "Setting portD: " << config.get<std::string>("peer-ior") << std::endl;
   tunnel.setRemotePortFrom(config.get<std::string>("remote-port"));
   if (createFrom) {
     if (config.get<std::string>("remote-port") == "") {
@@ -389,20 +365,16 @@ main(int argc, char* argv[], char* envp[]) {
     tunnel.createTunnelTo(createTo);
     tunnel.createTunnelFrom(createFrom);
   }
-  std::cout << "Openning" << std::endl;
   tunnel.open();
-  std::cout << "Openned" << std::endl;
 
   /* Try to find the peer. */
   bool canLaunch = true;
   if (config.get<std::string>("peer-ior")!="") {
     try {
-      std::cout << "connecting" << std::endl;
       if (connectPeer(ior, config.get<std::string>("peer-ior"),
                       "localhost", tunnel.getRemoteHost(),
                       tunnel.getLocalPortFrom(), tunnel.getRemotePortFrom(),
                       forwarder, mgr)) {
-        std::cout << "connected1" << std::endl;
         /* In this case it seems that there is a problem with
          * the alias 'localhost', thus try to use 127.0.0.1
          */

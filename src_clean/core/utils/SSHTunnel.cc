@@ -365,10 +365,10 @@ SSHTunnel::open() {
     std::cout << "In open 6" << std::endl;
     std::cout << "Command: " << argv[0] << std::endl;
     int i = 1;
-    while (argv[i] != "\0") {
-      std::cout << "Opt: " << argv[i] << std::endl;
-      i++;
-    }
+//    while (argv[i] != "\0") {
+//      std::cout << "Opt: " << argv[i] << std::endl;
+//      i++;
+//    }
     if (execvp(argv[0], argv)) {
       std::cout << "In open 7" << std::endl;
       mlogger->log(dadi::Message("SSHTunnel",
