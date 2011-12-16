@@ -18,6 +18,34 @@ set( LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib"
 set( INC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include"
   CACHE INTERNAL "Directory where include will be installed" )
 
+
+
+#-------------- PLATFORM SPECIFIC COMPILATION FLAGS -----------------------
+# Requires CMake >= 2.4.7
+# Used within omniORB, when set remove some warnings/errors
+# Not tested under SunOS & FreeBSD
+
+if (CYGWIN)
+  add_definitions(-D__cygwin__)
+elseif (AIX)
+  add_definitions(-D__aix__)
+  # AIX doesn't like mixing static and shared libraries	 
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build libraries as shared libraries." FORCE)
+elseif (APPLE)
+  add_definitions( -D__darwin__)
+  if (NOT BUILD_SHARED_LIBS)
+    message("Cannot do a static build on Apple platforms")
+  endif (NOT BUILD_SHARED_LIBS)
+  set(BUILD_SHARED_LIBS ON CACHE BOOL "Build libraries as shared libraries." FORCE)
+elseif (LINUX)
+  add_definitions(-D__linux__)
+elseif (SUNOS)
+  add_definitions(-D__sunos__)
+elseif(FREEBSD)
+  add_definitions(-D__freebsd__)
+endif (CYGWIN)
+
+
 # OmniORB is mandatory:
 find_package(OmniORB)
 if (OMNIORB4_FOUND)
@@ -92,6 +120,7 @@ add_dependencies(CorbaCommon CORBAFiles)
 # Link CorbaCommon to DIET_CORBA, DIET_Utils and OmniORB
 target_link_libraries(CorbaCommon
 dadiCORBA
+${DADI_LIBRARIES}
 ${Boost_LIBRARIES}
 ${OMNIORB4_LIBRARIES}
 )

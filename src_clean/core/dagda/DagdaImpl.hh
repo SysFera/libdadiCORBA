@@ -24,7 +24,6 @@
 #include <omnithread.h>
 #include "Dagda.hh"
 #include "common_types.hh"
-#include "DIET_data.h"
 #ifdef USE_LOG_SERVICE
 #include "DietLogComponent.hh"
 #endif
