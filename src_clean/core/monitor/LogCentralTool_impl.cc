@@ -1,30 +1,16 @@
-/****************************************************************************/
-/* Implements the object LogCentralTool defined in the LogTool.idl          */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: LogCentralTool_impl.cc,v 1.4 2010/12/03 12:40:27 kcoulomb Exp $
- * $Log: LogCentralTool_impl.cc,v $
- * Revision 1.4  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
+/**
+ * @file LogCentralTool_impl.cc
  *
- * Revision 1.3  2010/11/10 04:23:44  bdepardo
- * Correctly generate random number
+ * @brief Defines an object implementing the interface LogCentralTool defined in
+ * the LogCentralTool.idl
  *
- * Revision 1.2  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "LogCentralTool_impl.hh"
 #include <cstdio>

@@ -1,28 +1,16 @@
-/****************************************************************************/
-/* Defines an object implementing the interface LogCentralTool defined in   */
-/* the LogCentralTool.idl                                                   */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: LogCentralTool_impl.hh,v 1.3 2010/12/03 12:40:27 kcoulomb Exp $
- * $Log: LogCentralTool_impl.hh,v $
- * Revision 1.3  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
+/**
+ * @file LogCentralTool_impl.hh
  *
- * Revision 1.2  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
+ * @brief Defines an object implementing the interface LogCentralTool defined in
+ * the LogCentralTool.idl
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- ***************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _LOGCENTRALTOOL_IMPL_HH_
 #define _LOGCENTRALTOOL_IMPL_HH_
@@ -44,9 +32,11 @@ const short LS_TOOL_REMOVEFILTER_NOTEXISTS
  */
 
 /**
- * Implements the tool servant for the logCentral.
+ * @brief Implements the tool servant for the logCentral.
  * Attaches and detaches tools and forwards their
  * filter-configurations to the FilterManager
+ * See the IDL documentation file
+ * @class LogCentralTool_impl
  */
 class LogCentralTool_impl: public POA_LogCentralTool,
                            public PortableServer::RefCountServantBase
@@ -177,7 +167,10 @@ private:
 
 };
 
-
+/**
+ * @brief See the idl documentation
+ * @class LogCentralToolFwdr_impl
+ */
 class LogCentralToolFwdr_impl: public POA_LogCentralToolFwdr,
 			       public PortableServer::RefCountServantBase
 {
@@ -277,7 +270,10 @@ protected :
 
 
 
-
+/**
+ * @brief See idl for documentation
+ * @class ToolMsgReceiverFwdr_impl
+ */
 class ToolMsgReceiverFwdr_impl: public POA_ToolMsgReceiverFwdr,
 				public PortableServer::RefCountServantBase
 {

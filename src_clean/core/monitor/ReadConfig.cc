@@ -1,33 +1,15 @@
-/****************************************************************************/
-/* Implementation of the ReadConfig class                                   */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: ReadConfig.cc,v 1.3 2011/02/04 15:13:40 bdepardo Exp $
- * $Log: ReadConfig.cc,v $
- * Revision 1.3  2011/02/04 15:13:40  bdepardo
- * Remove memleak.
- * Initialize members in constructor.
+/**
+ * @file ReadConfig.cc
  *
- * Revision 1.2  2004/06/01 21:43:00  hdail
- * Tracking down seg fault in LogService:
- * - corrected mismatched malloc / delete[]
- * - corrected getLine(...) to return NULL if no more characters are available
- *   in the file (previous behavior tried to process the line)
- * - changed logic in all code in this file that calls getLine in order to
- *   properly check for NULL.  Also corrected apparent bug that last line of
- *   file may not have been processed under certain circumstances
+ * @brief Implementation of the ReadConfig class
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "ReadConfig.hh"
 #include <string.h>

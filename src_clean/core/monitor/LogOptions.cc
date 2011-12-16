@@ -1,24 +1,15 @@
-/****************************************************************************/
-/* A static class for having access to some options from everywhere         */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: LogOptions.cc,v 1.1 2010/12/08 11:37:54 kcoulomb Exp $
- * $Log: LogOptions.cc,v $
- * Revision 1.1  2010/12/08 11:37:54  kcoulomb
- * Refix the static library problem.
- * Renamed the monitor/Options to monitor/LogOptions due to conflict creating the static lib (2 files called Options)
+/**
+ * @file LogOptions.cc
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+ * @brief A static class for having access to some options from everywhere
  *
- ****************************************************************************/
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "LogOptions.hh"
 

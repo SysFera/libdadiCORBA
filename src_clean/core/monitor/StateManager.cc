@@ -1,20 +1,15 @@
-/****************************************************************************/
-/* Implementation for the StateManager class                                */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: StateManager.cc,v 1.1 2004/01/09 11:07:12 ghoesch Exp $
- * $Log: StateManager.cc,v $
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @file StateManager.hh
  *
- ****************************************************************************/
+ * @brief Implementation of the StateManager class
+ *
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "StateManager.hh"
 #include <stdio.h>

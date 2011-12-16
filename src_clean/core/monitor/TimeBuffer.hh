@@ -1,23 +1,15 @@
-/****************************************************************************/
-/* Header for the TimeBuffer class                                          */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: TimeBuffer.hh,v 1.2 2011/02/04 15:13:02 bdepardo Exp $
- * $Log: TimeBuffer.hh,v $
- * Revision 1.2  2011/02/04 15:13:02  bdepardo
- * isOlder is now const
+/**
+ * @file TimeBuffer.hh
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+ * @brief Header of the TimeBuffer class
  *
- ***************************************************************************/
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _TIMEBUFFER_HH_
 #define _TIMEBUFFER_HH_
@@ -25,6 +17,10 @@
 #include "LogTypes.hh"
 #include "utils/FullLinkedList.hh"
 
+/**
+ * @brief Class that handles the buffer of time
+ * @class TimeBuffer
+ */
 class TimeBuffer
 {
 public:

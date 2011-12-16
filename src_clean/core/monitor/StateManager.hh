@@ -1,20 +1,15 @@
-/****************************************************************************/
-/* Header for the StateManager class                                        */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: StateManager.hh,v 1.1 2004/01/09 11:07:12 ghoesch Exp $
- * $Log: StateManager.hh,v $
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @file StateManager.hh
  *
- ***************************************************************************/
+ * @brief Header of the StateManager class
+ *
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _STATEMANAGER_HH_
 #define _STATEMANAGER_HH_
@@ -27,11 +22,15 @@
 
 typedef FullLinkedList<log_msg_t> StateList;
 
+/**
+ * @brief Class that manages the different states of the log central
+ * @class StateManager
+ */
 class StateManager
 {
 public:
   /**
-   * Initialize the StateManager
+   * @brief Initialize the StateManager
    * The tags IN and OUT are always important.
    * @param readConfig ReadConfig reference
    * @param success used to indicated if the initialisation was successfull.
@@ -40,7 +39,7 @@ public:
   ~StateManager();
 
   /**
-   * To know if a message must be broadcast to all Tools
+   * @brief To know if a message must be broadcast to all Tools
    * By the same time register it if necessary (Important Tag)
    * @param msg Message to check and/or register
    * @return true if the message must be boradcast
@@ -49,7 +48,7 @@ public:
   check(log_msg_t* msg);
 
   /**
-   * Call by the LogCentraTool_impl to send the current SystemState
+   * @brief Call by the LogCentraTool_impl to send the current SystemState
    * to a new tool.
    * @param toolName name of the tool to send the SystemState
    */
