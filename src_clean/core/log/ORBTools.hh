@@ -1,20 +1,17 @@
-/****************************************************************************/
-/* A class for putting some ORB functions together - HEADER                 */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: ORBTools.hh,v 1.1 2004/01/09 11:07:12 ghoesch Exp $
- * $Log: ORBTools.hh,v $
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @file ORBTools.hh
  *
- ****************************************************************************/
+ * @brief  A class for putting some ORB functions together - HEADER
+ *
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
+
 
 #ifndef _ORBTOOLS_HH_
 #define _ORBTOOLS_HH_

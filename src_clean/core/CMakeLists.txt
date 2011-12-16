@@ -104,7 +104,6 @@ endif (DIET_USE_ALT_BATCH)
 
 set(Forwarder_SOURCES
   utils/SSHTunnel.cc
-  utils/Options.cc
   diet/Agent.cc
   diet/Callback.cc
   diet/MasterAgent.cc

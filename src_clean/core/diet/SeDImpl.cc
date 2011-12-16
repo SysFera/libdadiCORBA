@@ -1,3 +1,15 @@
+/**
+ * @file SeDImpl.hh
+ *
+ * @brief  DIET SeD implementation source code
+ *
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
+
 
 #include <cmath>
 #include <csignal>

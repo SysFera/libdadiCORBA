@@ -1,13 +1,14 @@
 /**
-* @file DIETForwarder.cc
-*
-* @brief   DIET forwarder implementation
-*
-* @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
+ * @file DIETForwarder.cc
+ *
+ * @brief   DIET forwarder implementation
+ *
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "CorbaForwarder.hh"
 

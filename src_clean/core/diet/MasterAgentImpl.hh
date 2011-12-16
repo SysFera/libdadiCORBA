@@ -1,105 +1,16 @@
 /**
-* @file  MasterAgentImpl.hh
-*
-* @brief  DIET master agent implementation header
-*
-* @author - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
-*         - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
-*         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.24  2011/02/04 15:20:48  hguemar
- * fixes to new configuration parser
- * some cleaning
+ * @file  MasterAgentImpl.hh
  *
- * Revision 1.23  2010/11/24 15:18:08  bdepardo
- * searchData is now available on all agents. SeDs are now able to retrieve
- * a DAGDA data from an alias specified by a client.
- * Currently a SeD cannot declare an alias.
+ * @brief  DIET master agent implementation header
  *
- * Revision 1.22  2010/07/12 20:14:32  glemahec
- * DIET 2.5 beta 1 - Forwarders with Multi-MAs bug correction
+ * @author - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ *         - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.21  2010/07/12 16:14:11  glemahec
- * DIET 2.5 beta 1 - Use the new ORB manager and allow the use of SSH-forwarders for all DIET CORBA objects
- *
- * Revision 1.20  2008/06/25 09:55:56  bisnard
- * removed unused parameter in submit_pb_set & corrected bug with ReqIDs
- *
- * Revision 1.19  2008/05/23 11:55:03  glemahec
- * 64 bits CORBA mapping bug correction.
- *
- * Revision 1.18  2008/04/29 22:22:02  glemahec
- * DAGDA improvements :
- *   - Asynchronous API.
- *   - Data ID alias managing.
- *   - Data manager state backup and restore.
- *
- * Revision 1.17  2008/04/14 13:44:29  bisnard
- * - Parameter 'used' obsoleted in MultiWfScheduler::submit_wf & submit_pb_set
- *
- * Revision 1.16  2008/04/10 09:17:09  bisnard
- * New version of the MaDag where workflow node execution is triggered by the MaDag agent and done by a new CORBA object CltWfMgr located in the client
- *
- * Revision 1.15  2007/07/13 10:00:25  ecaron
- * Remove deprecated code (ALTPREDICT part)
- *
- * Revision 1.14  2006/11/16 09:55:54  eboix
- *   DIET_config.h is no longer used. --- Injay2461
- *
- * Revision 1.13  2006/11/06 15:14:53  aamar
- * Workflow support: Correct some code about reqID
- *
- * Revision 1.12  2006/10/20 08:48:59  aamar
- * Remove the submit_wf function.
- * Handle the request ID in workflow submission.
- *
- * Revision 1.11  2006/04/14 14:17:38  aamar
- * Implementing the two methods for workflow support:
- *   - submit_wf (TO REMOVE)
- *   - submit_pb_set.
- *
- * Revision 1.10  2005/09/05 16:06:56  hdail
- * Addition of client hostname and location information to submit call.
- *
- * Revision 1.9  2004/12/16 11:16:44  sdahan
- * adds multi-mas informations into the logService
- *
- * Revision 1.8  2004/12/15 15:57:08  sdahan
- * rewrite the FloodRequestsList to use a simplest implementation. The previous mutex bugs does not exist anymore.
- *
- * Revision 1.7  2004/10/06 16:40:24  rbolze
- * implement function to return the Profiles avialable on platform when a client ask it
- *
- * Revision 1.6  2004/10/05 07:45:34  hdail
- * Grouped private and public members together.
- *
- * Revision 1.5  2004/10/04 09:40:43  sdahan
- * warning fix :
- *  - debug.cc : change the printf format from %ul to %lu and from %l to %ld
- *  - ReferenceUpdateThread and BindService : The omniORB documentation said that
- *    it's better to create private destructor for the thread subclasses. But
- *    private destructors generate warning, so I set the destructors public.
- *  - CORBA.h and DIET_config.h define the same macros. So I include the CORBA.h
- *    before the DIET_config.h to avoid to define two times the same macros.
- *  - remove the deprecated warning when including iostream.h and set.h
- *
- * Revision 1.4  2004/09/29 13:35:31  sdahan
- * Add the Multi-MAs feature.
- *
- * Revision 1.3  2004/02/27 10:25:11  bdelfabr
- * methods for data id creation and  methods to retrieve data descriptor are added
- *
- * Revision 1.2  2003/05/10 08:53:34  pcombes
- * New format for configuration files, new Parsers.
- *
- * Revision 1.1  2003/04/10 13:00:55  pcombes
- * Replace MasterAgent_impl.hh. Apply CS. Update submit profile.
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _MASTERAGENTIMPL_HH_
 #define _MASTERAGENTIMPL_HH_
@@ -121,6 +32,12 @@ class FloodRequestsList;
 #include "dadi/Logging/Logger.hh"
 
 
+/**
+ * @brief The master agent forwarder class that implements all the agents methods
+ * throught the forwarder
+ * @class MasterAgentFwdrImpl
+ * For non documented methods, please see the \ref MasterAgentIDL and its parents idl interfaces.
+ */
 class MasterAgentFwdrImpl : public POA_MasterAgentFwdr,
                             public PortableServer::RefCountServantBase {
 public:

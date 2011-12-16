@@ -1,67 +1,14 @@
 /**
-* @file DagdaImpl.hh
-*
-* @brief Dagda component implementation
-*
-* @author Gael Le Mahec (lemahec@clermont.in2p3.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.35  2011/03/18 08:43:32  hguemar
- * fix memory leak in DagdaImpl: getID() method returns a CORBA::String which is not always deallocated (patch from Gael Le Mahec)
+ * @file DagdaImpl.hh
  *
- * Revision 1.34  2011/03/16 22:02:34  bdepardo
- * Unbind dagda element in destructor
+ * @brief Dagda component implementation
  *
- * Revision 1.33  2011/03/03 00:29:46  bdepardo
- * Add missing include
+ * @author Gael Le Mahec (lemahec@clermont.in2p3.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.32  2011/03/03 00:23:10  bdepardo
- * Resolved a few fix me
- *
- * Revision 1.31  2010/12/17 09:48:01  kcoulomb
- * * Set diet to use the new log with forwarders
- * * Fix a CoRI problem
- * * Add library version remove DTM flag from ccmake because deprecated
- *
- * Revision 1.30  2010/10/15 02:38:55  bdepardo
- * Bug correction in INOUT data
- *
- * Revision 1.29  2010/08/04 09:06:20  glemahec
- * Parallel compilation
- *
- * Revision 1.28  2010/07/12 16:14:12  glemahec
- * DIET 2.5 beta 1 - Use the new ORB manager and allow the use of SSH-forwarders for all DIET CORBA objects
- *
- * Revision 1.27  2009/10/26 09:11:26  bdepardo
- * Added method for dynamically managing the hierarchy:
- * - void subscribeParent(const char * parentID)
- * - void unsubscribeParent()
- *
- * Revision 1.26  2009/04/17 08:50:49  bisnard
- * added handling of container empty elements
- *
- * Revision 1.25  2009/03/27 09:09:41  bisnard
- * replace container size attr by dynamic value
- *
- * Revision 1.24  2009/01/16 13:36:13  bisnard
- * changed Container constructor signature
- * modified scope of getDataRelationMgr to protected
- * lock container during element addition
- * check lock before sending container
- *
- * Revision 1.23  2008/12/09 12:06:21  bisnard
- * changed container download method to transfer only the list of IDs
- * (each container element must be downloaded separately)
- *
- * Revision 1.22  2008/11/07 14:32:14  bdepardo
- * Headers correction
- *
- *
- ***********************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _DAGDAIMPL_HH_
 #define _DAGDAIMPL_HH_

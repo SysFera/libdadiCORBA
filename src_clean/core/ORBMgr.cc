@@ -1,13 +1,14 @@
 /**
-* @file ORBMgr.cc
-*
-* @brief  ORB manager v. 2.0 - CORBA management with DIET forwarders
-*
-* @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
+ * @file ORBMgr.cc
+ *
+ * @brief  ORB manager v. 2.0 - CORBA management with DIET forwarders
+ *
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include <list>
 #include <map>

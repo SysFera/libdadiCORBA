@@ -1,24 +1,17 @@
-/****************************************************************************/
-/* Thread safe generic Double linked list with full access                  */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.2  2006/06/01 16:13:47  rbolze
- * change to be able to compile with gcc-4
- * Thanks to Abdelkader Amar who has done the work.
+/**
+ * @file FullLinkedList.hh
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+ * @brief Thread safe generic Double linked list with full access
  *
- ****************************************************************************/
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
+
 
 #ifndef _FULLLINKEDLIST_HH_
 #define _FULLLINKEDLIST_HH_

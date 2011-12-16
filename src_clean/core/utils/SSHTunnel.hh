@@ -18,6 +18,10 @@
 
 #include "dadi/Logging/Logger.hh"
 
+/**
+ * @brief The generic class to handle ssh connection
+ * @class SSHConnection
+ */
 class SSHConnection {
 public:
   SSHConnection();
@@ -81,17 +85,21 @@ protected:
 
 private:
   /* SSH executable path. */
-  std::string sshPath;
+  std::string msshPath;
   /* SSH connection params. */
-  std::string login;
-  std::string keyPath;
-  std::string sshHost;
-  std::string sshPort;
-  std::string options;
+  std::string mlogin;
+  std::string mkeyPath;
+  std::string msshHost;
+  std::string msshPort;
+  std::string moptions;
 
 
 };
 
+/**
+ * @brief The generic class to handle ssh tunnels
+ * @class SSHTunnel
+ */
 class SSHTunnel : public SSHConnection {
 public:
   SSHTunnel();
@@ -179,29 +187,33 @@ public:
   createTunnelFrom(const bool create);
 private:
   /* Format strings for ssh commands. */
-  static std::string cmdFormat;
-  static std::string cmdFormatDefault;
-  static std::string localFormat;
-  static std::string remoteFormat;
-  static std::string keyFormat;
+  static std::string mcmdFormat;
+  static std::string mcmdFormatDefault;
+  static std::string mlocalFormat;
+  static std::string mremoteFormat;
+  static std::string mkeyFormat;
   /* Tunnel configuration. */
-  bool createFrom;
-  bool createTo;
-  unsigned int waitingTime;
-  std::string localPortTo;
-  std::string localPortFrom;
-  std::string remoteHost;
-  std::string remotePortTo;
-  std::string remotePortFrom;
+  bool mcreateFrom;
+  bool mcreateTo;
+  unsigned int mwaitingTime;
+  std::string mlocalPortTo;
+  std::string mlocalPortFrom;
+  std::string mremoteHost;
+  std::string mremotePortTo;
+  std::string mremotePortFrom;
 
   /* Process pid. */
-  pid_t pid;
+  pid_t mpid;
 
   std::string
   makeCmd();
 };
 
 /* Copy a file using scp. */
+/**
+ * @brief The generic class to handle scp
+ * @class SSHCopy
+ */
 class SSHCopy : public SSHConnection {
 public:
   SSHCopy(const std::string & sshHost,
@@ -215,11 +227,11 @@ public:
   putFile() const;
 
 private:
-  std::string remoteFilename;
-  std::string localFilename;
+  std::string mremoteFilename;
+  std::string mlocalFilename;
 
   /* Process pid. */
-  mutable pid_t pid;
+  mutable pid_t mpid;
 };
 
 

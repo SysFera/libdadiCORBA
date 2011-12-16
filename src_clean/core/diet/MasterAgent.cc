@@ -1,32 +1,14 @@
 /**
-* @file MasterAgent.cc
-*
-* @brief  DIET forwarder implementation - MA DAG forwarder implementation
-*
-* @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.5  2010/11/24 15:12:56  bdepardo
- * searchData is now available on all agents. SeDs are now able to retrieve
- * a DAGDA data from an alias specified by a client.
- * Currently a SeD cannot declare an alias.
+ * @file MasterAgent.cc
  *
- * Revision 1.4  2010/07/27 16:16:49  glemahec
- * Forwarders robustness
+ * @brief  DIET forwarder implementation - MA DAG forwarder implementation
  *
- * Revision 1.3  2010/07/14 23:45:30  bdepardo
- * Header corrections
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.2  2010/07/13 15:24:13  glemahec
- * Warnings corrections and some robustness improvements
- *
- * Revision 1.1  2010/07/12 16:08:56  glemahec
- * DIET 2.5 beta 1 - Forwarder implementations
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"

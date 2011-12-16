@@ -1,30 +1,16 @@
-/****************************************************************************/
-/* Header corresponding to the LogComponentComponent interface              */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: LogCentralComponent_impl.hh,v 1.4 2010/12/13 12:21:14 kcoulomb Exp $
- * $Log: LogCentralComponent_impl.hh,v $
- * Revision 1.4  2010/12/13 12:21:14  kcoulomb
- * Clean types
+/**
+ * @file LogCentralComponent_impl.cc
  *
- * Revision 1.3  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
+ * @brief Implementation corresponding to the LogComponentComponent interface
  *
- * Revision 1.2  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ***************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _LOGCENTRALCOMPONENT_IMPL_HH_
 #define _LOGCENTRALCOMPONENT_IMPL_HH_
@@ -51,13 +37,14 @@ const short LS_COMPONENT_DISCONNECT_NOTEXISTS
 
 
 /**
- * Implements the Component-Servant on the LogCentral.
+ * @brief Implements the Component-Servant on the LogCentral.
  * The Servant is responsible for connection and deconnection components,
  * forwarding messages and synchronisation. This includes:
  * - store components in internal list
  * - correct time for incoming messages
  *   and forward them to the timebuffer
  * - synchronize with components
+ * @class LastPing
  */
 class LastPing
 {
@@ -73,6 +60,10 @@ public:
 };
 typedef FullLinkedList<LastPing> LastPings;
 
+/**
+ * @brief The implementation of the log component interface
+ * @class LogCentralComponent_impl
+ */
 class LogCentralComponent_impl: public POA_LogCentralComponent,
                                 public PortableServer::RefCountServantBase {
 public:
@@ -177,10 +168,20 @@ private:
   getGeneratedName(const char* hostname, ComponentList::ReadIterator* it);
 
 private:
+  /**
+   * @brief A thread to check if it is alive
+   * @class LogCentralComponent_impl
+   */
   class AliveCheckThread:public omni_thread
   {
   public:
+/**
+ * @brief Constructor
+ */
     AliveCheckThread(LogCentralComponent_impl* LCC);
+/**
+ * @brief Destructor
+ */
     ~AliveCheckThread();
     /**
      * Start the thread. Return immediately.
@@ -211,7 +212,10 @@ private:
 }; // end class LogCentralComponen_impl
 
 
-
+/**
+ * @brief The implementation of the log component interface
+ * @class LogCentralComponentFwdrImpl
+ */
 class LogCentralComponentFwdrImpl: public POA_LogCentralComponentFwdr,
 				   public PortableServer::RefCountServantBase {
 public:
@@ -259,6 +263,10 @@ private:
 }; // end class LogCentralComponentFwdr_impl
 
 
+/**
+ * @brief The implementation of the log component configurator
+ * @class ComponentConfiguratorFwdr_impl
+ */
 class ComponentConfiguratorFwdr_impl: public POA_ComponentConfiguratorFwdr,
 				   public PortableServer::RefCountServantBase {
 public:

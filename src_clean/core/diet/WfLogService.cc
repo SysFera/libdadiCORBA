@@ -1,30 +1,14 @@
 /**
-* @file WfLogService.cc
-* 
-* @brief  DIET forwarder implementation - Workflow Logservice forwarder implem
-* 
-* @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr) 
-* 
-* @section Licence
-*   |LICENSE|                                                                
-*/
-/* $Id$
- * $Log$
- * Revision 1.5  2010/07/27 16:16:49  glemahec
- * Forwarders robustness
+ * @file WfLogService.cc
  *
- * Revision 1.4  2010/07/20 08:56:23  bisnard
- * Updated WfLogService IDL
+ * @brief  DIET forwarder implementation - Workflow Logservice forwarder implem
  *
- * Revision 1.3  2010/07/14 23:45:30  bdepardo
- * Header corrections
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.2  2010/07/13 15:24:13  glemahec
- * Warnings corrections and some robustness improvements
- *
- * Revision 1.1  2010/07/12 16:08:56  glemahec
- * DIET 2.5 beta 1 - Forwarder implementations
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "DIETForwarder.hh"
 #include "ORBMgr.hh"

@@ -1,27 +1,14 @@
 /**
-* @file MaDag.cc
-*
-* @brief  DIET forwarder implementation - MA DAG forwarder implementation
-*
-* @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.4  2010/07/27 16:16:49  glemahec
- * Forwarders robustness
+ * @file MaDag.cc
  *
- * Revision 1.3  2010/07/14 23:45:30  bdepardo
- * Header corrections
+ * @brief  DIET forwarder implementation - MA DAG forwarder implementation
  *
- * Revision 1.2  2010/07/13 15:24:13  glemahec
- * Warnings corrections and some robustness improvements
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.1  2010/07/12 16:08:56  glemahec
- * DIET 2.5 beta 1 - Forwarder implementations
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"

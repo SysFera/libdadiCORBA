@@ -1,19 +1,20 @@
  /**
-* @file Fwdr.cc
-*
-* @brief   DIET forwarder implementation - Forwarder executable
-*
-* @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
+  * @file Fwdr.cc
+  *
+  * @brief   DIET forwarder implementation - Forwarder executable
+  *
+  * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+  *
+  * @section Licence
+  *   |LICENSE|
+  */
 
 #include "Forwarder.hh"
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"
 #include "utils/SSHTunnel.hh"
-#include "utils/Options.hh"
+//#include "utils/Options.hh"
 
 #include <iostream>
 #include <cstdlib>

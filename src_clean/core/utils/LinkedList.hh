@@ -4,6 +4,7 @@
  * @brief  Thread generic double linked list header
  *
  * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *          Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section Licence
  *   |LICENCE|

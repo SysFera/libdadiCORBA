@@ -1,43 +1,14 @@
 /**
-* @file Agent.cc
-*
-* @brief  DIET forwarder implementation - Agent forwarder implementation
-*
-* @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.8  2011/02/24 16:56:20  bdepardo
- * Use new parser
+ * @file Agent.cc
  *
- * Revision 1.7  2010/12/17 09:47:59  kcoulomb
- * * Set diet to use the new log with forwarders
- * * Fix a CoRI problem
- * * Add library version remove DTM flag from ccmake because deprecated
+ * @brief  DIET forwarder implementation - Agent forwarder implementation
  *
- * Revision 1.6  2010/11/24 15:12:56  bdepardo
- * searchData is now available on all agents. SeDs are now able to retrieve
- * a DAGDA data from an alias specified by a client.
- * Currently a SeD cannot declare an alias.
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.5  2010/07/27 16:16:49  glemahec
- * Forwarders robustness
- *
- * Revision 1.4  2010/07/27 10:24:32  glemahec
- * Improve robustness & general performance
- *
- * Revision 1.3  2010/07/14 23:45:30  bdepardo
- * Header corrections
- *
- * Revision 1.2  2010/07/13 15:24:13  glemahec
- * Warnings corrections and some robustness improvements
- *
- * Revision 1.1  2010/07/12 16:08:56  glemahec
- * DIET 2.5 beta 1 - Forwarder implementations
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"

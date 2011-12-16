@@ -1,31 +1,14 @@
 /**
-* @file SeD.cc
-*
-* @brief  DIET forwarder implementation - SeD forwarder implementation
-*
-* @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
-*
-* @section Licence
-*   |LICENSE|
-*/
-/* $Id$
- * $Log$
- * Revision 1.5  2011/05/09 13:10:10  bdepardo
- * Added method diet_get_SeD_services to retreive the services of a SeD given
- * its name
+ * @file SeD.cc
  *
- * Revision 1.4  2010/07/27 16:16:49  glemahec
- * Forwarders robustness
+ * @brief  DIET forwarder implementation - SeD forwarder implementation
  *
- * Revision 1.3  2010/07/14 23:45:30  bdepardo
- * Header corrections
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
- * Revision 1.2  2010/07/13 15:24:13  glemahec
- * Warnings corrections and some robustness improvements
- *
- * Revision 1.1  2010/07/12 16:08:56  glemahec
- * DIET 2.5 beta 1 - Forwarder implementations
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"

@@ -1,3 +1,14 @@
+/**
+ * @file AgentImp.cc
+ *
+ * @brief  DIET forwarder implementation - Agent forwarder implementation
+ *
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "AgentImpl.hh"
 

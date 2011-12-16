@@ -1,3 +1,14 @@
+/**
+ * @file LocalAgentImp.cc
+ *
+ * @brief  DIET forwarder implementation - Local Agent forwarder implementation
+ *
+ * @author - Gael Le Mahec   (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "LocalAgentImpl.hh"
 #include "ORBMgr.hh"

@@ -1,58 +1,24 @@
-/****************************************************************************/
-/* Implementation corresponding to the LogComponentComponent interface      */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: LogCentralComponent_impl.cc,v 1.10 2011/02/04 15:14:26 bdepardo Exp $
- * $Log: LogCentralComponent_impl.cc,v $
- * Revision 1.10  2011/02/04 15:14:26  bdepardo
- * Initialize members in constructor.
- * Reduce variable scope.
+/**
+ * @file LogCentralComponent_impl.cc
  *
- * Revision 1.9  2010/12/13 12:21:14  kcoulomb
- * Clean types
+ * @brief Implementation corresponding to the LogComponentComponent interface
  *
- * Revision 1.8  2010/12/08 11:37:54  kcoulomb
- * Refix the static library problem.
- * Renamed the monitor/Options to monitor/LogOptions due to conflict creating the static lib (2 files called Options)
+ * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.7  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
- *
- * Revision 1.6  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
- *
- * Revision 1.5  2007/09/03 06:33:24  bdepardo
- * Removed IOR, it was useless.
- *
- * Revision 1.4  2007/08/31 16:41:17  bdepardo
- * When trying to add a new component, we check if the name of the component exists and if the component is reachable
- * - it the name already exists:
- *    - if the component is reachable, then we do not connect the new component
- *    - else we consider that the component is lost, and we delete the old component ant add the new one
- * - else add the component
- *
- * Revision 1.3  2004/06/01 21:39:57  hdail
- * Tracking down seg fault of LogService:
- * - Corrected mis-matched malloc / delete
- * - Corrected error in size of string allocation, and terminated string with \0
- *
- * Revision 1.2  2004/03/02 08:38:16  rbolze
- * add some information in the IN and OUT messages
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ***************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "LogCentralComponent_impl.hh"
+
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <stdlib.h>
+
 #include "ComponentList.hh"
 #include "FilterManagerInterface.hh"
 #include "TimeBuffer.hh"
@@ -63,10 +29,6 @@
 // helpers
 #include "log/ORBTools.hh"
 
-#include <stdio.h>
-#include <string.h>
-#include <iostream>
-#include <stdlib.h>
 
 using namespace std;
 
