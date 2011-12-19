@@ -23,15 +23,15 @@
 
 SendThread::SendThread(ToolList* toolList)
 {
-  this->toolList = toolList;
-  runSendThread=false;
+  this->mtoolList = toolList;
+  mrunSendThread=false;
 }
 
 void
 SendThread::startThread()
 {
-  if (runSendThread == false) {
-    runSendThread = true;
+  if (mrunSendThread == false) {
+    mrunSendThread = true;
     start_undetached();
   }
   // else thread is already running
@@ -40,8 +40,8 @@ SendThread::startThread()
 void
 SendThread::stopThread()
 {
-  if (runSendThread == true) {
-    runSendThread = false;
+  if (mrunSendThread == true) {
+    mrunSendThread = false;
     join(NULL);
   }
   // else thread is not running
@@ -61,9 +61,9 @@ SendThread::run_undetached(void* arg) {
   int tCnt;
   int mCnt;
 
-  while (runSendThread) {
+  while (mrunSendThread) {
     // main loop
-    toolIt = toolList->getIterator();
+    toolIt = mtoolList->getIterator();
 
     tCnt=0;
     mCnt=0;
@@ -119,8 +119,8 @@ SendThread::run_undetached(void* arg) {
 }
 
 SendThread::~SendThread() {
-  if (runSendThread == true) {
-    runSendThread = false;
+  if (mrunSendThread == true) {
+    mrunSendThread = false;
     join(NULL);
   }
 }

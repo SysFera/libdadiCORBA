@@ -67,12 +67,12 @@ private:
    * stopThread will set this to false to stop the main loop of this
    * thread.
    */
-  bool runSendThread;
+  bool mrunSendThread;
 
   /**
    * Stores the toolList the thread uses
    */
-  ToolList* toolList;
+  ToolList* mtoolList;
 };
 
 #endif

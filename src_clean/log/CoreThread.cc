@@ -22,18 +22,18 @@ using namespace std;
 CoreThread::CoreThread(TimeBuffer* timeBuffer, StateManager* stateManager,
                        FilterManagerInterface* filterManager,
                        ToolList* toolList):
-timeBuffer(timeBuffer),
-stateManager(stateManager),
-filterManager(filterManager),
-toolList(toolList),
-threadRunning(false)
+mtimeBuffer(timeBuffer),
+mstateManager(stateManager),
+mfilterManager(filterManager),
+mtoolList(toolList),
+mthreadRunning(false)
 {
 }
 
 CoreThread::~CoreThread()
 {
-  if (this->threadRunning) {
-    this->threadRunning = false;
+  if (this->mthreadRunning) {
+    this->mthreadRunning = false;
     join(NULL);
   }
 }
@@ -41,20 +41,20 @@ CoreThread::~CoreThread()
 void
 CoreThread::startThread()
 {
-  if (this->threadRunning) {
+  if (this->mthreadRunning) {
     return;
   }
-  this->threadRunning = true;
+  this->mthreadRunning = true;
   start_undetached();
 }
 
 void
 CoreThread::stopThread()
 {
-  if (!this->threadRunning) {
+  if (!this->mthreadRunning) {
     return;
   }
-  this->threadRunning = false;
+  this->mthreadRunning = false;
   join(NULL);
 }
 
@@ -65,7 +65,7 @@ CoreThread::run_undetached(void* params)
   log_msg_t* msg = NULL;
   ToolList::ReadIterator* it = NULL;
   bool haveMsgs;
-  while (this->threadRunning) {
+  while (this->mthreadRunning) {
     minAge = getLocalTime();
     minAge.sec -= LogOptions::CORETHREAD_MINAGE_TIME_SEC;
     minAge.msec -= LogOptions::CORETHREAD_MINAGE_TIME_MSEC;
@@ -75,17 +75,17 @@ CoreThread::run_undetached(void* params)
     }
     haveMsgs=true;
     while (haveMsgs) {
-      msg = this->timeBuffer->get(minAge);
+      msg = this->mtimeBuffer->get(minAge);
       if (msg != NULL) { // we have a message
-        if (this->stateManager->check(msg)) { // directly sent
-          it = this->toolList->getReadIterator();
+        if (this->mstateManager->check(msg)) { // directly sent
+          it = this->mtoolList->getReadIterator();
           while (it->hasCurrent()) {
             it->getCurrentRef()->outBuffer.push(msg);
             it->nextRef();
           }
           delete it;
         } else { // send to the FilterManager
-          this->filterManager->sendMessageWithFilters(msg);
+          this->mfilterManager->sendMessageWithFilters(msg);
         }
         delete msg;
       } else {

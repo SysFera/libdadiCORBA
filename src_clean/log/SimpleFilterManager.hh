@@ -133,18 +133,18 @@ public:
   sendMessageWithFilters(log_msg_t* message);
 
 private:
-  ToolList* toolList;
-  ComponentList* componentList;
+  ToolList* mtoolList;
+  ComponentList* mcomponentList;
 
   /**
    * hold current configuration for each component
    */
-  ConfigList configList;
+  ConfigList mconfigList;
 
   /**
    * taglist that contains stateChanging tags that must always be sent
    */
-  tag_list_t systemStateTags;
+  tag_list_t msystemStateTags;
 
   /**
    * Checks if a given component_list_t contains the

@@ -27,11 +27,11 @@ SimpleFilterManager::SimpleFilterManager(ToolList* toolList,
                                          ComponentList* compList,
                                          tag_list_t* stateTags)
 {
-  this->toolList = toolList;
-  this->componentList = compList;
+  this->mtoolList = toolList;
+  this->mcomponentList = compList;
   
   if (stateTags != NULL) {
-    this->systemStateTags = *stateTags;
+    this->msystemStateTags = *stateTags;
   }
 }
 
@@ -100,10 +100,10 @@ SimpleFilterManager::removeFilter(const char* toolName,
 
   // rebuild all configs
   // clear configs first...
-  configIt = configList.getIterator();
+  configIt = mconfigList.getIterator();
   while (configIt->hasCurrent()) {
     // reset config to core tags
-    configIt->getCurrentRef()->config = systemStateTags;
+    configIt->getCurrentRef()->config = msystemStateTags;
     configIt->nextRef();
   }
   delete(configIt);
@@ -145,10 +145,10 @@ SimpleFilterManager::flushAllFilters(const char* toolName,
 
   // rebuild all configs
   // clear configs first...
-  configIt = configList.getIterator();
+  configIt = mconfigList.getIterator();
   while (configIt->hasCurrent()) {
     // reset config to core tags
-    configIt->getCurrentRef()->config = systemStateTags;
+    configIt->getCurrentRef()->config = msystemStateTags;
     configIt->nextRef();
   }
   delete(configIt);
@@ -189,20 +189,20 @@ SimpleFilterManager::componentConnect(const char* componentName,
   cfgEl = new ConfigElement();
   cfgEl->componentName = CORBA::string_dup(componentName);
   // "empty" configs always include the systemState tags
-  cfgEl->config = systemStateTags;
-  cfgEl->oldConfig = systemStateTags;
+  cfgEl->config = msystemStateTags;
+  cfgEl->oldConfig = msystemStateTags;
 
-  cfgIt = configList.getIterator();
+  cfgIt = mconfigList.getIterator();
   cfgIt->insertBeforeRef(cfgEl);
 
   // now iterate through each Filter
   // if it matches add it to the new config
-  toolIt = toolList->getReadIterator();
+  toolIt = mtoolList->getReadIterator();
   while (toolIt->hasCurrent()) {
     toolEl = toolIt->getCurrentRef();
     filterIt = toolEl->filterList.getReadIterator();
     while (filterIt->hasCurrent()) {
-      if (containsComponent(&(filterIt->getCurrentRef()->componentList),
+      if (containsComponent(&(filterIt->getCurrentRef()->mcomponentList),
                             componentName)) {
         addTagList(&(cfgEl->config), &(filterIt->getCurrentRef()->tagList));
       }
@@ -228,7 +228,7 @@ SimpleFilterManager::componentDisconnect(const char* componentName,
   // remove the components configuration
   ConfigList::Iterator* it;
 
-  it = configList.getIterator();
+  it = mconfigList.getIterator();
   while (it->hasCurrent()) {
     if (strcmp((char*)(it->getCurrentRef()->componentName),componentName)==0) {
       break;
@@ -246,14 +246,14 @@ SimpleFilterManager::sendMessageWithFilters(log_msg_t* message)
   FilterList::ReadIterator* filterIt;
   filter_t* filter;
 
-  toolIt = toolList->getReadIterator();
+  toolIt = mtoolList->getReadIterator();
   while (toolIt->hasCurrent()) {
 
     filterIt = toolIt->getCurrentRef()->filterList.getReadIterator();
     while (filterIt->hasCurrent()) {
       filter = filterIt->getCurrentRef();
 
-      if (containsComponent(&(filter->componentList),message->componentName)) {
+      if (containsComponent(&(filter->mcomponentList),message->componentName)) {
         if (containsTag(&(filter->tagList),message->tag)) {
           // okay, this filter fits
           // ush the element on the list, it will be copied automatically
@@ -384,10 +384,10 @@ SimpleFilterManager::addFilter(filter_t* filter)
 {
   ConfigList::Iterator* configIt;
 
-  configIt = configList.getIterator();
+  configIt = mconfigList.getIterator();
 
   while(configIt->hasCurrent()) {
-    if (containsComponent(&(filter->componentList), 
+    if (containsComponent(&(filter->mcomponentList), 
                           (const char*)(configIt->getCurrentRef()->componentName))) {
       // this component is part of the filter and must be altered
       addTagList(&(configIt->getCurrentRef()->config), &(filter->tagList));
@@ -409,8 +409,8 @@ SimpleFilterManager::updateComponentConfigs() {
   unsigned int i;
   bool listsEqual;
 
-  configIt = configList.getIterator();
-  compIt = componentList->getIterator();
+  configIt = mconfigList.getIterator();
+  compIt = mcomponentList->getIterator();
 
   while(configIt->hasCurrent()) {
     cfgEl = configIt->getCurrentRef();

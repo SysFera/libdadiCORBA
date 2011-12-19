@@ -43,11 +43,11 @@ private:
   void*
   run_undetached(void* params);
 
-  TimeBuffer* timeBuffer;
-  StateManager* stateManager;
-  FilterManagerInterface* filterManager;
-  ToolList* toolList;
-  bool threadRunning;
+  TimeBuffer* mtimeBuffer;
+  StateManager* mstateManager;
+  FilterManagerInterface* mfilterManager;
+  ToolList* mtoolList;
+  bool mthreadRunning;
 };
 #endif
 
