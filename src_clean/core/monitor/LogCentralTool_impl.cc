@@ -432,8 +432,8 @@ LogCentralToolFwdr_impl::flushAllFilters(const char* toolName){
 
 ToolMsgReceiverFwdr_impl::ToolMsgReceiverFwdr_impl(Forwarder_ptr fwdr,
 			  const char* objName){
-  this->forwarder = Forwarder::_duplicate(fwdr);
-  this->objName = CORBA::string_dup(objName);
+  this->mforwarder = Forwarder::_duplicate(fwdr);
+  this->mobjName = CORBA::string_dup(objName);
 }
 
 
@@ -444,5 +444,5 @@ ToolMsgReceiverFwdr_impl::~ToolMsgReceiverFwdr_impl(){
 
 void
 ToolMsgReceiverFwdr_impl::sendMsg(const log_msg_buf_t& msgBuf){
-  return forwarder->sendMsg(msgBuf, objName);
+  return mforwarder->sendMsg(msgBuf, mobjName);
 }

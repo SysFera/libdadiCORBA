@@ -1,21 +1,14 @@
-/****************************************************************************/
-/* The SimpleFilterManager implements the FilterManagerInterface. This      */
-/* Implementation is complete, but it is not very efficient.                */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @brief The SimpleFilterManager implements the FilterManagerInterface. This
+ * Implementation is complete, but it is not very efficient.
  *
- ***************************************************************************/
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _SIMPLEFILTERMANAGER_HH_
 #define _SIMPLEFILTERMANAGER_HH_

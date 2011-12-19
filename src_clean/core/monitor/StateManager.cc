@@ -21,70 +21,70 @@ using namespace std;
 StateManager::StateManager(ReadConfig* readConfig, bool* success)
 {
   *success = false;
-  this->dynamicTagsList = readConfig->getDynamicTags();
-  if (this->dynamicTagsList == NULL) {
+  this->mdynamicTagsList = readConfig->getDynamicTags();
+  if (this->mdynamicTagsList == NULL) {
     cout << "Internal Error (StateManager)\n";
   } else {
     char* s;
 
-    this->start = readConfig->getDynamicStartSuffix();
-    unsigned int l1 = strlen(start);
-    this->stop = readConfig->getDynamicStopSuffix();
-    unsigned int l2 = strlen(stop);
+    this->mstart = readConfig->getDynamicStartSuffix();
+    unsigned int l1 = strlen(mstart);
+    this->mstop = readConfig->getDynamicStopSuffix();
+    unsigned int l2 = strlen(mstop);
 
-    this->dynamicStarts = new tag_list_t();
-    this->dynamicStarts->length(this->dynamicTagsList->length());
-    this->dynamicStops = new tag_list_t();
-    this->dynamicStops->length(this->dynamicTagsList->length());
+    this->mdynamicStarts = new tag_list_t();
+    this->mdynamicStarts->length(this->mdynamicTagsList->length());
+    this->mdynamicStops = new tag_list_t();
+    this->mdynamicStops->length(this->mdynamicTagsList->length());
 
-    for (CORBA::ULong i = 0 ; i < this->dynamicTagsList->length() ; i++) {
-      s = new char[strlen((*(this->dynamicTagsList))[i]) + l1 + 2];
-      sprintf(s, "%s_%s", (const char*)(*(this->dynamicTagsList))[i],
-          this->start);
-      (*(this->dynamicStarts))[i] = CORBA::string_dup(s);
+    for (CORBA::ULong i = 0 ; i < this->mdynamicTagsList->length() ; i++) {
+      s = new char[strlen((*(this->mdynamicTagsList))[i]) + l1 + 2];
+      sprintf(s, "%s_%s", (const char*)(*(this->mdynamicTagsList))[i],
+          this->mstart);
+      (*(this->mdynamicStarts))[i] = CORBA::string_dup(s);
       delete[] s;
 
-      s = new char[strlen((*(this->dynamicTagsList))[i]) + l2 + 2];
-      sprintf(s, "%s_%s", (const char*)(*(this->dynamicTagsList))[i],
-          this->stop);
-      (*(this->dynamicStops))[i] = CORBA::string_dup(s);
+      s = new char[strlen((*(this->mdynamicTagsList))[i]) + l2 + 2];
+      sprintf(s, "%s_%s", (const char*)(*(this->mdynamicTagsList))[i],
+          this->mstop);
+      (*(this->mdynamicStops))[i] = CORBA::string_dup(s);
       delete[] s;
     }
   }
-  this->staticTagsList = readConfig->getStaticTags();
-  if (this->staticTagsList == NULL) {
+  this->mstaticTagsList = readConfig->getStaticTags();
+  if (this->mstaticTagsList == NULL) {
     cout << "Internal Error (StateManager)\n";
   }
-  this->uniqueTagsList = readConfig->getUniqueTags();
-  if (this->uniqueTagsList == NULL) {
+  this->muniqueTagsList = readConfig->getUniqueTags();
+  if (this->muniqueTagsList == NULL) {
     cout << "Internal Error (StateManager)\n";
   }
-  this->stateList = new StateList();
+  this->mstateList = new StateList();
   *success = true;
 }
 
 StateManager::~StateManager()
 {
-  if (this->dynamicTagsList != NULL) {
-    delete this->dynamicTagsList;
-    delete this->dynamicStarts;
-    delete this->dynamicStops;
-    delete[] this->start;
-    delete[] this->stop;
+  if (this->mdynamicTagsList != NULL) {
+    delete this->mdynamicTagsList;
+    delete this->mdynamicStarts;
+    delete this->mdynamicStops;
+    delete[] this->mstart;
+    delete[] this->mstop;
   }
-  if (this->staticTagsList != NULL) {
-    delete this->staticTagsList;
+  if (this->mstaticTagsList != NULL) {
+    delete this->mstaticTagsList;
   }
-  if (this->uniqueTagsList != NULL) {
-    delete this->uniqueTagsList;
+  if (this->muniqueTagsList != NULL) {
+    delete this->muniqueTagsList;
   }
-  delete this->stateList;
+  delete this->mstateList;
 }
 
 bool
 StateManager::check(log_msg_t* msg)
 {
-  if (this->dynamicTagsList == NULL) {
+  if (this->mdynamicTagsList == NULL) {
     return false;
   }
   char* tag = msg->tag;
@@ -93,10 +93,10 @@ StateManager::check(log_msg_t* msg)
   bool found = false;
   log_msg_t* state = NULL;
   // Check if this tag belongs to the unique tag list
-  for (CORBA::ULong i = 0 ; i < this->uniqueTagsList->length() ; i++) {
-    if (strcmp(tag, (*(this->uniqueTagsList))[i]) == 0) {
+  for (CORBA::ULong i = 0 ; i < this->muniqueTagsList->length() ; i++) {
+    if (strcmp(tag, (*(this->muniqueTagsList))[i]) == 0) {
       found = true;
-      it = this->stateList->getIterator();
+      it = this->mstateList->getIterator();
       it->resetToLast();
       while (it->hasCurrent()) {
         state = it->getCurrentRef();
@@ -109,16 +109,16 @@ StateManager::check(log_msg_t* msg)
         }
       }
       delete it;
-      this->stateList->push(msg);
+      this->mstateList->push(msg);
     }
   }
   if (!found) {
     found = false;
     // Check if this tag belongs to the dynamic starts tag list
-    for (CORBA::ULong i = 0 ; i < this->dynamicStarts->length() ; i++) {
-      if (strcmp(tag, (*(this->dynamicStarts))[i]) == 0) {
+    for (CORBA::ULong i = 0 ; i < this->mdynamicStarts->length() ; i++) {
+      if (strcmp(tag, (*(this->mdynamicStarts))[i]) == 0) {
         found = true;
-        this->stateList->push(msg);
+        this->mstateList->push(msg);
         break;
       }
     }
@@ -126,17 +126,17 @@ StateManager::check(log_msg_t* msg)
   if (!found) {
     found = false;
     // Check if this tag belongs to the dynamic stops tag list
-    for (CORBA::ULong i = 0 ; i < this->dynamicStops->length() ; i++) {
-      if (strcmp(tag, (*(this->dynamicStops))[i]) == 0) {
+    for (CORBA::ULong i = 0 ; i < this->mdynamicStops->length() ; i++) {
+      if (strcmp(tag, (*(this->mdynamicStops))[i]) == 0) {
         found = true;
         unsigned int l1 = strlen(tag);
-        unsigned int l2 = strlen(this->start);
-        unsigned int l3 = strlen(this->stop);
+        unsigned int l2 = strlen(this->mstart);
+        unsigned int l3 = strlen(this->mstop);
         *(tag + l1 - l3) = '\0'; // trunc after the '_'
         char* s = new char[l1 + l2 - l3 + 1];
-        sprintf(s, "%s%s", tag, this->start);
-        *(tag + l1 - l3) = *(this->stop); // restore the string
-        it = this->stateList->getIterator();
+        sprintf(s, "%s%s", tag, this->mstart);
+        *(tag + l1 - l3) = *(this->mstop); // restore the string
+        it = this->mstateList->getIterator();
         it->resetToLast();
         while (it->hasCurrent()) {
           state = it->getCurrentRef();
@@ -157,10 +157,10 @@ StateManager::check(log_msg_t* msg)
   if (!found) {
     found = false;
     // Check if this tag belongs to the static tag list
-    for (CORBA::ULong i = 0 ; i < this->staticTagsList->length() ; i++) {
-      if (strcmp(tag, (*(this->staticTagsList))[i]) == 0) {
+    for (CORBA::ULong i = 0 ; i < this->mstaticTagsList->length() ; i++) {
+      if (strcmp(tag, (*(this->mstaticTagsList))[i]) == 0) {
         found = true;
-        this->stateList->push(msg);
+        this->mstateList->push(msg);
         break;
       }
     }
@@ -170,10 +170,10 @@ StateManager::check(log_msg_t* msg)
     // Check if this tag is an IN or OUT tag
     if (strcmp(tag, "IN") == 0 ) {
       found = true;
-      this->stateList->push(msg);
+      this->mstateList->push(msg);
     } else if (strcmp(tag, "OUT") == 0) {
       found = true;
-      it = this->stateList->getIterator();
+      it = this->mstateList->getIterator();
       while (it->hasCurrent()) {
         state = it->getCurrentRef();
         if (strcmp(name, state->componentName) == 0) {
@@ -192,7 +192,7 @@ void
 StateManager::askForSystemState(OutBuffer* outBuffer)
 {
   if (outBuffer != NULL) {
-    outBuffer->appendList(this->stateList);
+    outBuffer->appendList(this->mstateList);
   }
 }
 

@@ -175,18 +175,10 @@ add_dependencies(LibForwarder CORBAFiles)
 set(Forwarder_Libs
   ${Forwarder_Libs}
   dadiCORBA
-  )
-
-set(Forwarder_Libs
-  ${Forwarder_Libs}
-  CorbaCommon
-)
-
-set(Forwarder_Libs
-  ${Forwarder_Libs}
   CorbaCommon
   ${OMNIORB4_LIBRARIES}
-)
+  )
+
 
 
 target_link_libraries(corbaForwarder

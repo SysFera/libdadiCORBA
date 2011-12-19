@@ -71,3 +71,4 @@ target_link_libraries(LogCentral
   )
 install(TARGETS LogCentral DESTINATION ${BIN_INSTALL_DIR})
 install(TARGETS LogCommon DESTINATION ${LIB_INSTALL_DIR})
+

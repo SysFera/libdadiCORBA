@@ -3,8 +3,7 @@
  *
  * @brief Implementation corresponding to the LogComponentComponent interface
  *
- * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
- *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
@@ -73,18 +72,18 @@ LogCentralComponent_impl::LogCentralComponent_impl(
   FilterManagerInterface* filterManager,
   TimeBuffer* timeBuffer)
 {
-  this->componentList = componentList;
-  this->filterManager = filterManager;
-  this->timeBuffer = timeBuffer;
-  this->lastPings = new LastPings();
-  this->aliveCheckThread = new AliveCheckThread(this);
-  this->aliveCheckThread->startThread();
+  this->mcomponentList = componentList;
+  this->mfilterManager = filterManager;
+  this->mtimeBuffer = timeBuffer;
+  this->mlastPings = new LastPings();
+  this->maliveCheckThread = new AliveCheckThread(this);
+  this->maliveCheckThread->startThread();
 }
 
 LogCentralComponent_impl::~LogCentralComponent_impl()
 {
-  delete this->lastPings;
-  this->aliveCheckThread->stopThread();  // stop and (automatically) delete the thread
+  delete this->mlastPings;
+  this->maliveCheckThread->stopThread();  // stop and (automatically) delete the thread
 }
 
 
@@ -110,7 +109,7 @@ LogCentralComponent_impl::connectComponent(
   }
 
   // Put this here to be synchronised
-  ComponentList::Iterator* it = componentList->getIterator();
+  ComponentList::Iterator* it = mcomponentList->getIterator();
   // Generate a unique name if the name is empty
   if (componentName == NULL || strcmp(componentName, "") == 0) {
     const char* s = getGeneratedName(componentHostname, it);
@@ -147,7 +146,7 @@ LogCentralComponent_impl::connectComponent(
     disconnectComponent(componentName, msg);
   }
 
-  it = componentList->getIterator();
+  it = mcomponentList->getIterator();
   it->reset();
   it->insertBeforeRef(ce);
 
@@ -158,9 +157,9 @@ LogCentralComponent_impl::connectComponent(
   lp.time = localTime;
   lp.timeDifference.sec = localTime.sec - componentTime.sec;
   lp.timeDifference.msec = localTime.msec - componentTime.msec;
-  this->lastPings->push(&lp);
+  this->mlastPings->push(&lp);
   // Notify the FilterManager
-  tag_list_t* tl = this->filterManager->componentConnect(
+  tag_list_t* tl = this->mfilterManager->componentConnect(
     (const char*)componentName, it);
   if (tl == NULL) {
     fprintf (stderr, "Connecting component failed after filter \n");
@@ -178,7 +177,7 @@ LogCentralComponent_impl::connectComponent(
   inmsg->time = localTime;
   inmsg->tag = CORBA::string_dup("IN");
   inmsg->msg = CORBA::string_dup(msg);
-  this->timeBuffer->put(inmsg);
+  this->mtimeBuffer->put(inmsg);
   delete inmsg;
   // Return the initialConfig
   // update the tag_list_t&
@@ -193,7 +192,7 @@ LogCentralComponent_impl::disconnectComponent(const char* componentName,
                                               const char* message)
 {
   // Find the component to delete it
-  ComponentList::Iterator* it = this->componentList->getIterator();
+  ComponentList::Iterator* it = this->mcomponentList->getIterator();
   bool found = false;
   while (it->hasCurrent()) {
     if (strcmp(it->getCurrentRef()->componentName, componentName) == 0) {
@@ -212,13 +211,13 @@ LogCentralComponent_impl::disconnectComponent(const char* componentName,
   it->removeCurrent();
   // Migrate it to a ReadItarator
   ComponentList::ReadIterator* readIterator =
-    this->componentList->reduceWriteIterator(it);
+    this->mcomponentList->reduceWriteIterator(it);
 
   // Notify the FilterManager
-  this->filterManager->componentDisconnect(componentName, readIterator);
+  this->mfilterManager->componentDisconnect(componentName, readIterator);
 
   // Remove the last ping
-  LastPings::Iterator* it2 = this->lastPings->getIterator();
+  LastPings::Iterator* it2 = this->mlastPings->getIterator();
   while (it2->hasCurrent()) {
     if (strcmp(it2->getCurrentRef()->name, componentName) == 0) {
       it2->removeCurrent();
@@ -236,7 +235,7 @@ LogCentralComponent_impl::disconnectComponent(const char* componentName,
   inmsg->time = localTime;
   inmsg->tag = CORBA::string_dup("OUT");
   inmsg->msg = CORBA::string_dup(message);
-  this->timeBuffer->put(inmsg);
+  this->mtimeBuffer->put(inmsg);
   delete inmsg;
 
   cout << "Disconnection of '" << componentName << "' with message"
@@ -254,7 +253,7 @@ LogCentralComponent_impl::sendBuffer(const log_msg_buf_t& buffer)
   LastPing* lp = NULL;
   if (buffer.length() != 0) {
     const char* name = buffer[0].componentName;
-    LastPings::ReadIterator* it = this->lastPings->getReadIterator();
+    LastPings::ReadIterator* it = this->mlastPings->getReadIterator();
 
     bool compExists = false;
     while (it->hasCurrent()) {
@@ -286,7 +285,7 @@ LogCentralComponent_impl::sendBuffer(const log_msg_buf_t& buffer)
         msg.time.sec += 1;
       }
       // FIXME: manage overflows here
-      this->timeBuffer->put(&msg);
+      this->mtimeBuffer->put(&msg);
     }
   }
 }
@@ -311,7 +310,7 @@ void
 LogCentralComponent_impl::ping(const char* componentName)
 {
   // Find the component
-  LastPings::Iterator* it = this->lastPings->getIterator();
+  LastPings::Iterator* it = this->mlastPings->getIterator();
   while (it->hasCurrent()) {
     if (strcmp(it->getCurrentRef()->name, componentName) == 0) {
       it->getCurrentRef()->time = getLocalTime();
@@ -328,7 +327,7 @@ LogCentralComponent_impl::synchronize(const char* componentName,
 {
   log_time_t localTime = getLocalTime();
   // Find the component
-  LastPings::Iterator* it = this->lastPings->getIterator();
+  LastPings::Iterator* it = this->mlastPings->getIterator();
   while (it->hasCurrent()) {
     if (strcmp(it->getCurrentRef()->name, componentName) == 0) {
       it->getCurrentRef()->timeDifference.sec =
@@ -408,7 +407,7 @@ LogCentralComponent_impl::AliveCheckThread::run_undetached(void* params)
     componentsToDisconnect = new FullLinkedList<char>();
     somePingTimeout = false;
     // Check for all in the LastPings buffer
-    LastPings::ReadIterator* it = this->LCC->lastPings->getReadIterator();
+    LastPings::ReadIterator* it = this->LCC->mlastPings->getReadIterator();
     while (it->hasCurrent()) {
       lp = it->nextRef();
       if ((lp->time.sec < checkTime.sec)

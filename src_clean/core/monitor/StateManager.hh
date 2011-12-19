@@ -56,15 +56,15 @@ public:
   askForSystemState(OutBuffer* outBuffer);
 
 private:
-  tag_list_t* dynamicTagsList;
-  tag_list_t* dynamicStarts;
-  tag_list_t* dynamicStops;
-  tag_list_t* staticTagsList;
-  tag_list_t* uniqueTagsList;
-  char* start;
-  char* stop;
-  ToolList* toolList;
-  StateList* stateList;
+  tag_list_t* mdynamicTagsList;
+  tag_list_t* mdynamicStarts;
+  tag_list_t* mdynamicStops;
+  tag_list_t* mstaticTagsList;
+  tag_list_t* muniqueTagsList;
+  char* mstart;
+  char* mstop;
+  ToolList* mtoolList;
+  StateList* mstateList;
 };
 
 #endif

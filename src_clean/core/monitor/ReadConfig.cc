@@ -19,7 +19,7 @@ using namespace std;
 
 ReadConfig::ReadConfig(const char* configFilename, bool* success) {
   *success = false;
-  this->filename = NULL;
+  this->mfilename = NULL;
   if (configFilename == NULL) {
     return;
   }
@@ -28,28 +28,28 @@ ReadConfig::ReadConfig(const char* configFilename, bool* success) {
     return;
   }
   fclose(file);
-  this->filename = strdup(configFilename);
-  this->alreadyParsed = false;
-  this->tracelevel = 0;
-  this->port = 0;
-  this->startSuffix = NULL;
-  this->stopSuffix = NULL;
-  this->dynamicTags = new tag_list_t();
-  this->staticTags = new tag_list_t();
-  this->uniqueTags = new tag_list_t();
-  this->volatileTags = new tag_list_t();
+  this->mfilename = strdup(configFilename);
+  this->malreadyParsed = false;
+  this->mtracelevel = 0;
+  this->mport = 0;
+  this->mstartSuffix = NULL;
+  this->mstopSuffix = NULL;
+  this->mdynamicTags = new tag_list_t();
+  this->mstaticTags = new tag_list_t();
+  this->muniqueTags = new tag_list_t();
+  this->mvolatileTags = new tag_list_t();
   *success = true;
 }
 
 ReadConfig::~ReadConfig()
 {
-  if (this->filename != NULL) {
-    free(this->filename);
+  if (this->mfilename != NULL) {
+    free(this->mfilename);
   }
-  delete this->dynamicTags;
-  delete this->staticTags;
-  delete this->uniqueTags;
-  delete this->volatileTags;
+  delete this->mdynamicTags;
+  delete this->mstaticTags;
+  delete this->muniqueTags;
+  delete this->mvolatileTags;
 }
 
 char*
@@ -159,11 +159,11 @@ ReadConfig::parseTagSection(FILE* file, const char* sectionName,
 short
 ReadConfig::parse()
 {
-  if (this->alreadyParsed) {
+  if (this->malreadyParsed) {
     return LS_PARSE_ALREADYPARSED;
   }
 
-  FILE* file = fopen(filename, "r");
+  FILE* file = fopen(mfilename, "r");
   if (file == NULL) {
     return LS_PARSE_FILEERROR;
   }
@@ -197,69 +197,69 @@ ReadConfig::parse()
   lport = strlen("Port=");
   lstart = strlen("DynamicStartSuffix=");
   lstop = strlen("DynamicStopSuffix=");
-  this->tracelevel = 0;
-  this->port = 0;
-  this->startSuffix = NULL;
-  this->stopSuffix = NULL;
+  this->mtracelevel = 0;
+  this->mport = 0;
+  this->mstartSuffix = NULL;
+  this->mstopSuffix = NULL;
   while (i == 0) {
     s = this->readLine(file);
     if((s == NULL) || (s[0] == '[')){
       i = 1;  // stop if new section or end of file
     } else if (strncmp(s, "Tracelevel=", ltracelevel) == 0) {
-      sscanf(s, "Tracelevel=%u", &(this->tracelevel));
+      sscanf(s, "Tracelevel=%u", &(this->mtracelevel));
     } else if (strncmp(s, "Port=", lport) == 0) {
-      sscanf(s, "Port=%u", &(this->port));
+      sscanf(s, "Port=%u", &(this->mport));
     } else if (strncmp(s, "DynamicStartSuffix=", lstart) == 0) {
       s2 = new char[strlen(s) - lstart + 1];
       sscanf(s, "DynamicStartSuffix=%s", s2);
-      this->startSuffix = strdup(s2);
+      this->mstartSuffix = strdup(s2);
       delete[] s2;
     } else if (strncmp(s, "DynamicStopSuffix=", lstop) == 0) {
       s2 = new char[strlen(s) - lstop + 1];
       sscanf(s, "DynamicStopSuffix=%s", s2);
-      this->stopSuffix = strdup(s2);
+      this->mstopSuffix = strdup(s2);
       delete[] s2;
     } else if (feof(file)){
       i = 1;  // stop if new section or end of file
     }
     delete[] s;
   }
-  if (this->startSuffix == NULL) {
-    this->startSuffix = new char[6];
-    strncpy(this->startSuffix, "START", 6);
+  if (this->mstartSuffix == NULL) {
+    this->mstartSuffix = new char[6];
+    strncpy(this->mstartSuffix, "START", 6);
   }
-  if (this->stopSuffix == NULL) {
-    this->stopSuffix = new char[5];
-    strncpy(this->stopSuffix, "STOP", 5);
+  if (this->mstopSuffix == NULL) {
+    this->mstopSuffix = new char[5];
+    strncpy(this->mstopSuffix, "STOP", 5);
   }
 
 
   // Find the DynamicTagList section
-  i = this->parseTagSection(file, "[DynamicTagList]", this->dynamicTags);
+  i = this->parseTagSection(file, "[DynamicTagList]", this->mdynamicTags);
   if (i != LS_OK) {
     return i;
   }
 
   // Find the StaticTagList section
-  i = this->parseTagSection(file, "[StaticTagList]", this->staticTags);
+  i = this->parseTagSection(file, "[StaticTagList]", this->mstaticTags);
   if (i != LS_OK) {
     return i;
   }
 
   // Find the UniqueTagList section
-  i = this->parseTagSection(file, "[UniqueTagList]", this->uniqueTags);
+  i = this->parseTagSection(file, "[UniqueTagList]", this->muniqueTags);
   if (i != LS_OK) {
     return i;
   }
 
   // Find the VolatileTagList section
-  i = this->parseTagSection(file, "[VolatileTagList]", this->volatileTags);
+  i = this->parseTagSection(file, "[VolatileTagList]", this->mvolatileTags);
   if (i != LS_OK) {
     return i;
   }
 
   fclose(file);
-  this->alreadyParsed = true;
+  this->malreadyParsed = true;
   return LS_OK;
 }
 
@@ -267,8 +267,8 @@ unsigned int
 ReadConfig::getTracelevel()
 {
   unsigned int ret = 0;
-  if (this->alreadyParsed) {
-    ret = this->tracelevel;
+  if (this->malreadyParsed) {
+    ret = this->mtracelevel;
   }
   return ret;
 }
@@ -277,8 +277,8 @@ unsigned int
 ReadConfig::getPort()
 {
   unsigned int ret = 0;
-  if (this->alreadyParsed) {
-    ret = this->port;
+  if (this->malreadyParsed) {
+    ret = this->mport;
   }
   return ret;
 }
@@ -287,8 +287,8 @@ char*
 ReadConfig::getDynamicStartSuffix()
 {
   char* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = strdup(this->startSuffix);
+  if (this->malreadyParsed) {
+    ret = strdup(this->mstartSuffix);
   }
   return ret;
 }
@@ -297,8 +297,8 @@ char*
 ReadConfig::getDynamicStopSuffix()
 {
   char* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = strdup(this->stopSuffix);
+  if (this->malreadyParsed) {
+    ret = strdup(this->mstopSuffix);
   }
   return ret;
 }
@@ -307,8 +307,8 @@ tag_list_t*
 ReadConfig::getDynamicTags()
 {
   tag_list_t* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = new tag_list_t(*(this->dynamicTags));
+  if (this->malreadyParsed) {
+    ret = new tag_list_t(*(this->mdynamicTags));
   }
   return ret;
 }
@@ -317,8 +317,8 @@ tag_list_t*
 ReadConfig::getStaticTags()
 {
   tag_list_t* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = new tag_list_t(*(this->staticTags));
+  if (this->malreadyParsed) {
+    ret = new tag_list_t(*(this->mstaticTags));
   }
   return ret;
 }
@@ -327,8 +327,8 @@ tag_list_t*
 ReadConfig::getUniqueTags()
 {
   tag_list_t* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = new tag_list_t(*(this->uniqueTags));
+  if (this->malreadyParsed) {
+    ret = new tag_list_t(*(this->muniqueTags));
   }
   return ret;
 }
@@ -337,8 +337,8 @@ tag_list_t*
 ReadConfig::getVolatileTags()
 {
   tag_list_t* ret = NULL;
-  if (this->alreadyParsed) {
-    ret = new tag_list_t(*(this->volatileTags));
+  if (this->malreadyParsed) {
+    ret = new tag_list_t(*(this->mvolatileTags));
   }
   return ret;
 }
@@ -369,26 +369,26 @@ tag_list_t*
 ReadConfig::getStateTags()
 {
   tag_list_t* ret = NULL;
-  if (this->alreadyParsed) {
-    CORBA::ULong n = this->dynamicTags->length();
+  if (this->malreadyParsed) {
+    CORBA::ULong n = this->mdynamicTags->length();
     ret = new tag_list_t();
     ret->length(2 * n);
     char* s1;
     char* s2;
     for (CORBA::ULong i = 0 ; i < n ; i++) {
-      s1 = (*this->dynamicTags)[i];
-      s2 = new char[strlen(s1) + strlen(this->startSuffix) + 2];
-      sprintf(s2, "%s_%s", s1, this->startSuffix);
+      s1 = (*this->mdynamicTags)[i];
+      s2 = new char[strlen(s1) + strlen(this->mstartSuffix) + 2];
+      sprintf(s2, "%s_%s", s1, this->mstartSuffix);
       (*ret)[2 * i] = CORBA::string_dup(s2);
       delete[] s2;
 
-      s2 = new char[strlen(s1) + strlen(this->stopSuffix) + 2];
-      sprintf(s2, "%s_%s", s1, this->stopSuffix);
+      s2 = new char[strlen(s1) + strlen(this->mstopSuffix) + 2];
+      sprintf(s2, "%s_%s", s1, this->mstopSuffix);
       (*ret)[2 * i + 1] = CORBA::string_dup(s2);
       delete[] s2;
     }
-    this->appendToList(ret, this->staticTags);
-    this->appendToList(ret, this->uniqueTags);
+    this->appendToList(ret, this->mstaticTags);
+    this->appendToList(ret, this->muniqueTags);
   }
   return ret;
 }
@@ -398,7 +398,7 @@ ReadConfig::getAllTags()
 {
   tag_list_t* ret = this->getStateTags();
   if (ret != NULL) {
-    this->appendToList(ret, this->volatileTags);
+    this->appendToList(ret, this->mvolatileTags);
   }
   return ret;
 }

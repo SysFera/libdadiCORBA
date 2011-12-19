@@ -64,20 +64,22 @@ set(IDL_SOURCES
   response
   CallbackFwdr
   Forwarder
-)
-
-#if (CORBA_DIET)
-  set(IDL_SOURCES
-    ${IDL_SOURCES}
-    Agent
-    LocalAgent
-    MasterAgent
-    SeD
-    AgentFwdr
-    LocalAgentFwdr
-    MasterAgentFwdr
-    SeDFwdr
-    )
+  Agent
+  LocalAgent
+  MasterAgent
+  SeD
+  AgentFwdr
+  LocalAgentFwdr
+  MasterAgentFwdr
+  SeDFwdr
+  Dagda
+  DagdaFwdr
+  LogComponent
+  LogTool
+  LogTypes
+  LogComponentFwdr
+  LogToolFwdr
+  )
 
 #    - Workflow's IDLs
 if (DIET_USE_WORKFLOW)
@@ -91,25 +93,6 @@ if (DIET_USE_WORKFLOW)
     ${IDL_SOURCES}
   )
 endif (DIET_USE_WORKFLOW)
-
-#endif (CORBA_DIET)
-#    - Data manager's IDL
-set(IDL_SOURCES
-  Dagda
-  DagdaFwdr
-  ${IDL_SOURCES}
-  )
-
-#if (CORBA_LOG)
-  set(IDL_SOURCES
-    ${IDL_SOURCES}
-    LogComponent
-    LogTool
-    LogTypes
-    LogComponentFwdr
-    LogToolFwdr
-    )
-#endif(CORBA_LOG)
 
 
 # A clean way to call omniidl
@@ -151,5 +134,30 @@ target_link_libraries(dadiCORBA
 ${OMNIORB4_LIBRARIES}
 )
 
-install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR})
-install(TARGETS dadiCORBA DESTINATION ${LIB_INSTALL_DIR})
+install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR}/dadiCORBA)
+install(TARGETS dadiCORBA DESTINATION ${LIB_INSTALL_DIR}/dadiCORBA)
+
+set(IDL_INSTALL_SOURCES
+  common_types.idl
+  Callback.idl
+  response.idl
+  CallbackFwdr.idl
+  Forwarder.idl
+  Agent.idl
+  LocalAgent.idl
+  MasterAgent.idl
+  SeD.idl
+  AgentFwdr.idl
+  LocalAgentFwdr.idl
+  MasterAgentFwdr.idl
+  SeDFwdr.idl
+  Dagda.idl
+  DagdaFwdr.idl
+  LogComponent.idl
+  LogTool.idl
+  LogTypes.idl
+  LogComponentFwdr.idl
+  LogToolFwdr.idl
+  )
+
+install(FILES ${IDL_INSTALL_SOURCES} DESTINATION ${INC_INSTALL_DIR}/dadiCORBA/idl)

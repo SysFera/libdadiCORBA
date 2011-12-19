@@ -1,22 +1,17 @@
-/****************************************************************************/
-/* A thread that continously empties the tools outbuffers by sending them   */
-/* to the corresponding toolMsgReceiver. Based on omni_thread and the orb.  */
-/* Attention: causes memory leaks if the orb does not exist !!              */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @file SendThread.hh
  *
- ***************************************************************************/
+ * @brief A thread that continously empties the tools outbuffers by sending them
+ * to the corresponding toolMsgReceiver. Based on omni_thread and the orb.
+ * Attention: causes memory leaks if the orb does not exist !!
+ *
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _SENDTHREAD_HH_
 #define _SENDTHREAD_HH_

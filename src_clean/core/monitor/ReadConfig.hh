@@ -123,17 +123,17 @@ private:
   appendToList(tag_list_t* list, tag_list_t* appendlist);
 
 private:
-  char* filename;
-  bool alreadyParsed;
+  char* mfilename;
+  bool malreadyParsed;
 
-  unsigned int tracelevel;
-  unsigned int port;
-  char* startSuffix;
-  char* stopSuffix;
-  tag_list_t* dynamicTags;
-  tag_list_t* staticTags;
-  tag_list_t* uniqueTags;
-  tag_list_t* volatileTags;
+  unsigned int mtracelevel;
+  unsigned int mport;
+  char* mstartSuffix;
+  char* mstopSuffix;
+  tag_list_t* mdynamicTags;
+  tag_list_t* mstaticTags;
+  tag_list_t* muniqueTags;
+  tag_list_t* mvolatileTags;
 };
 
 #endif

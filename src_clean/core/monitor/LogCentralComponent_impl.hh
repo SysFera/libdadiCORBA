@@ -74,7 +74,7 @@ public:
 
 
   /**
-   * Connect a component to the LogCentral. The component attaches with its
+   * @brief Connect a component to the LogCentral. The component attaches with its
    * name, which must be unique (among all components) and its hostname (no
    * need to be unique). If the name is an empty string, a name is generated.
    * The return value indicates if the component could be connected.
@@ -103,7 +103,7 @@ public:
 
 
   /**
-   * Disconnect a connected component from the LogCentral.
+   * @brief Disconnect a connected component from the LogCentral.
    * No further messages should be sent after disconnection.
    * The componentConfigurator will no longer be used by the LogCentral after
    * this call. Returns NOTCONNECTED if the calling component was not
@@ -117,14 +117,14 @@ public:
 
 
   /**
-   * Send a buffer of log_msg_t to the LogCentral.
+   * @brief Send a buffer of log_msg_t to the LogCentral.
    * @param buffer sequence of log_msg_t to be sent
    */
   void
   sendBuffer(const log_msg_buf_t& buffer);
 
   /**
-   * Tell if a component exists or not.
+   * @brief Tell if a component exists or not.
    * @param name name of the component to find
    * @return true if the component exists
    */
@@ -132,7 +132,7 @@ public:
   isComponentExists(const char* name, ComponentList::ReadIterator* it);
 
   /**
-   * To be called by a thread for saying that the component is still alive.
+   * @brief To be called by a thread for saying that the component is still alive.
    * If the last ping is too old, the component is considered dead and
    * generate a disconnect message (OUT).
    * @param componentName the name of the component who send the ping
@@ -141,7 +141,7 @@ public:
   ping(const char* componentName);
 
   /**
-   * To be called by a thread for clock synchronisation.
+   * @brief To be called by a thread for clock synchronisation.
    * @param componentTime localtime on the component side
    * @param componentName the name of the component who send the synchro
    */
@@ -160,7 +160,7 @@ public:
 
 private:
   /**
-   * Generate an unique name based on the hostname
+   * @brief Generate an unique name based on the hostname
    * @param hostname the hostname to base to form the name
    * @return a unique name
    */
@@ -204,11 +204,11 @@ private:
   friend class LogCentralComponent_impl::AliveCheckThread;
 
 private:
-  ComponentList* componentList;
-  FilterManagerInterface* filterManager;
-  TimeBuffer* timeBuffer;
-  LastPings* lastPings;
-  AliveCheckThread* aliveCheckThread;
+  ComponentList* mcomponentList;
+  FilterManagerInterface* mfilterManager;
+  TimeBuffer* mtimeBuffer;
+  LastPings* mlastPings;
+  AliveCheckThread* maliveCheckThread;
 }; // end class LogCentralComponen_impl
 
 

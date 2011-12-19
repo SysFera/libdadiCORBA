@@ -1,48 +1,15 @@
-/****************************************************************************/
-/* LogCentral                                                               */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id$
- * $Log$
- * Revision 1.9  2011/05/13 08:17:52  bdepardo
- * Update ORB manager with changes made in DIET ORB manager.
+/**
+ * @file LogCentral.cc
  *
- * Revision 1.8  2011/04/22 11:44:22  bdepardo
- * Use a signal handler to handle background option.
- * This handler catches SIGINT and SIGTERM.
+ * @brief LogCentral binary
  *
- * Revision 1.7  2010/12/08 11:37:54  kcoulomb
- * Refix the static library problem.
- * Renamed the monitor/Options to monitor/LogOptions due to conflict creating the static lib (2 files called Options)
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.6  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
- *
- * Revision 1.5  2010/11/10 02:27:44  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
- *
- * Revision 1.4  2008/07/17 01:03:11  rbolze
- * make some change to avoid gcc warning
- *
- * Revision 1.3  2004/05/12 12:39:04  hdail
- * Add support for running services in the background (at a loss of clean
- * exit with interactive 'Q').  Behavior can be controlled via configure.
- *
- * Revision 1.2  2004/01/13 15:11:28  ghoesch
- * added stdlib.h to compile with omniORB3
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include <cstdio>
 #include <cstdlib>

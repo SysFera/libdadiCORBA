@@ -1,31 +1,17 @@
-/****************************************************************************/
-/* A thread that continously empties the tools outbuffers by sending them   */
-/* to the corresponding toolMsgReceiver.                                    */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: SendThread.cc,v 1.4 2010/12/08 11:37:54 kcoulomb Exp $
- * $Log: SendThread.cc,v $
- * Revision 1.4  2010/12/08 11:37:54  kcoulomb
- * Refix the static library problem.
- * Renamed the monitor/Options to monitor/LogOptions due to conflict creating the static lib (2 files called Options)
+/**
+ * @file SendThread.cc
  *
- * Revision 1.3  2010/12/03 12:40:27  kcoulomb
- * MAJ log to use forwarders
+ * @brief A thread that continously empties the tools outbuffers by sending them
+ * to the corresponding toolMsgReceiver. Based on omni_thread and the orb.
+ * Attention: causes memory leaks if the orb does not exist !!
  *
- * Revision 1.2  2004/01/13 15:10:49  ghoesch
- * explicity initialize runThread bool
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "SendThread.hh"
 #include "LogOptions.hh"

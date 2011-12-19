@@ -287,8 +287,8 @@ public:
   void sendMsg (const log_msg_buf_t& msgBuf);
 
 protected :
-  Forwarder_ptr forwarder;
-  char* objName;
+  Forwarder_ptr mforwarder;
+  char* mobjName;
 
 };
 

@@ -1,36 +1,15 @@
-/****************************************************************************/
-/* A class for putting some ORB functions together - IMPLEMENTATION         */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: ORBTools.cc,v 1.5 2011/02/07 12:27:42 bdepardo Exp $
- * $Log: ORBTools.cc,v $
- * Revision 1.5  2011/02/07 12:27:42  bdepardo
- * Correctly declare tracelevel option
+/**
+ * @file ORBTools.cc
  *
- * Revision 1.4  2008/07/17 01:03:12  rbolze
- * make some change to avoid gcc warning
+ * @brief A class for putting some ORB functions together - IMPLEMENTATION
  *
- * Revision 1.3  2006/02/17 14:46:55  ecaron
- * Bug fix: uncompatible syntax with new(char*)
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
- * Revision 1.2  2004/06/01 21:45:58  hdail
- * Tracking down seg fault in LogService:
- * - Several strings were created in this file using malloc that are later cleaned
- * up by omniORB code using delete[].  Since creation and deletion approaches must
- * match for some non-linux systems, I removed old method of strdup and added new
- * method of allocation with new char[...] and then copied the data with strcpy.
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #include "ORBTools.hh"
 #include "omnithread.h"
