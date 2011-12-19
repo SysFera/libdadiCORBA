@@ -23,8 +23,8 @@
 #include "ORBMgr.hh"
 #include "common_types.hh"
 
-#include "monitor/LogCentralComponent_impl.hh"
-#include "monitor/LogCentralTool_impl.hh"
+#include "monitor/LogCentralComponentFwdr_impl.hh"
+#include "monitor/LogCentralToolFwdr_impl.hh"
 
 
 #ifdef MAXHOSTNAMELEN

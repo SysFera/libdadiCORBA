@@ -1,5 +1,6 @@
 project( FWD )
 cmake_minimum_required( VERSION 2.8 )
+include(CMakeDependentOption)
 
 set(FWD_MAJOR_VERSION 1)
 set(FWD_MINOR_VERSION 0)
@@ -15,9 +16,20 @@ set( BIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin"
 set( LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib"
   CACHE INTERNAL "Directory where libraries will be installed" )
 
-set( INC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include"
+set( INC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/dadiCORBA"
   CACHE INTERNAL "Directory where include will be installed" )
 
+
+# documentation
+option(ENABLE_DOC "Build documentation" OFF)
+# when ENABLE_DOC is enabled, we build by default: doxygen html and man pages
+cmake_dependent_option(ENABLE_DOXYGEN "Build doxygen documentation" ON
+  "ENABLE_DOC" OFF)
+set(DOXYGEN_FORMATS  "html;man"
+  CACHE STRING "Doxygen output formats (allowed: html;man;pdf;rtf)")
+mark_as_advanced(DOXYGEN_FORMATS)
+cmake_dependent_option(ENABLE_EXTRAS_DOC "Build extrasdocumentation" OFF
+  "ENABLE_DOC" OFF)
 
 
 #-------------- PLATFORM SPECIFIC COMPILATION FLAGS -----------------------
@@ -99,8 +111,8 @@ add_library(CorbaCommon SHARED
   dagda/DagdaImpl.cc
   diet/DIETForwarder.cc
   log/LogForwarder.cc
-  monitor/LogCentralTool_impl.cc
-  monitor/LogCentralComponent_impl.cc
+  monitor/LogCentralToolFwdr_impl.cc
+  monitor/LogCentralComponentFwdr_impl.cc
   monitor/LogOptions.cc
   monitor/TimeBuffer.cc
   monitor/StateManager.cc
@@ -199,8 +211,8 @@ install(TARGETS CorbaCommon DESTINATION ${LIB_INSTALL_DIR})
 
 
 install(FILES ORBMgr.hh DESTINATION ${INC_INSTALL_DIR})
-install(FILES monitor/LogCentralTool_impl.hh DESTINATION ${INC_INSTALL_DIR})
-install(FILES monitor/LogCentralComponent_impl.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/LogCentralToolFwdr_impl.hh DESTINATION ${INC_INSTALL_DIR})
+install(FILES monitor/LogCentralComponentFwdr_impl.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES CorbaForwarder.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES monitor/ToolList.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES monitor/ComponentList.hh DESTINATION ${INC_INSTALL_DIR})
@@ -213,3 +225,9 @@ install(FILES utils/FullLinkedList.hh DESTINATION ${INC_INSTALL_DIR}/utils)
 install(FILES utils/FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR}/utils)
 install(FILES utils/LocalTime.hh DESTINATION ${INC_INSTALL_DIR}/utils)
 
+## generate doxygen documentation
+add_custom_target(doc ALL)
+if(ENABLE_DOXYGEN)
+  include(UseDoxygen)
+  generate_doxygen(FORMATS ${DOXYGEN_FORMATS})
+endif()

@@ -62,7 +62,11 @@ add_subdirectory(
   examples
 )
 
-add_executable(LogCentral LogCentral.cc)
+add_executable(LogCentral 
+  LogCentral.cc
+  LogCentralTool_impl.cc
+  LogCentralComponent_impl.cc
+  )
 target_link_libraries(LogCentral
   ${FWD_LIBRARY}
   ${OMNIORB4_LIBRARIES}

@@ -29,7 +29,7 @@ SimpleFilterManager::SimpleFilterManager(ToolList* toolList,
 {
   this->mtoolList = toolList;
   this->mcomponentList = compList;
-  
+
   if (stateTags != NULL) {
     this->msystemStateTags = *stateTags;
   }
@@ -202,7 +202,7 @@ SimpleFilterManager::componentConnect(const char* componentName,
     toolEl = toolIt->getCurrentRef();
     filterIt = toolEl->filterList.getReadIterator();
     while (filterIt->hasCurrent()) {
-      if (containsComponent(&(filterIt->getCurrentRef()->mcomponentList),
+      if (containsComponent(&(filterIt->getCurrentRef()->componentList),
                             componentName)) {
         addTagList(&(cfgEl->config), &(filterIt->getCurrentRef()->tagList));
       }
@@ -213,7 +213,7 @@ SimpleFilterManager::componentConnect(const char* componentName,
   }
   delete(toolIt);
 
-  // send config back 
+  // send config back
   tag_list_t* tl = new tag_list_t();
   (*tl) = cfgEl->config;
 
@@ -253,7 +253,7 @@ SimpleFilterManager::sendMessageWithFilters(log_msg_t* message)
     while (filterIt->hasCurrent()) {
       filter = filterIt->getCurrentRef();
 
-      if (containsComponent(&(filter->mcomponentList),message->componentName)) {
+      if (containsComponent(&(filter->componentList),message->componentName)) {
         if (containsTag(&(filter->tagList),message->tag)) {
           // okay, this filter fits
           // ush the element on the list, it will be copied automatically
@@ -387,7 +387,7 @@ SimpleFilterManager::addFilter(filter_t* filter)
   configIt = mconfigList.getIterator();
 
   while(configIt->hasCurrent()) {
-    if (containsComponent(&(filter->mcomponentList), 
+    if (containsComponent(&(filter->componentList),
                           (const char*)(configIt->getCurrentRef()->componentName))) {
       // this component is part of the filter and must be altered
       addTagList(&(configIt->getCurrentRef()->config), &(filter->tagList));

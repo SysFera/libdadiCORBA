@@ -134,8 +134,8 @@ target_link_libraries(dadiCORBA
 ${OMNIORB4_LIBRARIES}
 )
 
-install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR}/dadiCORBA)
-install(TARGETS dadiCORBA DESTINATION ${LIB_INSTALL_DIR}/dadiCORBA)
+install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR})
+install(TARGETS dadiCORBA DESTINATION ${LIB_INSTALL_DIR})
 
 set(IDL_INSTALL_SOURCES
   common_types.idl
@@ -160,4 +160,16 @@ set(IDL_INSTALL_SOURCES
   LogToolFwdr.idl
   )
 
-install(FILES ${IDL_INSTALL_SOURCES} DESTINATION ${INC_INSTALL_DIR}/dadiCORBA/idl)
+if (DIET_USE_WORKFLOW)
+  set(IDL_INSTALL_SOURCES
+    MaDag.idl
+    CltMan.idl
+    CltManFwdr.idl
+    MaDagFwdr.idl
+    WfLogService.idl
+    WfLogServiceFwdr.idl
+    ${IDL_INSTALL_SOURCES}
+  )
+endif (DIET_USE_WORKFLOW)
+
+install(FILES ${IDL_INSTALL_SOURCES} DESTINATION ${INC_INSTALL_DIR}/idl)
