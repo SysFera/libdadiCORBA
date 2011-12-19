@@ -1,8 +1,0 @@
-Notes:
- - A dependency expresses towards LOGSERVICE_TARGET_IDL_GENERATED_HEADER_FILES
-   (e.g. as encountered in src/utils/CMakeLists.txt for LogServiceUtils)
-   indicates that before compiling the considered target one first needs to
-   generate the header files with idl. Refer to the definition
-   of the commidity target LOGSERVICE_TARGET_IDL_GENERATED_HEADER_FILES
-   (see src/idl/CMakeLists.txt) for more details.
-

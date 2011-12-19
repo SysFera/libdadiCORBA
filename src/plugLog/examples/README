@@ -1,6 +1,0 @@
-DIETLogTool is an example of LogTool which can connect to LogCentral
-and receive messages from LogCentral. This tool retrieves log messages
-from LogCentral and then writes them in a file (filename can be defined
-on the command line).  The log file is formatted for a visualization
-tool called VizDIET that is designed to show a DIET hierarchy. For more
-details see http://graal.ens-lyon.fr/DIET.
