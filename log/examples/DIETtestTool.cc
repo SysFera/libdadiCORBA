@@ -1,84 +1,12 @@
-/****************************************************************************/
-/* A test for the liblogtoolbase.a                                          */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: DIETtestTool.cc,v 1.6 2011/04/22 11:44:22 bdepardo Exp $
- * $Log: DIETtestTool.cc,v $
- * Revision 1.6  2011/04/22 11:44:22  bdepardo
- * Use a signal handler to handle background option.
- * This handler catches SIGINT and SIGTERM.
+/**
+ * @file DIETtestTool.cc
  *
- * Revision 1.5  2011/03/03 14:56:35  bdepardo
- * Fixed compilation warning
- *
- * Revision 1.4  2011/02/04 15:25:22  bdepardo
- * Removed unused variables.
- * Removed resource leak.
- *
- * Revision 1.3  2010/12/24 09:47:07  kcoulomb
- * Remove deprecated tools
- * tool gets generated name
- *
- * Revision 1.2  2010/12/03 12:40:26  kcoulomb
- * MAJ log to use forwarders
- *
- * Revision 1.1  2010/11/10 05:59:44  kcoulomb
- * Add a tool for DIET, the generated files can be used with VizDIET
- *
- * Revision 1.11  2010/11/10 04:32:51  kcoulomb
- * Fix the rebind problem
- *
- * Revision 1.10  2010/11/10 02:27:43  kcoulomb
- * Update the log to use the forwarder.
- * Programm run without launching forwarders but fails with forwarder.
- *
- * Revision 1.9  2008/11/04 08:21:05  bdepardo
- * Added #include <stdlib.h>.
- * Now compiles with gcc 4.3.2
- *
- * Revision 1.8  2005/07/01 12:55:01  rbolze
- * message recieve from LogCentral can be bigger now !
- *
- * Revision 1.7  2004/10/08 11:20:49  hdail
- * Corrected problem seen under 64-bit opteron: can not cast CORBA Long to
- * time_t directly.
- *
- * Revision 1.6  2004/07/08 20:32:15  rbolze
- * make som changes :
- *  - create a tool named DIETLogTool that is specific for DIET and VizDIET
- *  - create README to explain what is DIETLogTool
- *  - modify testTool to be an example independant from DIET
- *  - modify Makefile.am to take account of all this changes
- *
- * Revision 1.5  2004/05/25 12:02:39  hdail
- * Sleep isn't found on some systems with current inclusions.  Added
- * inclusion of unistd.h when HAVE_BACKGROUND is true.
- *
- * Revision 1.4  2004/05/12 12:39:04  hdail
- * Add support for running services in the background (at a loss of clean
- * exit with interactive 'Q').  Behavior can be controlled via configure.
- *
- * Revision 1.3  2004/03/16 17:57:22  rbolze
- * Now  you can tell to write log messages into a specific filname
- * the default filename is Dietlog.log
- * the command line to launch testTool should be >./testTool <filname>
- *
- * Revision 1.2  2004/03/02 08:41:21  rbolze
- * print message in VizDiet readable format, save in a file named logtest.log
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @brief An example of tool
+ * @author Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @section Licence
+ *  |LICENCE|
+ */
 
-//#include "LogToolBase.hh"
 #include "stdio.h"
 #include <iostream>
 #include <string>
@@ -88,8 +16,6 @@
 
 #include "ORBMgr.hh"
 #include "LogCentralTool_impl.hh"
-
-//#include "LogToolBase.hh"
 
 
 #ifdef HAVE_BACKGROUND
@@ -105,47 +31,18 @@ public :
   char* name;
   string filename;
 
-  filter_t filter;//ADD
+  filter_t filter;
 
   MyMsgRecv(const char* name){
 
     this->name = CORBA::string_dup(name);
 
-    filter.filterName = CORBA::string_dup("allFilter");//ADD
-    filter.tagList.length(1);			       //ADD
-    filter.tagList[0] = CORBA::string_dup("*");	       //ADD
-    filter.componentList.length(1);		       //ADD
-    filter.componentList[0] = CORBA::string_dup("*");  //ADD
+    filter.filterName = CORBA::string_dup("allFilter");
+    filter.tagList.length(1);
+    filter.tagList[0] = CORBA::string_dup("*");
+    filter.componentList.length(1);
+    filter.componentList[0] = CORBA::string_dup("*");
     filename = "DIETLogTool.log";
-    //    CORBA::Object_ptr myLCTptr;
-    //
-    //    myLCT = LogORBMgr::getMgr()->resolve<LogCentralTool, LogCentralTool_ptr>("LogServiceT", "LCT");
-    ////    try {
-    ////      fprintf (stderr, "Recherche %s/%s \n", LOGCOMPCTXT, "LCT"),
-    ////      myLCTptr = LogORBMgr::getMgr()->resolveObject(LOGCOMPCTXT, "LCT");
-    ////    } catch(CORBA::SystemException &e) {
-    ////      fprintf (stderr, "Could not resolve 'LogService./LogComponent (LCT).' from the NS");
-    ////    }
-    ////    if (CORBA::is_nil(myLCTptr)) {
-    ////      fprintf (stderr, "Could not resolve 'LogService./LogComponent (LCT).' from the NS");
-    ////    }
-    ////    try {
-    ////      myLCT = LogCentralTool::_narrow(myLCTptr);
-    ////    } catch(CORBA::SystemException &e) {
-    ////      fprintf (stderr, "Could not narrow the LogCentralComponent");
-    ////    }
-    //    if (CORBA::is_nil(myLCT)){
-    //      fprintf (stderr, "You failed ! Nil narrow ! \n");
-    //    }
-    //    try{
-    //      LogORBMgr::getMgr()->bind("LogServiceT", name, _this(), false);
-    //      LogORBMgr::getMgr()->fwdsBind("LogServiceT", name,
-    //				 LogORBMgr::getMgr()->getIOR(_this()));
-    //    }
-    //    catch (...){
-    //      fprintf (stderr, "Bind FAILED  in the LogService context\n");
-    //    }
-
   }
 
   int disconnect (){

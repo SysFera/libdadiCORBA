@@ -153,7 +153,6 @@ main(int argc, char** argv) {
   delete stateTags;
   delete readConfig;
 
-  // ADD *******
   ORBMgr::init(argc, argv);
 
   /**

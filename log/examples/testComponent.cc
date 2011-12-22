@@ -1,26 +1,11 @@
-/****************************************************************************/
-/* A sample component based on libLogComponentBase.a                        */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: testComponent.cc,v 1.3 2011/02/04 15:52:22 bdepardo Exp $
- * $Log: testComponent.cc,v $
- * Revision 1.3  2011/02/04 15:52:22  bdepardo
- * System headers before our own headers
+/**
+ * @file testComponent.cc
  *
- * Revision 1.2  2010/12/03 12:40:26  kcoulomb
- * MAJ log to use forwarders
- *
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
- *
- ****************************************************************************/
+ * @brief An example of component
+ * @author Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @section Licence
+ *  |LICENCE|
+ */
 
 #include <cstdio>
 #include <cstdlib>
@@ -36,10 +21,7 @@
 #include "utils/LocalTime.hh"
 #include "LogOptions.hh"
 
-//#include "LogComponentBase.hh"
 #include "ORBMgr.hh"
-//#include "TimeBuffer.hh"
-//#include "LogCentralComponent_impl.hh"
 #include <stdio.h>
 
 using namespace std;
@@ -125,9 +107,7 @@ public:
 int
 main(int argc, char** argv)
 {
-  cout << "Test of liblogcomponentbase.a\n\n";
   bool success = false;
-  cout << "Init \n" << endl;
   try {
     ORBMgr::init(argc, argv);
   } catch (...) {
@@ -160,96 +140,14 @@ main(int argc, char** argv)
   logmsg.time = getLocalTime();
   logmsg.warning = false;
   logmsg.tag = CORBA::string_dup(tag2.c_str());
-  logmsg.msg = CORBA::string_dup("Message sentttttttttt");
+  logmsg.msg = CORBA::string_dup("Message sent");
   CORBA::ULong l = buffer.length();
   buffer.length(l + 1);
   buffer[l] = logmsg;
 
-
   myLCB->sendMsg(buffer);
 
   myLCB->disconnect(name.c_str(), "Bye bye");
-
-
-//  LogComponentBase* logComponentBase =
-//    new LogComponentBase(&success, argc, argv, 0, "testComponent");
-//  cout << "Inited \n" << endl;
-//  if (!success) {
-//    cerr << "Cannot innitialize the LogComponentBase !\n"
-//      << "Are LogCentral or Omninames not running ?\n";
-//    return 1;
-//  }
-//  short ret = 0;
-//  ret = logComponentBase->connect("testCompo connected \\o/");
-//  if (ret == LS_COMPONENT_CONNECT_BADNAME) {
-//    cerr << "Component : bad name !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_ALREADYEXISTS) {
-//    cerr << "Component : already exist !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_BADCOMPONENTCONFIGURATOR) {
-//    cerr << "Component : bad component configurator !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_INTERNALERROR) {
-//    cerr << "Component : cannot connect !\n";
-//    return ret;
-//  }
-//
-//  char* s;
-//  s = logComponentBase->getName();
-//  cout << "name:" << s << endl;
-//  delete s;
-//  s = logComponentBase->getHostname();
-//  cout << "hostname:" << s << endl;
-//  delete s;
-//
-//  ret = logComponentBase->connect("test connect 2");
-//  if (ret == LS_COMPONENT_CONNECT_BADNAME) {
-//    cerr << "Component : bad name !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_ALREADYEXISTS) {
-//    cerr << "Component : already exists !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_BADCOMPONENTCONFIGURATOR) {
-//    cerr << "Component : bad component configurator !\n";
-//    return ret;
-//  }
-//  if (ret == LS_COMPONENT_CONNECT_INTERNALERROR) {
-//    cerr << "Component : cannot connect !\n";
-//    return ret;
-//  }
-//
-//  logComponentBase->sendMsg("TEST", "test message");
-//  sleep(1);  // make sure the message is sent
-//
-//  ret = logComponentBase->disconnect("test disconnection of component");
-//  if (ret == LS_COMPONENT_DISCONNECT_NOTEXISTS) {
-//    cerr << "Component : cannot disconnect, not exists !\n";
-//    return ret;
-//  }
-//
-//  //  logComponentBase->setName("testComponent_C++");
-//  ret = logComponentBase->connect("test connect 3");
-//  if (ret != LS_OK) {
-//    return ret;
-//  }
-//
-//  logComponentBase->sendMsg("ANY", "another test message");
-//  sleep(1);  // make sure this message is sent
-//
-//  cout << "'IN' tag wanted ? " << logComponentBase->isLog("IN") << endl;
-//  cout << "'TEST' tag wanted ? " << logComponentBase->isLog("TAG") << endl;
-//  ret = logComponentBase->disconnect("test disconnect 2");
-//  if (ret != LS_OK) {
-//    return ret;
-//  }
-//
-//  delete logComponentBase;
   cout << "All tests passed successfully !\n";
   return 0;
 }
