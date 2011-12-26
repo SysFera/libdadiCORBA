@@ -25,8 +25,6 @@
 #include "LogOptions.hh"
 #include "ORBMgr.hh"
 
-// helpers
-#include "log/ORBTools.hh"
 
 
 using namespace std;

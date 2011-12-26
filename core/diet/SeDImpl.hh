@@ -42,7 +42,7 @@ extern "C" {
  * @brief The SeD forwarder class that implements all the SeD methods
  * throught the forwarder
  * @class SeDFwdrImpl
- * For non documented methods, please see the \ref SeDIDL and its parents idl interfaces.
+ * For non documented methods, please see the SeD and its parents idl interfaces.
  */
 class SeDFwdrImpl : public POA_SeD,
                     public PortableServer::RefCountServantBase {

@@ -22,8 +22,8 @@
 
 
 class Node;
-/****************************************************************************
- * This is a thread safe generic double linked list. It offers ReadWrite
+/**
+ * @brief This is a thread safe generic double linked list. It offers ReadWrite
  * and Readonly access to the list with the two iterators Iterator and
  * ReadIterator. Several Readers can exist at a time, while writers have
  * exclusive access to the list. Other iterators created in this time
@@ -38,6 +38,7 @@ class Node;
  *
  * This list deals with a copy of all the elements (T) but you can also use
  * some special functions to deal with references, but use them carrefully.
+ * @class FullLinkedList
  */
 template<class T>
 class FullLinkedList {
@@ -210,10 +211,11 @@ public:
  ****************************************************************************/
 public:
   /**
-   * Allows readaccess to the linked list. Several readers
+   * @brief Allows readaccess to the linked list. Several readers
    * can exist parallel, but no writer will disturb the
    * reading. The iterators lock on the list will be removed
    * when the iterator is deleted.
+   * @class ReadIterator
    */
   class ReadIterator {
     // these two are necessary for the private constructors
@@ -358,11 +360,12 @@ public:
 
 
   /**
-   * Allows full access on the linked list. This includes write
+   * @brief Allows full access on the linked list. This includes write
    * access as specified in the parentclass ReadIterator as well
    * as functions to add and remove elements. Can be reduced to
    * a ReadIterator by the FullLinkedList.reduceWriteIterator() to
    * release its writeLock.
+   * @class Iterator
    */
   class Iterator: public FullLinkedList::ReadIterator {
     friend class FullLinkedList;

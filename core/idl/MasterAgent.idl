@@ -23,8 +23,8 @@ interface MasterAgent : Agent {
 
   /**
    * @brief Submission function: called by the clients to submit a problem. 
-   * @param pb_profile: The profile of the problem
-   * @param maxServers: The max number of server
+   * @param pb_profile The profile of the problem
+   * @param maxServers The max number of server
    * @return An error code
    */
   corba_response_t submit(in corba_pb_desc_t pb_profile,
@@ -37,35 +37,35 @@ interface MasterAgent : Agent {
   long get_session_num();
 
   /**
-   * @brief get id of the data :  aggregation of numsession and numdata 
+   * @brief get id of the data   aggregation of numsession and numdata 
    * @return The id of the data
    */
   string get_data_id();
 
   /** 
    * @brief look up of data identified by id 
-   * @param id: The id of the data
+   * @param id The id of the data
    * @return TODO
    */
   unsigned long dataLookUp(in string id);
 
   /** 
    * @brief get data descriptor 
-   * @param argID: ID of the data
+   * @param argID ID of the data
    * @return TODO
    */
   corba_data_desc_t get_data_arg(in string argID) raises(Dagda::DataNotFound);
 
   /**
-   * @brief Invoked by client : removal from the platform of the data identified by argID
-   * @param argID: ID of the data
+   * @brief Invoked by client  removal from the platform of the data identified by argID
+   * @param argID ID of the data
    * @return An error code
    */
   long diet_free_pdata(in string argID);
 
   /**
    * @brief Get the list of Profile available.
-   * @param length: TODO
+   * @param length TODO
    * @return TODO
    */
   SeqCorbaProfileDesc_t getProfiles(out long length);
@@ -74,8 +74,8 @@ interface MasterAgent : Agent {
 
   /**
    * @brief MAs federation management 
-   * @param masterAgentName: The name of the MA
-   * @param myName: TODO
+   * @param masterAgentName The name of the MA
+   * @param myName TODO
    */
   boolean handShake(in string masterAgentName, in string myName);
 
@@ -87,9 +87,9 @@ interface MasterAgent : Agent {
 
   /**
    * @brief Send a new request to the MA.
-   * @param masterAgentName: The name of the MA
-   * @param myName: TODO
-   * @param request: The request submitted
+   * @param masterAgentName The name of the MA
+   * @param myName TODO
+   * @param request The request submitted
    */
   oneway void searchService(in string masterAgentName,
 			    in string myName,
@@ -97,46 +97,46 @@ interface MasterAgent : Agent {
 
   /** 
    * @brief Ask to the MA to stop the flooding 
-   * @param reqId: TODO
-   * @param senderId: TODO
+   * @param reqId TODO
+   * @param senderId TODO
    */
   oneway void stopFlooding(in long reqId, in string senderId) ;
 
   /** 
    * @brief Response which saids that the service is not found and a new step
    *    of flooding can be achive 
-   * @param reqId: TODO
-   * @param senderId: TODO
+   * @param reqId TODO
+   * @param senderId TODO
    */
   oneway void serviceNotFound(in long reqId, in string senderId) ;
 
   /** 
    * @brief Launchs a new step of flooding 
-   * @param reqId: TODO
-   * @param senderId: TODO
+   * @param reqId TODO
+   * @param senderId TODO
    */
   oneway void newFlood(in long reqId, in string senderId) ;
 
   /** 
    * @brief Response which saids that no new server can be found via this MA. 
-   * @param reqId: TODO
-   * @param senderId: TODO
+   * @param reqId TODO
+   * @param senderId TODO
    */
   oneway void floodedArea(in long reqId, in string senderId) ;
 
   /**
    * @brief response which saids that the MA was already contacted for this
       request. 
-   * @param reqId: TODO
-   * @param senderId: TODO
+   * @param reqId TODO
+   * @param senderId TODO
    */
   oneway void alreadyContacted(in long reqId,
 			       in string senderId) ;
 
   /** 
    * @brief Response which saids that some servers was found. 
-   * @param reqId: TODO
-   * @param decision: TODO
+   * @param reqId TODO
+   * @param decision TODO
    */
   oneway void serviceFound(in long reqId, in corba_response_t decision) ;
 
@@ -173,8 +173,8 @@ interface MasterAgent : Agent {
 #endif // HAVE_WORKFLOW
   /**
    * @brief TODO
-   * @param key: TODO
-   * @param values: TODO
+   * @param key TODO
+   * @param values TODO
    * @return TODO
    */
   long insertData(in string key, in SeqString values);

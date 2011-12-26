@@ -71,7 +71,7 @@ typedef sequence <corba_server_estimation_t> SeqServerEstimation_t;
 /* RESPONSE                                                                 */
 /****************************************************************************/
 /**
- * The servers are sorted as follows:
+ * @brief The servers are sorted as follows:
  *   the first part of the servers sequence consists of all servers where the
  *   computation could be estimated,
  *   whereas the second part consists of all the ones that provide only an
@@ -87,7 +87,6 @@ typedef sequence <corba_server_estimation_t> SeqServerEstimation_t;
  *   servers[sortedServers[i]] was estimated and the results are stored in
  *   servers[sortedServers[i]].perf.feeCpu and freeMem
  */
-
 struct corba_response_t {
   unsigned long reqID;
   long myID;

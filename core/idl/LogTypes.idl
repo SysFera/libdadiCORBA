@@ -23,7 +23,7 @@ const short LS_OK = 0;
 
 // exact time definition with milliseconds
 /**
- * àbrief Structure to represent the time
+ * @brief Structure to represent the time
  */
 struct log_time_t {
   /**

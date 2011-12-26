@@ -52,21 +52,21 @@ class ORBMgr {
 public:
   /**
    * @brief Constructors.
-   * @param argc: C main parameter
-   * @param argv: C main parameter
+   * @param argc C main parameter
+   * @param argv C main parameter
    */
   ORBMgr(int argc, char* argv[]);
 
   /**
    * @brief Constructors using an existing ORB.
-   * @param ORB: The ORB
+   * @param ORB The ORB
    */
   explicit ORBMgr(CORBA::ORB_ptr ORB);
 
   /**
    * @brief Constructors.
-   * @param ORB: The ORB to use
-   * @param POA: The POA to use
+   * @param ORB The ORB to use
+   * @param POA The POA to use
    */
   ORBMgr(CORBA::ORB_ptr ORB, PortableServer::POA_var POA);
 
@@ -77,10 +77,10 @@ public:
 
   /**
    * @brief Bind the object using its ctxt/name
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param object: The object to bind
-   * @param rebind: If try to rebind this object when it is said to be already bound
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param object The object to bind
+   * @param rebind If try to rebind this object when it is said to be already bound
    */
   void
   bind(const std::string& ctxt, const std::string& name,
@@ -88,10 +88,10 @@ public:
 
   /**
    * @brief Bind an object using its IOR.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param IOR: The IOR of the object to bind
-   * @param rebind: If try to rebind this object when it is said to be already bound
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param IOR The IOR of the object to bind
+   * @param rebind If try to rebind this object when it is said to be already bound
    */
   void
   bind(const std::string& ctxt, const std::string& name,
@@ -99,9 +99,9 @@ public:
 
   /**
    * @brief Rebind objects.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param object: The object to rebind
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param object The object to rebind
    */
   void
   rebind(const std::string& ctxt, const std::string& name,
@@ -109,9 +109,9 @@ public:
 
   /**
    * @brief Rebind objects.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param IOR: The IOR of the object to rebind
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param IOR The IOR of the object to rebind
    */
   void
   rebind(const std::string& ctxt, const std::string& name,
@@ -119,27 +119,27 @@ public:
 
   /**
    * @brief Unbind an object.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
+   * @param ctxt The context to use
+   * @param name The name of the object
    */
   void
   unbind(const std::string& ctxt, const std::string& name) const;
 
   /**
    * @brief Forwarders binding.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param ior: The IOR of the object to forward
-   * @param fwName: The name of the forwarder to use
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param ior The IOR of the object to forward
+   * @param fwName The name of the forwarder to use
    */
   void
   fwdsBind(const std::string& ctxt, const std::string& name,
            const std::string& ior, const std::string& fwName = "") const;
   /**
    * @brief Forwarders unbinding.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param fwName: The name of the forwarder to use
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param fwName The name of the forwarder to use
    */
   void
   fwdsUnbind(const std::string& ctxt, const std::string& name,
@@ -147,7 +147,7 @@ public:
 
   /**
    * @brief Resolve an object using its IOR.
-   * @param IOR: The IOR of the object to resolve
+   * @param IOR The IOR of the object to resolve
    * @return A CORBA pointer to the object
    */
   CORBA::Object_ptr
@@ -155,9 +155,9 @@ public:
 
   /**
    * @brief Resolve an object using its ctxt/name.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param fwName: The name of the forwarder to use
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param fwName The name of the forwarder to use
    * @return A CORBA pointer to the object
    */
   CORBA::Object_ptr
@@ -165,8 +165,8 @@ public:
                 const std::string& fwdName = "") const;
   /**
    * @brief Resolve objects without object caching or invoking forwarders.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
+   * @param ctxt The context to use
+   * @param name The name of the object
    * @return A CORBA pointer to the object
    */
   CORBA::Object_ptr
@@ -175,7 +175,7 @@ public:
   /**
    * @brief Get the list of the objects id binded in the omniNames server
    *   for a given context.
-   * @param ctxt: The context to list all the object inside
+   * @param ctxt The context to list all the object inside
    * @return A list of the names of the binded objects
    */
   std::list<std::string>
@@ -184,7 +184,7 @@ public:
   /**
    * @brief Get the list of the objects id binded in the omniNames server
    *   for a given context.
-   * @param ctxt: The name of the context to list all the object inside
+   * @param ctxt The name of the context to list all the object inside
    * @return A list of the names of the binded objects
    */
   std::list<std::string>
@@ -200,8 +200,8 @@ public:
   /**
    * @brief Return true if the object is local, false if it is reachable through
    *   a forwarder.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
+   * @param ctxt The context to use
+   * @param name The name of the object
    * @return True if the object is local, false otherwise
    */
   bool
@@ -209,8 +209,8 @@ public:
 
   /**
    * @brief Return the name of the forwarder that manage the object.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
+   * @param ctxt The context to use
+   * @param name The name of the object
    * @return The name of the forwarder
    */
   std::string
@@ -218,9 +218,9 @@ public:
 
   /**
    * @brief Resolve an object
-   * @param ctxt: The context to use
-   * @param name: The name of the object
-   * @param fwdName: The name of the forwarder to use
+   * @param ctxt The context to use
+   * @param name The name of the object
+   * @param fwdName The name of the forwarder to use
    * @return A pointer to the object
    */
   template <typename CORBA_object, typename CORBA_ptr>
@@ -233,7 +233,7 @@ public:
 
   /**
    * @brief Resolve an object from its IOR
-   * @param IOR: The IOR of the object to resolve
+   * @param IOR The IOR of the object to resolve
    * @return A pointer to the object
    */
   template <typename CORBA_object, typename CORBA_ptr>
@@ -245,7 +245,7 @@ public:
 
   /**
    * @brief Return the IOR of the passed object.
-   * @param object: The object to get the IOR
+   * @param object The object to get the IOR
    * @return The IOR
    */
   std::string
@@ -253,8 +253,8 @@ public:
 
   /**
    * @brief Return the IOR of the passed object.
-   * @param ctxt: The context to use
-   * @param name: The name of the object
+   * @param ctxt The context to use
+   * @param name The name of the object
    * @return The IOR
    */
   std::string
@@ -262,14 +262,14 @@ public:
 
   /**
    * @brief Activate an object.
-   * @param object: The POA to activate
+   * @param object The POA to activate
    */
   void
   activate(PortableServer::ServantBase* object) const;
 
   /**
    * @brief Deactivate an object.
-   * @param object: The POA to deactivate
+   * @param object The POA to deactivate
    */
   void
   deactivate(PortableServer::ServantBase* object) const;
@@ -282,15 +282,15 @@ public:
 
   /**
    * @brief Shut down the ORBMgr
-   * @param waitForCompletion: If shut immediatly or wait the completion to shut
+   * @param waitForCompletion If shut immediatly or wait the completion to shut
    */
   void
   shutdown(bool waitForCompletion);
 
   /**
    * @brief Init the ORBMgr
-   * @param argc: C main parameter
-   * @param argv: C main parameter
+   * @param argc C main parameter
+   * @param argv C main parameter
    */
   static void
   init(int argc, char* argv[]);
@@ -304,8 +304,8 @@ public:
 
   /**
    * @brief List the objects in a context of a forwarder
-   * @param fwdName: The name of the forwarder
-   * @param ctxt: The context
+   * @param fwdName The name of the forwarder
+   * @param ctxt The context
    * @return The list of the name of the objects
    */
   std::list<std::string>
@@ -313,7 +313,7 @@ public:
 
   /**
    * @brief List the local objects in a context
-   * @param ctxt: The context
+   * @param ctxt The context
    * @return The list of the name of the local objects
    */
   std::list<std::string>
@@ -323,23 +323,23 @@ public:
 
   /**
    * @brief Make an IOP::IOR object using a stringified IOR.
-   * @param strIOR: The IOR as a string
-   * @param ior: The new IOR
+   * @param strIOR The IOR as a string
+   * @param ior The new IOR
    */
   static void
   makeIOR(const std::string& strIOR, IOP::IOR& ior);
 
   /**
    * @brief Convert IOP::IOR to a stringified IOR.
-   * @param ior: The ior
-   * @param strIOR: The stringfied IOR
+   * @param ior The ior
+   * @param strIOR The stringfied IOR
    */
   static void
   makeString(const IOP::IOR& ior, std::string& strIOR);
 
   /**
    * @brief Get the hostname of the first profile in this IOR.
-   * @param ior: The IOR
+   * @param ior The IOR
    * @return The hostname
    */
   static std::string
@@ -348,7 +348,7 @@ public:
   /**
    * @brief Get the hostname of the first profile in IOR passed
    * as a string.
-   * @param strIOR: The IOR
+   * @param strIOR The IOR
    * @return The hostname
    */
   static std::string
@@ -356,7 +356,7 @@ public:
 
   /**
    * @brief Get the port of the first profile in this IOR.
-   * @param ior: The IOR
+   * @param ior The IOR
    * @return The port
    */
   static unsigned int
@@ -365,7 +365,7 @@ public:
   /**
    * @brief Get the port of the first profile in IOR passed
    * as a string.
-   * @param strIOR: The IOR
+   * @param strIOR The IOR
    * @return The port
    */
   static unsigned int
@@ -373,7 +373,7 @@ public:
 
   /**
    * @brief Get the type id of the IOR.
-   * @param ior: The IOR
+   * @param ior The IOR
    * @return The dataType
    */
   static std::string
@@ -381,7 +381,7 @@ public:
 
   /**
    * @brief Get the type id of the IOR passed as a string.
-   * @param strIOR: The IOR
+   * @param strIOR The IOR
    * @return The dataType
    */
   static std::string
@@ -389,9 +389,9 @@ public:
 
   /**
    * @brief Convert the IOR to a string
-   * @param ior: The IOR to convert
-   * @param host: The hostname
-   * @param port: The port number
+   * @param ior The IOR to convert
+   * @param host The hostname
+   * @param port The port number
    * @return The stringified IOR
    */
   static std::string
@@ -399,9 +399,9 @@ public:
 
   /**
    * @brief Convert the IOR to a string
-   * @param ior: The IOR to convert
-   * @param host: The hostname
-   * @param port: The port number
+   * @param ior The IOR to convert
+   * @param host The hostname
+   * @param port The port number
    * @return The stringified IOR
    */
   static std::string
@@ -417,15 +417,15 @@ public:
 
   /**
    * @brief Remove the object called name from the cache
-   * @param name: The name of the object to remove
+   * @param name The name of the object to remove
    */
   void
   removeObjectFromCache(const std::string& name) const;
 
   /**
    * @brief Remove the object called name in the context ctxt from the cache
-   * @param ctxt: The context of the object to remove
-   * @param name: The name of the object to remove
+   * @param ctxt The context of the object to remove
+   * @param name The name of the object to remove
    */
   void
   removeObjectFromCache(const std::string& ctxt, const std::string& name) const;
@@ -439,9 +439,9 @@ public:
   /**
    * @brief Translate the string passed as first argument in bytes and
    * record them into the buffer.
-   * @param ptr: The source buffer
-   * @param size: The size of the char
-   * @param buffer: The output buffer
+   * @param ptr The source buffer
+   * @param size The size of the char
+   * @param buffer The output buffer
    */
   static void
   hexStringToBuffer(const char* ptr, const size_t size,
@@ -450,14 +450,14 @@ public:
 private:
   /**
    * @brief CORBA initialization.
-   * @param ORB: The ORB to use
+   * @param ORB The ORB to use
    */
   void
   init(CORBA::ORB_ptr ORB);
 
   /**
    * @brief Handler for sigint signal interception
-   * @param sig: The received signal
+   * @param sig The received signal
    */
   static void
   sigIntHandler(int sig);

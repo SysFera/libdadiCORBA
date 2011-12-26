@@ -15,13 +15,17 @@
 
 #include "MaDag.idl"
 
+/**
+ * @brief MaDag interface
+ * @class MaDagFwdr
+ */
 interface MaDagFwdr : MaDag {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref MaDagIDL. All methods have
+ * of the class see MaDag. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */

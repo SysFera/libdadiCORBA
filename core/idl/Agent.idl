@@ -23,7 +23,7 @@
 /****************************************************************************/
 /**
  * @brief The agent interface
- * @section AgentIDL
+ * @section Agent
  */
 interface Agent {
 
@@ -32,9 +32,9 @@ interface Agent {
    * useless to register without offering services, the last argument is the
    * same as for addServices method. Returns a registration number wich
    * indentifies the child amongst the other children of this agent.
-   * @param agentName: The name of the agent registering
-   * @parent hostName: The hostname
-   * @param services: Set of services (the services offered by the agent)
+   * @param agentName The name of the agent registering
+   * @parent hostName The hostname
+   * @param services Set of services (the services offered by the agent)
    * @return An id to identify the child among others
    */
   long agentSubscribe(in string agentName, in string hostname,
@@ -44,9 +44,9 @@ interface Agent {
    * to register without offering services, the last argument is the same as for
    * addServices method. Returns a registration number wich indentifies the
    * child amongst the other children of this agent.
-   * @param seDName: The name of the SeD registering
-   * @parent hostName: The hostname
-   * @param services: Set of services (the services offered by the agent)
+   * @param seDName The name of the SeD registering
+   * @parent hostName The hostname
+   * @param services Set of services (the services offered by the agent)
    * @return An id to identify the child among others
    */
   long serverSubscribe(in string seDName,
@@ -57,13 +57,13 @@ interface Agent {
    * @brief Sends a request to the agent to commit suicide.
    * If "recursive" is true, then the agent forwards the request
    * to its children.
-   * @param recursive: If the children must remove to
+   * @param recursive If the children must remove to
    * @return An error code
    */
   long removeElement(in boolean recursive);
   /**
    * @brief To bind the agent to a parent
-   * @param parentName: The name of the parent to bind
+   * @param parentName The name of the parent to bind
    * @return An error code
    */
   long bindParent(in string parentName);
@@ -77,8 +77,8 @@ interface Agent {
    * @brief Invoked by servers or LA to unregister as a child from this agent.
    * This also unregister the services offered by the child in the
    * service table of the agent.
-   * @param childID: The id of the child to remove
-   * @param services: The services offered by the child to eventually remove
+   * @param childID The id of the child to remove
+   * @param services The services offered by the child to eventually remove
    * @return An error code
    */
   long childUnsubscribe(in unsigned long childID,
@@ -88,8 +88,8 @@ interface Agent {
    * @brief Invoked by SeDImpl::removeService(...) after removing a service
    * locally on a SeD. Used to inform the rest of the hierarchy that this
    * service is no longer available on this SeD.
-   * @param childID: The id of the SeD calling
-   * @param profile: The profile of the deleted SeD
+   * @param childID The id of the SeD calling
+   * @param profile The profile of the deleted SeD
    * @return An error code
    */
   long childRemoveService(in unsigned long childID,
@@ -99,18 +99,18 @@ interface Agent {
    * @brief Service table update method. Propagate the update of the problem list up
    * the tree when a new child registers. The first parameter is the child's
    * registration number.
-   * @param myID: The id of the child
-   * @param services: The services to add
+   * @param myID The id of the child
+   * @param services The services to add
    */
   long addServices(in unsigned long myID,
                    in SeqCorbaProfileDesc_t services);
 
 
   /**
-   * @param: Message posting functions:
+   * @param Message posting functions:
    * This call is asynchronous. The response message REQ is kept in an
    * internal list and processed as soon as possible.
-   * @param resp: The response to add to the internal list to process later
+   * @param resp The response to add to the internal list to process later
    */
   oneway void getResponse(in corba_response_t resp);
 
@@ -132,7 +132,7 @@ interface Agent {
   string getDataManager();
   /**
    * @brief To search a data in the agent
-   * @param request: The request containing the dagda data
+   * @param request The request containing the dagda data
    */
   SeqString searchData(in string request);
 };

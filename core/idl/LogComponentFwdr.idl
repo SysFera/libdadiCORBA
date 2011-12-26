@@ -1,4 +1,5 @@
 /*
+ * @file LogComponentFwdr.idl
  * @brief Defines the componentside interfaces needed by the new LogService
  *                                                                          
  *  @author Georg Hoesch (hoesch@in.tum.de)                                     
@@ -19,13 +20,17 @@
  * LogCentral.
  */
 
+/**
+ * @brief ComponentConfigurator interface
+ * @class ComponentConfiguratorFwdr
+ */
 interface ComponentConfiguratorFwdr : ComponentConfigurator {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref ComponentConfiguratorIDL. All methods have
+ * of the class see ComponentConfigurator. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */
@@ -40,6 +45,10 @@ interface ComponentConfiguratorForwarder {
 
 };
 
+/**
+ * @brief LogCentralComponent interface
+ * @class LogCentralComponentFwdr
+ */
 interface LogCentralComponentFwdr : LogCentralComponent {
 
 };

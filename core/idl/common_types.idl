@@ -13,38 +13,82 @@
 #ifndef _COMMON_TYPES_IDL_
 #define _COMMON_TYPES_IDL_
 
+/**
+ * @brief A sequence of any objects
+ */
 typedef sequence<any>    SeqAny;
+/**
+ * @brief A sequence of doubles
+ */
 typedef sequence<double> SeqDouble;
+/**
+ * @brief A sequence of long
+ */
 typedef sequence<long>   SeqLong;
+/**
+ * @brief A sequence of char
+ */
 typedef sequence<char>   SeqChar;
+/**
+ * @brief A sequence of string
+ */
 typedef sequence<string> SeqString;
 
-/* The object name is not valid. */
+/**
+ * @brief The object name is not valid. 
+ */
 exception BadNameException {
-	string name;
-	string function;
-	string forwarder_name;
+  /**
+   * @brief The "bad" name
+   */
+  string name;
+  /**
+   * @brief The function that raises the exception
+   */
+  string function;
+  /**
+   * @brief The name of the forwarder
+   */
+  string forwarder_name;
 };
-/* The name does not refer to a registered object. */
+/**
+ * @brief The name does not refer to a registered object. 
+ */
 exception UnknownObject {
-	string name;
+  /**
+   * @brief The unknown named object
+   */
+  string name;
 };
 
 /****************************************************************************/
 /* DATA PERISTENCY: Data Description for Data Manager                       */
 /****************************************************************************/
 
-/** State of the data */
+/**
+ * @brief State of the data 
+ */
 enum occupationFlag {DIET_FREE, DIET_INUSE, DIET_TRANSFERT};
 /**
- * Flag used to manage data coherence: data only registered on one Data Manager
+ * @brief Flag used to manage data coherence: data only registered on one Data Manager
  */
 enum kleenexFlag {DIET_ORIGINAL, DIET_KLEENEXCOPY};
 
-/** Structure of the Data Identifier */
+/** 
+ * @brief Structure of the Data Identifier 
+ */
 struct corba_data_id_t {
+  /**
+   * @brief The id of the data
+   */
   string idNumber;
+  /**
+   * @brief A copy of the data
+   */
   kleenexFlag dataCopy;
+  /**
+   * @brief How to handle the data
+   */
   occupationFlag state;
 };
 
@@ -54,58 +98,103 @@ struct corba_data_id_t {
 /* Mapping for the diet_data_desc_t type                                    */
 /****************************************************************************/
 
-/** Simple complex mapping */
+/**
+ * @brief Simple complex mapping 
+ */
 struct corba_scomplex_t {
+  /**
+   * @brief Real part
+   */
   float r;
+  /**
+   * @brief Imaginary part
+   */
   float i;
 };
-/** Double complex mapping */
+/**
+ * @brief Double complex mapping 
+ */
 struct corba_dcomplex_t {
+  /**
+   * @brief Real part
+   */
   double r;
+  /**
+   * @brief Imaginary part
+   */
   double i;
 };
 
-/** Mapping for struct diet_scalar_specific */
+/**
+ * @brief Mapping for struct diet_scalar_specific 
+ */
 struct corba_scalar_specific_t {
+  /**
+   * @brief The value
+   */
   any value;
 };
 
-/** Mapping for struct diet_vector_specific */
+/**
+ * @brief Mapping for struct diet_vector_specific 
+ */
 struct corba_vector_specific_t {
+  /**
+   * @brief The size
+   */
   long size;
 };
 
-/** Mapping fo structr diet_matrix_specific */
+/**
+ * @brief Mapping fo structr diet_matrix_specific 
+ */
 struct corba_matrix_specific_t {
+  /**
+   * @brief The number of row
+   */
   long nb_r;
+  /**
+   * @brief The number of column
+   */
   long nb_c;
+  /**
+   * @brief The order
+   */
   long order;
 };
 
-/** Mapping for struct diet_string_specific */
+/**
+ * @brief Mapping for struct diet_string_specific 
+ */
 struct corba_string_specific_t {
   long length;
 };
 
-/** Mapping for struct diet_paramstring_specific */
+/**
+ * @brief Mapping for struct diet_paramstring_specific 
+ */
 struct corba_paramstring_specific_t {
   long length;
   string param;
 };
 
-/** Mapping for struct diet_file_specific */
+/**
+ * @brief Mapping for struct diet_file_specific 
+ */
 struct corba_file_specific_t {
   long size;
   string path;
 };
 
-/** Mapping for struct diet_container_specific */
+/**
+ * @brief Mapping for struct diet_container_specific 
+ */
 struct corba_container_specific_t {
   long size;
 };
 
 /**
- * Descriptor
+ * @brief Descriptor
  * The field 'type' in diet_data_desc_t is the discriminant of union field
  */
 union type switch (long) {
@@ -125,12 +214,30 @@ union type switch (long) {
    corba_container_specific_t   cont;
 };
 
+/**
+ * @brief Description of a data
+ */
 struct corba_data_desc_t {
+/**
+ * @brief The id of the data
+ */
   corba_data_id_t id;
+/**
+ * @brief TODO
+ */
   long mode;
+/**
+ * @brief TODO
+ */
   long base_type;
+/**
+ * @brief TODO
+ */
   type specific;
 };
+/**
+ * @brief Sequence of corba data
+ */
 typedef sequence<corba_data_desc_t> SeqCorbaDataDesc_t;
 
 
@@ -138,18 +245,24 @@ typedef sequence<corba_data_desc_t> SeqCorbaDataDesc_t;
 /* REGISTRATON _ Service description                                        */
 /****************************************************************************/
 
-/** Argument descriptor */
+/** 
+ * @brief Argument descriptor 
+ */
 struct corba_arg_desc_t {
   long base_type;
   long type;
 };
 
-/*
-** server estimate aggregation
-*/
+/**
+ * @brief server estimate aggregation
+ */
 struct corba_agg_default_t {
   octet dummy;
 };
+
+/**
+ * @brief server estimate aggregation priority
+ */
 struct corba_agg_priority_t {
   sequence<long> priorityList;
 };
@@ -164,11 +277,17 @@ union corba_agg_specific_t switch (long) {
 /** New : The aggregator for user scheduler support. */
 /*****************************************************/
 };
+
+/**
+ * @brief Descriptor for agregator
+ */
 struct corba_aggregator_desc_t {
   corba_agg_specific_t agg_specific;
 };
 
-/** Service profile descriptor (mapping for diet_profile_desc_t) */
+/**
+ * @brief Service profile descriptor (mapping for diet_profile_desc_t) 
+ */
 struct corba_profile_desc_t {
   string path;
   long   last_in;
@@ -177,6 +296,9 @@ struct corba_profile_desc_t {
   sequence<corba_arg_desc_t> param_desc;
   corba_aggregator_desc_t aggregator;
 };
+/**
+ * @brief A sequence of profile descriptor
+ */
 typedef sequence<corba_profile_desc_t> SeqCorbaProfileDesc_t;
 
 
@@ -185,15 +307,20 @@ typedef sequence<corba_profile_desc_t> SeqCorbaProfileDesc_t;
 /* REQUEST _ Problem profile description                                    */
 /****************************************************************************/
 
-/** Mapping for diet_data_t */
+/** 
+ * @brief Mapping for diet_data_t 
+ */
 struct corba_data_t {
   corba_data_desc_t desc;
   SeqChar value;
 };
+/**
+ * @brief A sequence of mapping for diet_data
+ */
 typedef sequence<corba_data_t> SeqCorbaData_t;
 
 /**
- * Actually, this is an equivalent to a diet_profile_t without the data.
+ * @brief Actually, this is an equivalent to a diet_profile_t without the data.
  */
 struct corba_pb_desc_t {
   string path;
@@ -207,7 +334,7 @@ struct corba_pb_desc_t {
 /* REQUEST                                                                  */
 /****************************************************************************/
 /**
- * A request is associated to an ID, a problem description, and a scheduler.
+ * @brief A request is associated to an ID, a problem description, and a scheduler.
  */
 struct corba_request_t {
   unsigned long     reqID;
@@ -221,23 +348,25 @@ struct corba_request_t {
 /* ESTIMATION                                                               */
 /****************************************************************************/
 /**
- * Custom estimation tags: space of a char, acceptable values
- * defined DIET_data_internal.h
+ * @brief Custom estimation tags
  */
 typedef short corba_est_tag_storage_t;
 
 /**
- * Custom estimation value
+ * @brief Custom estimation value
  */
 struct corba_est_value_t {
   corba_est_tag_storage_t v_tag;
   short                   v_idx;
   double                  v_value;
 };
+/**
+ * @brief A sequence of current estimation value
+ */
 typedef sequence <corba_est_value_t> SeqEstValue_t;
 
 /**
- * The estimation structure
+ * @brief The estimation structure
  * commTimes == Communication times of ALL parameters :
  * the tranfer time of OUT parameters is estimated as if they were IN,
  * which is better than not taking them into account.
@@ -254,7 +383,9 @@ struct corba_estimation_t {
 /* PROFILE (for problem solve)                                              */
 /****************************************************************************/
 
-/** The complete problem, sent from client to server. */
+/**
+ * @brief The complete problem, sent from client to server. 
+ */
 struct corba_profile_t {
   long   last_in;
   long   last_inout;

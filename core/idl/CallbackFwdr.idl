@@ -17,13 +17,17 @@
 #include "Callback.idl"
 #include "common_types.idl"
 
+/**
+ * @brief Callback interface
+ * @class CallbackFwdr
+ */
 interface CallbackFwdr : Callback {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref CallbackIDL. All methods have
+ * of the class see Callback. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */

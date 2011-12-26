@@ -53,14 +53,14 @@ interface ComponentConfigurator {
   /**
    * @brief Set the component filter to the specified taglist. All tags
    * in the list have to be forwarded, all others not.
-   * @param taglist: The list of tag to set
+   * @param taglist The list of tag to set
    */
   void
   setTagFilter(in tag_list_t tagList);
 
   /**
    * @brief Add the specified taglist to the internal filter and merge them.
-   * @param tagList: The list of tag to add
+   * @param tagList The list of tag to add
    */
   void
   addTagFilter(in tag_list_t tagList);
@@ -69,7 +69,7 @@ interface ComponentConfigurator {
    * @Remove all tags from the taglist from the internal filter. The
    * given tagList may contain tags that the internal filter does
    * not contain.
-   * @param tagList: The list of tag to remove
+   * @param tagList The list of tag to remove
    */
   void
   removeTagFilter(in tag_list_t tagList);
@@ -102,12 +102,12 @@ interface LogCentralComponent {
    * registered. In this case, the connection was not successful, and the tool
    * must connect with a diferent name before invoking other functions of the
    * LogCentralComponent interface.
-   * @param componentName: The name of the component to connect (automatically created if it is an empty string)
-   * @param componentHostname: The hostname of the machine
-   * @param message: The connexion message
-   * @param compConfigurator: The component configurator
-   * @param componentTime: The time
-   * @param initialConfig: The initial tag list to use
+   * @param componentName The name of the component to connect (automatically created if it is an empty string)
+   * @param componentHostname The hostname of the machine
+   * @param message The connexion message
+   * @param compConfigurator The component configurator
+   * @param componentTime The time
+   * @param initialConfig The initial tag list to use
    * @return An error code
    */
   short
@@ -125,8 +125,8 @@ interface LogCentralComponent {
    * The componentConfigurator will no longer be used by the LogCentral after
    * this call. Returns NOTCONNECTED if the calling component was not
    * registered.
-   * @param componentName: The name of the component to disconnect
-   * @param message: The disconnexion message
+   * @param componentName The name of the component to disconnect
+   * @param message The disconnexion message
    * @return An error code
    */
   short
@@ -135,7 +135,7 @@ interface LogCentralComponent {
 
   /**
    * @brief Send a buffer of log_msg_t to the LogCentral.
-   * @param buffer: The message to send
+   * @param buffer The message to send
    */
   oneway void
   sendBuffer(in log_msg_buf_t buffer);
@@ -144,15 +144,15 @@ interface LogCentralComponent {
    * @brief To be called by a thread for saying that the component is still alive.
    * If the last ping is too old, the component is considered dead and
    * generate a disconnect message (OUT).
-   * @param componentName: The component to ping
+   * @param componentName The component to ping
    */
   oneway void
   ping(in string componentName);
 
   /**
    * @brief To be called by a thread for clock synchronisation.
-   * @param: componentName: The component to ping
-   * @componentTime: The time for the synchro
+   * @param componentName The component to ping
+   * @componentTime The time for the synchro
    */
   oneway void
   synchronize(in string componentName, in log_time_t componentTime);

@@ -40,9 +40,9 @@ interface Callback {
   /**
    * @brief solveResults function:                                       
    *   put results of solve operation on client...              
-   * @param pb: The problem profile
-   * @param reqID: The request ID
-   * @param result: The result of the solve call
+   * @param pb The problem profile
+   * @param reqID The request ID
+   * @param result The result of the solve call
    * @return An error code
    */
   long solveResults(in corba_profile_t pb, in long reqID,

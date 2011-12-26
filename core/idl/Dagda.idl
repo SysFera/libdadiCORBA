@@ -86,19 +86,19 @@ interface Dagda {
   /* Is the data using dataID is present. */
   /**
    * @brief If the data is locally present
-   * @param dataId: The ID of the data
+   * @param dataId The ID of the data
    * @return True if present
    */
   boolean lclIsDataPresent(in string dataID);
   /**
    * @brief If the data is present from this level
-   * @param dataId: The ID of the data
+   * @param dataId The ID of the data
    * @return True if present
    */
   boolean lvlIsDataPresent(in string dataID);
   /**
    * @brief If the data is present in the platform
-   * @param dataId: The ID of the data
+   * @param dataId The ID of the data
    * @return True if present
    */
   boolean pfmIsDataPresent(in string dataID);
@@ -106,29 +106,29 @@ interface Dagda {
   /* Add a data. */
   /**
    * @brief Add a local data
-   * @param srcDagda: The source of the data
-   * @param data: The data to add
+   * @param srcDagda The source of the data
+   * @param data The data to add
    */
   void lclAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
   /**
    * @brief Add a data from this level
-   * @param srcDagda: The source of the data
-   * @param data: The data to add
+   * @param srcDagda The source of the data
+   * @param data The data to add
    */
   void lvlAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
   /**
    * @brief Add a data from the platform
-   * @param srcDagda: The source of the data
-   * @param data: The data to add
+   * @param srcDagda The source of the data
+   * @param data The data to add
    */
   void pfmAddData(in string srcDagda, in corba_data_t data)
     raises(InvalidPathName, ReadError, WriteError, NotEnoughSpace);
   /**
    * @brief Register a file. (without copying it. Used to declare a file present at
    * launching time or shared by SeDs.) 
-   * @param data: The data (file) to add
+   * @param data The data (file) to add
    */
   void registerFile(in corba_data_t data)
     raises(InvalidPathName, UnreachableFile);

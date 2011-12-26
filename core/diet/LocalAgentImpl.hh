@@ -24,8 +24,8 @@
 /**
  * @brief The Local Agent forwarder class that implements all the agents methods
  * throught the forwarder
- * @class LocalAgentImpl
- * For non documented methods, please see the \ref LocalAgentIDL and its parents idl interfaces.
+ * For non documented methods, please see the LocalAgent and its parents idl interfaces.
+ * @class LocalAgentFwdrImpl
  */
 class LocalAgentFwdrImpl : public POA_LocalAgentFwdr,
                            public PortableServer::RefCountServantBase {

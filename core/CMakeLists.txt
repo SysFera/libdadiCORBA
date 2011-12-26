@@ -31,6 +31,9 @@ mark_as_advanced(DOXYGEN_FORMATS)
 cmake_dependent_option(ENABLE_EXTRAS_DOC "Build extrasdocumentation" OFF
   "ENABLE_DOC" OFF)
 
+if (ENABLE_DOC)
+  add_subdirectory(doc)
+endif(ENABLE_DOC)
 
 #-------------- PLATFORM SPECIFIC COMPILATION FLAGS -----------------------
 # Requires CMake >= 2.4.7
@@ -226,8 +229,8 @@ install(FILES utils/FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR}/utils)
 install(FILES utils/LocalTime.hh DESTINATION ${INC_INSTALL_DIR}/utils)
 
 ## generate doxygen documentation
-add_custom_target(doc ALL)
-if(ENABLE_DOXYGEN)
-  include(UseDoxygen)
-  generate_doxygen(FORMATS ${DOXYGEN_FORMATS})
-endif()
+#add_custom_target(doc ALL)
+#if(ENABLE_DOXYGEN)
+#  include(UseDoxygen)
+#  generate_doxygen(FORMATS ${DOXYGEN_FORMATS})
+#endif()

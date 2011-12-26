@@ -31,8 +31,8 @@
 /**
  * @brief The agent forwarder class that implements all the agents methods
  * throught the forwarder
+ * For non documented methods, please see the Agent and its parents idl interfaces.
  * @class AgentFwdrImpl
- * For non documented methods, please see the \ref AgentIDL and its parents idl interfaces.
  */
 class AgentFwdrImpl : public POA_AgentFwdr,
                       public PortableServer::RefCountServantBase {

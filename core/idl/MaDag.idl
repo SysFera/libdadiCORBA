@@ -96,7 +96,7 @@ interface MaDag {
 
   /**
    * @brief Release a multi-dag
-   * @param wfReqId: The id of the multi dag to release
+   * @param wfReqId The id of the multi dag to release
    */
   void
       releaseMultiDag(in long wfReqId)
@@ -117,7 +117,7 @@ interface MaDag {
 
   /**
    * @brief To set the platform type
-   *@param pfmType: The type of the platform
+   *@param pfmType The type of the platform
    */
   void setPlatformType(in pfmType_t pfmType);
 

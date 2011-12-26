@@ -27,14 +27,14 @@
  * @brief The corba forwarder class that defines all the methods that can pass
  * throught the forwarder
  * @class CorbaForwarder
- * For non documented methods, please see the \ref ForwarderIDL and its parents idl interfaces.
+ * For non documented methods, please see the Forwarder and its parents idl interfaces.
  */
 class CorbaForwarder : public POA_Forwarder,
                        public PortableServer::RefCountServantBase {
 public:
 /**
  * @brief Constructor
- * @param name: Name of the forwarder
+ * @param name Name of the forwarder
  */
   explicit CorbaForwarder(const std::string& name);
 
@@ -79,7 +79,7 @@ public:
   /*
    * @brief To determine if the call is from another forwarder and
    * modify the object name.
-   * @param objName: The name of the object to check if local
+   * @param objName The name of the object to check if local
    * @return If the call is remote = true
    */
   static bool
@@ -106,7 +106,7 @@ public:
   getPeerHost();
   /**
    * @brief Set this forwarder peer object (not CORBA).
-   * @param peer: The peer to set
+   * @param peer The peer to set
    */
   void
   setPeer(Forwarder_ptr peer);
@@ -119,7 +119,7 @@ public:
   /* Object caches management functions. */
 /**
  * @brief To remove the object name from the cache
- * @param name: The object to remove from the cache
+ * @param name The object to remove from the cache
  */
   void
   removeObjectFromCache(const std::string& name);
@@ -142,10 +142,6 @@ public:
 
   /* AgentFwdr implementation. */
 
-/**
- * @brief To subscribe to an agent
- * @param
- */
   ::CORBA::Long
   agentSubscribe(const char* agentName,
                  const char* hostname,

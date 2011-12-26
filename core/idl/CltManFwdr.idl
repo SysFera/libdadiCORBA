@@ -14,13 +14,17 @@
 
 #include "CltMan.idl"
 
+/**
+ * @brief CltMan interface
+ * @class CltManFwdr
+ */
 interface CltManFwdr : CltMan {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref CltManIDL. All methods have
+ * of the class see CltMan. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */

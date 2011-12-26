@@ -36,7 +36,7 @@ class FloodRequestsList;
  * @brief The master agent forwarder class that implements all the agents methods
  * throught the forwarder
  * @class MasterAgentFwdrImpl
- * For non documented methods, please see the \ref MasterAgentIDL and its parents idl interfaces.
+ * For non documented methods, please see the MasterAgent and its parents idl interfaces.
  */
 class MasterAgentFwdrImpl : public POA_MasterAgentFwdr,
                             public PortableServer::RefCountServantBase {

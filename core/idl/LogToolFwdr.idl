@@ -15,14 +15,17 @@
 
 #include "LogTool.idl"
 
-
+/**
+ * @brief ToolMsgReceiver interface
+ * @class ToolMsgReceiverFwdr
+ */
 interface ToolMsgReceiverFwdr : ToolMsgReceiver {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref ToolMsgReceiverIDL. All methods have
+ * of the class see ToolMsgReceiver. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */
@@ -32,13 +35,17 @@ interface ToolMsgReceiverForwarder
   sendMsg(in log_msg_buf_t msgBuf, in string objName);
 };
 
+/**
+ * @brief log central tool interface
+ * @class LogCentralToolFwdr
+ */
 interface LogCentralToolFwdr : LogCentralTool{
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref LogCentralToolIDL. All methods have
+ * of the class see LogCentralTool. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */

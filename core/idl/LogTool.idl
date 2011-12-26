@@ -89,7 +89,7 @@ interface ToolMsgReceiver
    * @brief Receive a buffer of messages. The messages are ordered in the
    * sequence. Older messages will be at the beginning of the sequence,
    * younger(newer) messages at the end. 
-   * @param msgBuf: the message to send
+   * @param msgBuf the message to send
    */
   oneway void
   sendMsg(in log_msg_buf_t msgBuf);
@@ -116,8 +116,8 @@ interface LogCentralTool
    * reconnect with another name before specifying any filters. If the 
    * tool sends an empty toolName, the LogCentral will provide a unique
    * toolName and pass it back to the tool.
-   * @param toolName: The name of the tool (filled if not given)
-   * @param msgReceiver: The message receiver
+   * @param toolName The name of the tool (filled if not given)
+   * @param msgReceiver The message receiver
    * @return An error code
    */
   short
@@ -129,7 +129,7 @@ interface LogCentralTool
    * toolMsgReceiver will not be used by the monitor any more 
    * after this call. Returns NOTCONNECTED if the calling tool
    * was not connected.
-   * @param toolName: The name of the tool (filled if not given)
+   * @param toolName The name of the tool (filled if not given)
    * @return An error code
    */
   short
@@ -162,8 +162,8 @@ interface LogCentralTool
    * identified by its name, which is a part of filter_t. A tool
    * can have as much filters as it wants. Returns ALREADYEXISTS if
    * another filter with this name is already registered.
-   * @param toolName: The name of the tool
-   * @param filter: The filter to add
+   * @param toolName The name of the tool
+   * @param filter The filter to add
    * @return An error code
    */
   short
@@ -173,8 +173,8 @@ interface LogCentralTool
    * @brief Removes a existing filter from the tools filterList. The filter
    * will be identified by its name in the filter_t. If the specified
    * filter does not exist, NOTEXISTS is returned.
-   * @param toolName: The name of the tool
-   * @param filterName: The name of the filter to remove
+   * @param toolName The name of the tool
+   * @param filterName The name of the filter to remove
    * @return An error code
    */
   short
@@ -182,7 +182,7 @@ interface LogCentralTool
 
   /**
    * @brief Removes all defined filters.
-   * @param toolName: The name of the tool to remove all its filters
+   * @param toolName The name of the tool to remove all its filters
    */
   short
   flushAllFilters(in string toolName);

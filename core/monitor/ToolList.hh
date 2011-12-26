@@ -22,8 +22,9 @@ typedef FullLinkedList<log_msg_t> OutBuffer;
 typedef FullLinkedList<filter_t> FilterList;
 
 /**
- * All information that is stored for each Tool
+ * @brief All information that is stored for each Tool
  * (filterlist, output buffer, proxy)
+ * @struct ToolElement
  */
 struct ToolElement {
   ToolMsgReceiver_var msgReceiver;
@@ -33,7 +34,7 @@ struct ToolElement {
 };
 
 /**
- * Define a ToolList for the ToolElements
+ * @brief Define a ToolList for the ToolElements
  * No Elements should be changed without
  * having a writeLock(Iterator) on the whole
  * List.

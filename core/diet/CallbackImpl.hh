@@ -22,8 +22,8 @@
 /**
  * @brief The callback forwarder class that implements all the callback methods
  * throught the forwarder
- * @class CallbackImpl
- * For non documented methods, please see the \ref CallbackIDL and its parents idl interfaces.
+ * For non documented methods, please see the Callback and its parents idl interfaces.
+ * @class CallbackFwdrImpl
  */
 class CallbackFwdrImpl : public POA_CallbackFwdr,
                          public PortableServer::RefCountServantBase {

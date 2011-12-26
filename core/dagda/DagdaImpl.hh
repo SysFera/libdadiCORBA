@@ -35,7 +35,10 @@ typedef enum {DGD_CLIENT_MNGR,
               DGD_AGENT_MNGR,
               DGD_SED_MNGR} dagda_manager_type_t;
 
-
+/**
+ * @brief Dagda forwarder implementation
+ * @class DagdaFwdrImpl
+ */
 class DagdaFwdrImpl : public POA_DagdaFwdr,
                       public PortableServer::RefCountServantBase {
 public:

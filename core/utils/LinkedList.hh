@@ -20,7 +20,7 @@
 #include <cassert>
 
 /**
- * This is a thread safe generic double linked list. The list must be
+ * @brief This is a thread safe generic double linked list. The list must be
  * empty to be destroyed. All the methods are thread safe. When an
  * iterator is used, only the iterator can access to the linked
  * list. All the other thread which access to the linked list will
@@ -51,14 +51,14 @@
  * delete(i);                     // free the access to the linked list
  * l.emptyIt();                   // l = <>
  * \endcode
- *
+ * @class LinkedList
  */
 
 template<class T>
 class LinkedList {
 private:
   /**
-   * This structure define each node of the list.
+   * @brief This structure define each node of the list.
    */
   struct Node {
     // / next node or \c NULL if it's the last one.
@@ -71,36 +71,36 @@ private:
 
 
   /**
-   * indicates the number of element in the list.
+   * @brief indicates the number of element in the list.
    */
   long counter;
 
   /**
-   * mutex that gives acces to the critical zone of the list.
+   * @brief mutex that gives acces to the critical zone of the list.
    */
   mutable omni_mutex linkedListMutex;
 
   /**
-   * the first element of the list or \c NULL if the list is empty.
+   * @brief the first element of the list or \c NULL if the list is empty.
    */
   Node *first;
 
   /**
-   * the last element of the list or it is not defined if the list is
+   * @brief the last element of the list or it is not defined if the list is
    * empty.
    */
   Node *last;
 
 public:
   /**
-   * creates an new empty list.
+   * @brief creates an new empty list.
    */
   LinkedList(): counter(0), first(NULL), last(NULL) {
   }
 
 
   /**
-   * creates a copy of the list given in argument. All the arguments
+   * @brief creates a copy of the list given in argument. All the arguments
    * are cloned. This is not a copy of the pointer on the element but
    * a copy of the element itself which are use to clone the list.
    */
@@ -139,7 +139,7 @@ public:
 
 
   /**
-   * destroyes the list. The list must be empty.
+   * @brief destroyes the list. The list must be empty.
    */
   ~LinkedList() {
     assert(first == NULL);
@@ -148,7 +148,7 @@ public:
 
 
   /**
-   * destroyes all the element of the list. The list become an empty
+   * @brief destroyes all the element of the list. The list become an empty
    * list.
    */
   void
@@ -166,7 +166,7 @@ public:
 
 
   /**
-   * Add an element at the end of the list. The element is not
+   * @brief Add an element at the end of the list. The element is not
    * duplicated, only the pointer is copied.
    *
    * @param element a pointer on the element added into the list. It
@@ -197,7 +197,7 @@ public:
 
 
   /**
-   * returnes the first element of the list et removes it from the
+   * @brief returnes the first element of the list et removes it from the
    * list. If the list is empty, return a \c NULL pointer.
    */
   T *
@@ -217,7 +217,8 @@ public:
 
 
   /**
-   * returnes the length (number of element) of the list.
+   * @brief returnes the length (number of element) of the list.
+   * @return The size of the list
    */
   long
   length() const {
@@ -229,7 +230,7 @@ public:
 
 
   /**
-   * Append the list given in argument to the end of the list. The
+   * @brief Append the list given in argument to the end of the list. The
    * list given in argument become en empty list.
    *
    * @param list The list which is append to the end of the current
@@ -258,21 +259,22 @@ public:
   friend class Iterator;
 
   /**
-   * it the linked list iterator. It is created by the linked list and
+   * @brief it the linked list iterator. It is created by the linked list and
    * can works only with it. When it is created, it lock the access on
    * the list. The access is realised when the iterator is destroyed.
+   * @class Iterator
    */
   class Iterator {
 public:
     /**
-     * destroy the iterator and free the access to the linked list.
+     * @brief destroy the iterator and free the access to the linked list.
      */
     ~Iterator() {
       linkedList->linkedListMutex.unlock();
     }
 
     /**
-     * The first element of the linked list controled by the iterator
+     * @brief The first element of the linked list controled by the iterator
      * become the current element.
      */
     inline void
@@ -281,7 +283,7 @@ public:
     }
 
     /**
-     * returns true if there is a current element
+     * @brief returns true if there is a current element
      */
     inline bool
     hasCurrent() {
@@ -289,7 +291,8 @@ public:
     }
 
     /**
-     * returns true if there is a next element
+     * @brief returns true if there is a next element
+     * @return true if there is a next element, false otherwise
      */
     inline bool
     hasNext() {
@@ -297,7 +300,8 @@ public:
     }
 
     /**
-     * returns true if there is a previous element
+     * @brief returns true if there is a previous element
+     * @return true if there is a previous element, false otherwise
      */
     inline bool
     hasPrevious() {
@@ -305,7 +309,7 @@ public:
     }
 
     /**
-     * goes to the next element. The next element must exist. You can
+     * @brief goes to the next element. The next element must exist. You can
      * check if it existe withe the \c hasNext() methods.
      */
     inline void
@@ -315,7 +319,7 @@ public:
     }
 
     /**
-     * goes to the previous element. The previous element must
+     * @brief goes to the previous element. The previous element must
      * exist. You can check if it exist with the \c hasPrevious()
      * methods.
      */
@@ -326,7 +330,8 @@ public:
     }
 
     /**
-     * gets the current element. The current element must exist.
+     * @brief gets the current element. The current element must exist.
+     * @return the current element
      */
     inline T *
     getCurrent() {
@@ -335,7 +340,7 @@ public:
     }
 
     /**
-     * sets the current element. The actual current element is not
+     * @brief sets the current element. The actual current element is not
      * destroyed. The current element must exist.
      *
      * @param aElement it's the new current element. It must be not \c NULL.
@@ -348,7 +353,7 @@ public:
     }
 
     /**
-     * removes the current element from the list. But it does not
+     * @brief removes the current element from the list. But it does not
      * delete it. The element is not destoyed, just is reference is
      * removed from the list. The current element must exist.
      */
@@ -375,17 +380,17 @@ private:
     friend class LinkedList;
 
     /**
-     * pointer on the linkedList which is controled by the iterator.
+     * @brief pointer on the linkedList which is controled by the iterator.
      */
     LinkedList *linkedList;
 
     /**
-     * pointer on the current node of the linked list.
+     * @brief pointer on the current node of the linked list.
      */
     Node *currentNode;
 
     /**
-     * creates a new iterator for the linked list \c controledList.
+     * @brief creates a new iterator for the linked list \c controledList.
      *
      * @param controledList pointer on the list which is controled by
      * the iterator.
@@ -398,8 +403,9 @@ private:
   };
 
   /**
-   * Creates an iterator which control the linked list. All the access
+   * @brief Creates an iterator which control the linked list. All the access
    * on the list is blocked until the iterator is destroyed.
+   * @return an iterator to the current list
    */
   Iterator *
   getIterator() {

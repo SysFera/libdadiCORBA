@@ -17,13 +17,17 @@
 #include "MasterAgent.idl"
 #include "AgentFwdr.idl"
 
+/**
+ * @brief MasterAgent interface
+ * @class MasterAgentFwdr
+ */
 interface MasterAgentFwdr : MasterAgent {
 
 };
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref MasterAgentIDL. All methods have
+ * of the class see MasterAgent. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */
