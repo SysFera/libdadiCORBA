@@ -47,7 +47,7 @@ const short LS_COMPONENT_DISCONNECT_NOTEXISTS = 1;
 /**
  * @brief defines functions that the component has to implement 
  * to allow dynamic configuration.
- * @section ComponentConfiguratorIDL
+ * @class ComponentConfigurator
  */
 interface ComponentConfigurator {
   /**
@@ -84,7 +84,7 @@ interface ComponentConfigurator {
 
 /**
  * @brief Defines the interface the core offers to components
- * @section LogCentralComponentIDL
+ * @class LogCentralComponent
  */
 interface LogCentralComponent {
   /**

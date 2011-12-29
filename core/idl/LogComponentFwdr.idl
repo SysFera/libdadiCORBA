@@ -55,7 +55,7 @@ interface LogCentralComponentFwdr : LogCentralComponent {
 
 /**
  * @brief The forwarder version. For the documentation
- * of the class see @ref LogCentralComponentIDL. All methods have
+ * of the class see LogCentralComponent. All methods have
  * an objName param that represents the name of the
  * object, to know if it is local or distant
  */

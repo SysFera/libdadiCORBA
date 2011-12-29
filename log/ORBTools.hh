@@ -1,31 +1,29 @@
-/****************************************************************************/
-/* A class for putting some ORB functions together - HEADER                 */
-/*                                                                          */
-/*  Author(s):                                                              */
-/*    - Georg Hoesch (hoesch@in.tum.de)                                     */
-/*    - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)            */
-/*                                                                          */
-/* $LICENSE$                                                                */
-/****************************************************************************/
-/* $Id: ORBTools.hh,v 1.1 2004/01/09 11:07:12 ghoesch Exp $
- * $Log: ORBTools.hh,v $
- * Revision 1.1  2004/01/09 11:07:12  ghoesch
- * Restructured the whole LogService source tree.
- * Added autotools make process. Cleaned up code.
- * Removed some testers. Ready to release.
+/**
+ * @file ORBTools.hh
+ * @brief A class for putting some ORB functions together - HEADER
  *
- ****************************************************************************/
+ * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *         - Georg Hoesch (hoesch@in.tum.de)
+ *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *
+ * @section Licence
+ *   |LICENSE|
+ */
 
 #ifndef _ORBTOOLS_HH_
 #define _ORBTOOLS_HH_
 
 #include "LogTypes.hh"
 
+/**
+ * @brief The clas to encapsulate some ORB functionalities
+ * @class ORBTools
+ */
 class ORBTools
 {
 public:
   /**
-   * Initialize the CORBA ORB.
+   * @brief Initialize the CORBA ORB.
    * See CORBA documentation for all possibles parameters.
    * @param argc Number of parameters to pass to the ORB
    * @param argv Array of parameters to pass to the ORB
@@ -36,7 +34,7 @@ public:
   init(int argc, char** argv);
 
   /**
-   * Initialize the CORBA ORB.
+   * @brief Initialize the CORBA ORB.
    * @param argc Number of parameters to pass to the ORB
    * @param argv Array of parameters to pass to the ORB
    * @param tracelevel The tracelevel of the ORB (from 0 to 50)
@@ -48,7 +46,7 @@ public:
   init(int argc, char** argv, unsigned int tracelevel, unsigned int port = 0);
 
   /**
-   * Initialize the CORBA ORB.
+   * @brief Initialize the CORBA ORB.
    * None argument is set, usefull for tests
    * @return true if the operation succeed
    */
@@ -57,7 +55,7 @@ public:
   init();
 
   /**
-   * Register a servant to the Namming Service within a specific context and
+   * @brief Register a servant to the Namming Service within a specific context and
    * name. Do not activate the servant.
    * @param contextName Name of the new context
    * @param contextKind Kind of the new context (extra information)
@@ -74,7 +72,7 @@ public:
                   CORBA::Object* objref);
 
   /**
-   * Register a servant to the Namming Service within the default context and
+   * @brief Register a servant to the Namming Service within the default context and
    * with a specific name. Do not activate the servant.
    * @param name Name of the servant
    * @param kind Kind of the servant (extra information)
@@ -88,7 +86,7 @@ public:
                   CORBA::Object* objref);
 
   /**
-   * Activate a servant.
+   * @brief Activate a servant.
    * After this, the IOR of the servant is known by the POA.
    * @param object The implementation of a servant
    * @return true if the operation succeed
@@ -98,7 +96,7 @@ public:
   activateServant(PortableServer::ServantBase* object);
 
   /**
-   * Activate the POA (Portable Object Adaptor).
+   * @brief Activate the POA (Portable Object Adaptor).
    * After this, all servants registered are accessible
    * @return true if the operation succeed
    */
@@ -107,7 +105,7 @@ public:
   activatePOA();
 
   /**
-   * Unregister a servant to the Namming Service within a specific context and
+   * @brief Unregister a servant to the Namming Service within a specific context and
    * name.
    * @param contextName Name of the context
    * @param contextKind Kind of the context (extra information)
@@ -121,7 +119,7 @@ public:
                     const char* name, const char* kind);
 
   /**
-   * Unregister a servant to the Namming Service within the default context and
+   * @brief Unregister a servant to the Namming Service within the default context and
    * with a specific name.
    * @param name Name of the servant
    * @param kind Kind of the servant (extra information)
@@ -132,7 +130,7 @@ public:
   unregisterServant(const char* name, const char* kind);
 
   /**
-   * Find a servant by asking the Namming Service with a specific context and
+   * @brief Find a servant by asking the Namming Service with a specific context and
    * name.
    * @param contextName Name of the context
    * @param contextKind Kind of the context (extra information)
@@ -149,7 +147,7 @@ public:
               CORBA::Object*& objref);
 
   /**
-   * Find a servant by asking the Namming Service with the default context and
+   * @brief Find a servant by asking the Namming Service with the default context and
    * name.
    * @param name Name of the servant
    * @param kind Kind of the servant (extra information)
@@ -163,7 +161,7 @@ public:
               CORBA::Object*& objref);
 
   /**
-   * Make the thread to listen for a incomming connection to a servant.
+   * @brief Make the thread to listen for a incomming connection to a servant.
    * This function will return if the user enters a specific key.
    * @param stopLowercase character to hit for stopping the listen function
    * @param stopUppercase character to hit for stopping the listen function
@@ -174,14 +172,20 @@ public:
   listen(char stopLowercase, char stopUppercase);
 
   /**
-   * Shutdown and destroy the ORB
+   * @brief Shutdown and destroy the ORB
    * @return true if the operation succeed
    */
   static
   bool
   kill();
 
+/**
+ * @brief The ORB
+ */
   static CORBA::ORB_var orb;
+/**
+ * @brief The POA
+ */
   static PortableServer::POA_var poa;
 };
 #endif

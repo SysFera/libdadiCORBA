@@ -241,6 +241,7 @@ FullLinkedList<T>::appendListPrivate(FullLinkedList<T>* list) {
       this->last->next = new Node();
       Node* ownNode = this->last->next;
       Node* newListNode = list->first;
+      this->counter++;
       ownNode->previous = this->last;
       ownNode->element = new T(*(newListNode->element));
       while (newListNode->next != NULL) {

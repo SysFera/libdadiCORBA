@@ -14,73 +14,98 @@
 
 #include "common_types.idl"
 
-/* - "lcl" prefix means "local".
-   - "lvl" prefix means "from this level".
-   - "pfm" prefix means "in the platform".
-   - "dtm" prefix means "on this data manager".
-
-   The "dtm*" methods are necessary if we plan to use the hierarchy to
-   access a node. Otherwise, node->lcl* is sufficient. By overriding these
-   methods, we can choose a routing strategy taking into account the network
-   limitations like firewalls, network interface etc.
-
-   To make different protocols wrappers, we can use methods override. Each node
-   should execute its own DAGDA implementation taking into account its
-   capabilities.
-*/
+/**/
 
 /**
  * @brief The Dagda interface
- * @section DagdaIDL
+ *- "lcl" prefix means "local".
+ *  - "lvl" prefix means "from this level".
+ *  - "pfm" prefix means "in the platform".
+ *  - "dtm" prefix means "on this data manager".
+ *  The "dtm*" methods are necessary if we plan to use the hierarchy to
+ *  access a node. Otherwise, node->lcl* is sufficient. By overriding these
+ *  methods, we can choose a routing strategy taking into account the network
+ *  limitations like firewalls, network interface etc.
+ *  To make different protocols wrappers, we can use methods override. Each node
+ *  should execute its own DAGDA implementation taking into account its
+ *  capabilities.
+ * @class Dagda
  */
 interface Dagda {
   /**
    * @brief Exception when a data is not found
    */
   exception DataNotFound {
+    /**
+     * @brief The id of the data
+     */
     string dataID;
   };
   /**
    * @brief Exception when the path name is invalid
    */
   exception InvalidPathName {
+    /**
+     * @brief The id of the data
+     */
     string dataID;
+    /**
+     * @brief The invalid path
+     */
     string path;
   };
   /**
    * @brief Exception when there is an error reading 
    */
   exception ReadError {
+    /**
+     * @brief The error code
+     */
     long error;
   };
   /**
    * @brief Exception when there is an error writting
    */
   exception WriteError {
+    /**
+     * @brief The error code
+     */
     long error;
   };
   /**
    * @brief Exception when no space left on device
    */
   exception NotEnoughSpace {
+    /**
+     * @brief The available space
+     */
     long available;
   };
   /**
    * @brief Exception when a file is unreachable
    */
   exception UnreachableFile {
+    /**
+     * @brief The invalid path
+     */
     string path;
   };
   /**
    * @brief Exception when the access permission is denied
    */
   exception PermissionDenied {
+    /**
+     * @brief The error code
+     */
 	long error;
   };
   /**
    * @brief Exception when the data is unavailable
    */
   exception UnavailableData {
+    /**
+     * @brief The id of the unavailable data
+     */
     string dataID;
   };
   /* Is the data using dataID is present. */
@@ -142,101 +167,204 @@ interface Dagda {
                           in long flag)
     raises(DataNotFound);
 
-  /* Get the size ie nb of elements of a container */
+  /**
+   * @brief Get the size ie nb of elements of a container 
+   */
   long lclGetContainerSize(in string containerID);
 
-  /* Get all IDs of the elements of a container */
+  /**
+   * @brief Get all IDs of the elements of a container 
+   */
   void lclGetContainerElts(in string containerID,
                            inout SeqString dataIDSeq,
                            inout SeqLong flagSeq,
                            in boolean ordered);
 
-  /* Remove a data. */
+  /**
+   * @brief Remove a data. 
+   */
   void lclRemData(in string dataID);
+  /**
+   * @brief Remove a data. 
+   */
   void lvlRemData(in string dataID);
+  /**
+   * @brief Remove a data. 
+   */
   void pfmRemData(in string dataID);
 
-  /* Update a data. */
+  /**
+   * @brief Update a data. 
+   */
   void lclUpdateData(in string srcDagda, in corba_data_t data);
+  /**
+   * @brief Update a data. 
+   */
   void lvlUpdateData(in string srcDagda, in corba_data_t data);
+  /**
+   * @brief Update a data. 
+   */
   void pfmUpdateData(in string srcDagda, in corba_data_t data);
-
-  /* Get the data description list. */
+  
+  /**
+   * @brief Get the data description list. 
+   */
   SeqCorbaDataDesc_t lclGetDataDescList();
+  /**
+   * @brief Get the data description list. 
+   */
   SeqCorbaDataDesc_t lvlGetDataDescList();
+  /**
+   * @brief Get the data description list. 
+   */
   SeqCorbaDataDesc_t pfmGetDataDescList();
 
-  /* Get The description of a data. */
+  /**
+   * @brief Get The description of a data. 
+   */
   corba_data_desc_t lclGetDataDesc(in string dataID)
     raises(DataNotFound);
+  /**
+   * @brief Get The description of a data. 
+   */
   corba_data_desc_t lvlGetDataDesc(in string dataID)
     raises(DataNotFound);
+  /**
+   * @brief Get The description of a data. 
+   */
   corba_data_desc_t pfmGetDataDesc(in string dataID)
     raises(DataNotFound);
 
-  /* Replicate the data considering the conditions. */
+  /**
+   * @brief Replicate the data considering the conditions. 
+   */
   oneway void lclReplicate(in string dataID, in long ruleTarget,
     in string pattern, in boolean replace);
+  /**
+   * @brief Replicate the data considering the conditions. 
+   */
   oneway void lvlReplicate(in string dataID, in long ruleTarget,
     in string pattern, in boolean replace);
+  /**
+   * @brief Replicate the data considering the conditions. 
+   */
   oneway void pfmReplicate(in string dataID, in long ruleTarget,
     in string pattern, in boolean replace);
 
-  /* Write a file on the node storage ressource. If "replace" is true,
-     the file is opened at the beginning, otherwise the data are added at
-     the end of the file. Returns the path where the file was stored. */
+  /**
+   * @brief Write a file on the node storage ressource. If "replace" is true,
+   *   the file is opened at the beginning, otherwise the data are added at
+   *   the end of the file. Returns the path where the file was stored. 
+   */
   string writeFile(in SeqChar data, in string basename, in boolean replace)
     raises(InvalidPathName, WriteError, NotEnoughSpace);
-  /* Send a file to a node. */
+  /**
+   * @brief Send a file to a node. 
+   */
   string sendFile(in corba_data_t data, in string destDagda)
     raises(InvalidPathName, ReadError, WriteError);
-  /* Record a data into memory. If "replace" is true,
-     the data is erased or created and replaced by the new one.
-     Returns the id of the data. */
-/*  string recordData(in SeqChar data, in corba_data_desc_t dataDesc,
-		    in boolean replace)
-    raises(NotEnoughSpace);*/
+  /** 
+   * @brief Record a data into memory. If "replace" is true,
+   *     the data is erased or created and replaced by the new one.
+   *  @return the id of the data. 
+   */
   string recordData(in SeqChar data, in corba_data_desc_t dataDesc,
 		    in boolean replace, in long offset)
     raises(NotEnoughSpace);
-  /* Send a data to a node. */
+  /**
+   * @brief Send a data to a node. 
+   */
   string sendData(in string ID, in string destDagda)
     raises(DataNotFound);
-  /* Send a container to a node */
+  /**
+   * @brief Send a container to a node 
+   */
   string sendContainer(in string ID, in string destDagda, in boolean sendElements)
     raises(DataNotFound);
 
-
+  /**
+   * @brief A sequence of dagda data
+   */
   typedef sequence<string> SeqDagda_t;
-  enum dataStatus { ready, downloading, notOwner };
+  /**
+   * @brief The status of a data
+   */
+  enum dataStatus { 
+    /**
+     * @brief The data is ready
+     */
+    ready, 
+    /**
+     * @brief The data is downloaded
+     */
+    downloading,
+    /**
+     * @brief The data is not owned to
+     */
+    notOwner };
   /* Get the managers of a data. */
   SeqString lvlGetDataManagers(in string dataID);
   SeqString pfmGetDataManagers(in string dataID);
 
-  /* Ask to this node to become its child. */
+  /**
+   * @brief Ask to this node to become its child. 
+   */
   void subscribe(in string dagdaName);
-  /* Unsubscribe. */
+  /**
+   * @brief Unsubscribe. 
+   */
   void unsubscribe(in string dagdaName);
 
-  /* To identify the data manager node. */
+  /**
+   * @brief To identify the data manager node. 
+   */
   string getID();
+  /**
+   * @brief get the hostname
+   */
   string getHostname();
 
-  /* To lock the access to a data. */
+  /**
+   * @brief To lock the access to a data. 
+   */
   void lockData(in string dataID);
+  /**
+   * @brief To unlock the access to a data. 
+   */
   void unlockData(in string dataID);
 
+  /**
+   * @brief To get the status of a data
+   */
   dataStatus getDataStatus(in string dataID);
 
+  /**
+   * @brief To get the best source to get a data
+   */
   string getBestSource(in string destDagda, in string dataID)
     raises(DataNotFound);
 
+  /**
+   * @brief TODO
+   */
   void checkpointState();
 
+  /**
+   * @brief To subscribe to a parent
+   */
   void subscribeParent(in string parentID);
+  /**
+   * @brief To unsubscribe from a parent
+   */
   void unsubscribeParent();
 };
 
+/**
+ * @brief TODO
+ */
 typedef Dagda::SeqDagda_t SeqDagda_t;
+/**
+ * @brief A sequence of CORBA IOR
+ */
 typedef sequence<string> SeqIOR;
 #endif

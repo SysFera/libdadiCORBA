@@ -25,9 +25,9 @@
 
 /**
  * @brief The corba forwarder class that defines all the methods that can pass
- * throught the forwarder
+ * throught the forwarder. For non documented methods, please see the Forwarder
+ * and its parents idl interfaces.
  * @class CorbaForwarder
- * For non documented methods, please see the Forwarder and its parents idl interfaces.
  */
 class CorbaForwarder : public POA_Forwarder,
                        public PortableServer::RefCountServantBase {

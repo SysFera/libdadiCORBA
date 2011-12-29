@@ -27,9 +27,21 @@ typedef FullLinkedList<filter_t> FilterList;
  * @struct ToolElement
  */
 struct ToolElement {
+/**
+ * @brief The message receiver
+ */
   ToolMsgReceiver_var msgReceiver;
+/**
+ * @brief The output buffer
+ */
   OutBuffer outBuffer;
+/**
+ * @brief The list of filters
+ */
   FilterList filterList;
+/**
+ * @brief The name of the tool
+ */
   CORBA::String_var toolName;
 };
 
@@ -38,7 +50,6 @@ struct ToolElement {
  * No Elements should be changed without
  * having a writeLock(Iterator) on the whole
  * List.
- *
  * Attention: This also applies to the nested
  * list filterList. If the filterlist is to be
  * changed, please also acquire a writelock on

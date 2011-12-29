@@ -1,10 +1,11 @@
 /**
- * @file commonLogTypes.idl
- * @brief DIET IDL types for SeD registration and client request (init steps)     
+ * @file common_types.idl
+ * @brief SysFera-DS IDL types for SeD registration and client request (init steps)     
  *                                                                          
  *  @author                                                             
  *    Philippe COMBES (Philippe.Combes@ens-lyon.fr)                       
  *    Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)             
+ *    Kevin Coulomb (kevin.coulomb@sysfera.com)
  *                                                                          
  * |LICENSE|
  */
@@ -167,6 +168,9 @@ struct corba_matrix_specific_t {
  * @brief Mapping for struct diet_string_specific 
  */
 struct corba_string_specific_t {
+  /**
+   * @brief The length of the string
+   */
   long length;
 };
 
@@ -174,7 +178,13 @@ struct corba_string_specific_t {
  * @brief Mapping for struct diet_paramstring_specific 
  */
 struct corba_paramstring_specific_t {
+  /**
+   * @brief The length of the string
+   */
   long length;
+  /**
+   * @brief Parameters for the string
+   */
   string param;
 };
 
@@ -182,7 +192,13 @@ struct corba_paramstring_specific_t {
  * @brief Mapping for struct diet_file_specific 
  */
 struct corba_file_specific_t {
+  /**
+   * @brief The size of the file
+   */
   long size;
+  /**
+   * @brief The path to the file
+   */
   string path;
 };
 
@@ -190,6 +206,9 @@ struct corba_file_specific_t {
  * @brief Mapping for struct diet_container_specific 
  */
 struct corba_container_specific_t {
+  /**
+   * @brief The size of the container
+   */
   long size;
 };
 
@@ -199,18 +218,39 @@ struct corba_container_specific_t {
  */
 union type switch (long) {
  case 0:
+   /**
+    * @brief Scalar type
+    */
    corba_scalar_specific_t scal;
  case 1:
+   /**
+    * @brief Vector type
+    */
    corba_vector_specific_t vect;
  case 2:
+   /**
+    * @brief Matrix type
+    */
    corba_matrix_specific_t mat;
  case 3:
+   /**
+    * @brief String type
+    */
    corba_string_specific_t str;
  case 4:
+   /**
+    * @brief ParamString type
+    */
    corba_paramstring_specific_t pstr;
  case 5:
+   /**
+    * @brief File type
+    */
    corba_file_specific_t   file;
  case 6:
+   /**
+    * @brief Container type
+    */
    corba_container_specific_t   cont;
 };
 
@@ -223,7 +263,7 @@ struct corba_data_desc_t {
  */
   corba_data_id_t id;
 /**
- * @brief TODO
+ * @brief The mode of access to the data
  */
   long mode;
 /**
@@ -249,7 +289,13 @@ typedef sequence<corba_data_desc_t> SeqCorbaDataDesc_t;
  * @brief Argument descriptor 
  */
 struct corba_arg_desc_t {
+  /**
+   * @brief THe SysFera-DS basic type of the argument
+   */
   long base_type;
+  /**
+   * @brief The type of the argument
+   */
   long type;
 };
 
@@ -257,6 +303,9 @@ struct corba_arg_desc_t {
  * @brief server estimate aggregation
  */
 struct corba_agg_default_t {
+  /**
+   * @brief TODO
+   */
   octet dummy;
 };
 
@@ -264,24 +313,36 @@ struct corba_agg_default_t {
  * @brief server estimate aggregation priority
  */
 struct corba_agg_priority_t {
+  /**
+   * @brief The ordered list of the priorities
+   */
   sequence<long> priorityList;
 };
-/** New : The aggregator for user scheduler support.      */
-/** The same as the default aggregator. Maybe not needed. */
-/**********************************************************/
+/**
+ * @brief New : The aggregator for user scheduler support.      
+ * The same as the default aggregator. Maybe not needed. 
+ * @union corba_agg_specific_t
+ */
 union corba_agg_specific_t switch (long) {
  case 0:
+   /**
+    * @brief Default aggregator
+    */
    corba_agg_default_t agg_default;
  case 1:
+   /**
+    * @brief Priority aggregator
+    */
    corba_agg_priority_t agg_priority;
-/** New : The aggregator for user scheduler support. */
-/*****************************************************/
 };
 
 /**
  * @brief Descriptor for agregator
  */
 struct corba_aggregator_desc_t {
+  /**
+   * @brief The aggregator
+   */
   corba_agg_specific_t agg_specific;
 };
 
@@ -289,11 +350,29 @@ struct corba_aggregator_desc_t {
  * @brief Service profile descriptor (mapping for diet_profile_desc_t) 
  */
 struct corba_profile_desc_t {
+  /**
+   * @brief TODO
+   */
   string path;
+  /**
+   * @brief The position of the last input parameter
+   */
   long   last_in;
+  /**
+   * @brief The position of the last inout parameter
+   */
   long   last_inout;
+  /**
+   * @brief The position of the last output parameter
+   */
   long   last_out;
+  /**
+   * @brief The description of the parameters
+   */
   sequence<corba_arg_desc_t> param_desc;
+  /**
+   * @brief The aggregator for the service
+   */
   corba_aggregator_desc_t aggregator;
 };
 /**
@@ -311,7 +390,13 @@ typedef sequence<corba_profile_desc_t> SeqCorbaProfileDesc_t;
  * @brief Mapping for diet_data_t 
  */
 struct corba_data_t {
+  /**
+   * @brief The description of the data
+   */
   corba_data_desc_t desc;
+  /**
+   * @brief The value of the data
+   */
   SeqChar value;
 };
 /**
@@ -323,10 +408,25 @@ typedef sequence<corba_data_t> SeqCorbaData_t;
  * @brief Actually, this is an equivalent to a diet_profile_t without the data.
  */
 struct corba_pb_desc_t {
+  /**
+   * @brief TODO
+   */
   string path;
+  /**
+   * @brief The position of the last input parameter
+   */
   long   last_in;
+  /**
+   * @brief The position of the last inout parameter
+   */
   long   last_inout;
+  /**
+   * @brief The position of the last output parameter
+   */
   long   last_out;
+  /**
+   * @brief The description of the parameters
+   */
   SeqCorbaDataDesc_t param_desc;
 };
 
@@ -337,9 +437,21 @@ struct corba_pb_desc_t {
  * @brief A request is associated to an ID, a problem description, and a scheduler.
  */
 struct corba_request_t {
+  /**
+   * @brief The id of the request
+   */
   unsigned long     reqID;
+  /**
+   * @brief The description of the problem
+   */
   corba_pb_desc_t   pb;
+  /**
+   * @brief The serialized scheduler to use
+   */
   string            serialized_scheduler;
+  /**
+   * @brief The max number of server needed
+   */
   long              max_srv;
 };
 
@@ -356,8 +468,17 @@ typedef short corba_est_tag_storage_t;
  * @brief Custom estimation value
  */
 struct corba_est_value_t {
+  /**
+   * @brief The tag
+   */
   corba_est_tag_storage_t v_tag;
+  /**
+   * @brief The index
+   */
   short                   v_idx;
+  /**
+   * @brief The value
+   */
   double                  v_value;
 };
 /**
@@ -374,7 +495,9 @@ typedef sequence <corba_est_value_t> SeqEstValue_t;
  * totalTime stores all communication times + tComp
  */
 struct corba_estimation_t {
-  /* dynamic storage for performance estimation values */
+  /**
+   * @brief dynamic storage for performance estimation values 
+   */
   SeqEstValue_t estValues;
 };
 
@@ -387,11 +510,29 @@ struct corba_estimation_t {
  * @brief The complete problem, sent from client to server. 
  */
 struct corba_profile_t {
+  /**
+   * @brief The last input parameter
+   */
   long   last_in;
+  /**
+   * @brief The last inout parameter
+   */
   long   last_inout;
+  /**
+   * @brief The last output parameter
+   */
   long   last_out;
+  /**
+   * @brief The parameters description
+   */
   SeqCorbaData_t parameters;
+  /**
+   * @brief The id of the diet request
+   */
   unsigned long dietReqID ;
+  /**
+   * @brief The estimation vector
+   */
   corba_estimation_t estim;
 };
 

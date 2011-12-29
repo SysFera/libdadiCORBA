@@ -4,6 +4,7 @@
  * @brief  DIET master agent IDL description    
  *
  * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *          Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section License
  *   |LICENSE|
@@ -17,7 +18,7 @@
 
 /**
  * @brief The master agent interface
- * @section MasterAgentIDL
+ * @section MasterAgent
  */
 interface MasterAgent : Agent {
 
@@ -52,7 +53,7 @@ interface MasterAgent : Agent {
   /** 
    * @brief get data descriptor 
    * @param argID ID of the data
-   * @return TODO
+   * @return The description of the data
    */
   corba_data_desc_t get_data_arg(in string argID) raises(Dagda::DataNotFound);
 
@@ -65,8 +66,8 @@ interface MasterAgent : Agent {
 
   /**
    * @brief Get the list of Profile available.
-   * @param length TODO
-   * @return TODO
+   * @param length The size of the sequence
+   * @return The profiles description
    */
   SeqCorbaProfileDesc_t getProfiles(out long length);
 
@@ -75,7 +76,7 @@ interface MasterAgent : Agent {
   /**
    * @brief MAs federation management 
    * @param masterAgentName The name of the MA
-   * @param myName TODO
+   * @param myName The name of the object to handshaking with the other master agent
    */
   boolean handShake(in string masterAgentName, in string myName);
 
@@ -88,7 +89,7 @@ interface MasterAgent : Agent {
   /**
    * @brief Send a new request to the MA.
    * @param masterAgentName The name of the MA
-   * @param myName TODO
+   * @param myName The name of the MA asking to search for services
    * @param request The request submitted
    */
   oneway void searchService(in string masterAgentName,
@@ -97,46 +98,46 @@ interface MasterAgent : Agent {
 
   /** 
    * @brief Ask to the MA to stop the flooding 
-   * @param reqId TODO
-   * @param senderId TODO
+   * @param reqId The id of the request
+   * @param senderId The id of the sender
    */
   oneway void stopFlooding(in long reqId, in string senderId) ;
 
   /** 
    * @brief Response which saids that the service is not found and a new step
    *    of flooding can be achive 
-   * @param reqId TODO
-   * @param senderId TODO
+   * @param reqId The id of the request
+   * @param senderId The id of the sender
    */
   oneway void serviceNotFound(in long reqId, in string senderId) ;
 
   /** 
    * @brief Launchs a new step of flooding 
-   * @param reqId TODO
-   * @param senderId TODO
+   * @param reqId The id of the request
+   * @param senderId The id of the sender
    */
   oneway void newFlood(in long reqId, in string senderId) ;
 
   /** 
    * @brief Response which saids that no new server can be found via this MA. 
-   * @param reqId TODO
-   * @param senderId TODO
+   * @param reqId The id of the request
+   * @param senderId The id of the sender
    */
   oneway void floodedArea(in long reqId, in string senderId) ;
 
   /**
    * @brief response which saids that the MA was already contacted for this
       request. 
-   * @param reqId TODO
-   * @param senderId TODO
+   * @param reqId The id of the request
+   * @param senderId The id of the sender
    */
   oneway void alreadyContacted(in long reqId,
 			       in string senderId) ;
 
   /** 
    * @brief Response which saids that some servers was found. 
-   * @param reqId TODO
-   * @param decision TODO
+   * @param reqId The id of the request
+   * @param decision The decision 
    */
   oneway void serviceFound(in long reqId, in corba_response_t decision) ;
 
@@ -146,7 +147,7 @@ interface MasterAgent : Agent {
   /**
    * @brief Workflow submission function. *
    * called by the MA_DAG or a client to submit a set of problems *
-   * @param seq_pb:
+   * @param seq_pb The description of the problem
    */
   wf_response_t submit_pb_set (in corba_pb_desc_seq_t seq_pb);
 
@@ -162,7 +163,7 @@ interface MasterAgent : Agent {
     * @param firstReqId the first request identifier to be used by the client
     * @param seqReqId   an identifier to the submission (each sequence submission
     *                   has a unique identifier)
-    * @return TODO
+    * @return The response to the submission
     */
     response_seq_t
     submit_pb_seq(in corba_pb_desc_seq_t pb_seq,
@@ -172,9 +173,9 @@ interface MasterAgent : Agent {
                   out long seqReqId);
 #endif // HAVE_WORKFLOW
   /**
-   * @brief TODO
-   * @param key TODO
-   * @param values TODO
+   * @brief To insert a data
+   * @param key The key to insert the data
+   * @param values The values of the data
    * @return TODO
    */
   long insertData(in string key, in SeqString values);

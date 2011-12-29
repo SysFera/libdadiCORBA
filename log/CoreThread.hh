@@ -20,33 +20,65 @@
 #include "FilterManagerInterface.hh"
 #include "ToolList.hh"
 
+/**
+ * @brief The core for the log central tool
+ * @class CoreThread
+ */
 class CoreThread:public omni_thread {
 public:
+/**
+ * @brief Constructor
+ * @param timeBuffer A time buffer
+ * @param StateManager A state manager
+ * @param filterManager A filter manager
+ * @param toolList A toollist object
+ */
   CoreThread(TimeBuffer* timeBuffer, StateManager* stateManager,
              FilterManagerInterface* filterManager, ToolList* toolList);
 
+/**
+ * @brief Destructor
+ */
   ~CoreThread();
 
   /**
-   * Start the thread. Return immediately.
+   * @brief Start the thread. Return immediately.
    */
   void
   startThread();
 
   /**
-   * Stop the thread. Return when the thread is stopped.
+   * @brief Stop the thread. Return when the thread is stopped.
    */
   void
   stopThread();
 
 private:
+/**
+ * @brief Undetach the thread
+ */
   void*
   run_undetached(void* params);
 
+/**
+ * @brief A time buffer
+ */
   TimeBuffer* mtimeBuffer;
+/**
+ * @brief A state manager
+ */
   StateManager* mstateManager;
+/**
+ * @brief A filter manager
+ */
   FilterManagerInterface* mfilterManager;
+/**
+ * @brief A tool list
+ */
   ToolList* mtoolList;
+/**
+ * @brief If the thread is running
+ */
   bool mthreadRunning;
 };
 #endif

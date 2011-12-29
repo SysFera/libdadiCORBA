@@ -20,10 +20,14 @@
 #include "ToolList.hh"
 #include "LogTool.hh"
 
+/**
+ * @brief The thread to send messages
+ * @class SendThread
+ */
 class SendThread: public omni_thread {
 public:
   /**
-   * Creates a SendThread. The thread can be started with runThread().
+   * @brief Creates a SendThread. The thread can be started with runThread().
    * Use stopThread() to stop and delete the thread.
    *
    * @param toolList. The toolList that the thread will work on.
@@ -31,13 +35,13 @@ public:
   explicit SendThread(ToolList* toolList);
 
   /**
-   * Start the thread
+   * @brief Start the thread
    */
   void
   startThread();
 
   /**
-   * Stops the thread. Waits for the thread to terminate properly.
+   * @brief Stops the thread. Waits for the thread to terminate properly.
    * Deletes the threadobject if the orb is running. A missing orb
    * results in memory leaks.
    */
@@ -46,15 +50,16 @@ public:
 
 protected:
   /**
-   * Main function of thread
+   * @brief Main function of thread
    * Contains main loop of thread, which has to end if
    * runSendThread is set to false
+   * @param arg Param of the thread
    */
   void*
   run_undetached(void* arg);
 
   /**
-   * Destructor of function. Stops the thread if still running.
+   * @brief Destructor of function. Stops the thread if still running.
    * This function should not be called directly. The object is
    * implicitly deleted by the orb when join() is called. The
    * orb must exist to make this work.
@@ -63,14 +68,14 @@ protected:
 
 private:
   /**
-   * Shared variable that indicates if the thread is running or not.
+   * @brief Shared variable that indicates if the thread is running or not.
    * stopThread will set this to false to stop the main loop of this
    * thread.
    */
   bool mrunSendThread;
 
   /**
-   * Stores the toolList the thread uses
+   * @brief Stores the toolList the thread uses
    */
   ToolList* mtoolList;
 };

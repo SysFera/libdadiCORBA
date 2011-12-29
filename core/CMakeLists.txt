@@ -22,6 +22,9 @@ set( INC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/dadiCORBA"
 
 # documentation
 option(ENABLE_DOC "Build documentation" OFF)
+#tests
+option(ENABLE_TESTING "Provide tests execution" OFF)
+
 # when ENABLE_DOC is enabled, we build by default: doxygen html and man pages
 cmake_dependent_option(ENABLE_DOXYGEN "Build doxygen documentation" ON
   "ENABLE_DOC" OFF)
@@ -227,6 +230,14 @@ install(FILES monitor/TimeBuffer.hh DESTINATION ${INC_INSTALL_DIR})
 install(FILES utils/FullLinkedList.hh DESTINATION ${INC_INSTALL_DIR}/utils)
 install(FILES utils/FullLinkedList.cc DESTINATION ${INC_INSTALL_DIR}/utils)
 install(FILES utils/LocalTime.hh DESTINATION ${INC_INSTALL_DIR}/utils)
+
+## tests
+if(ENABLE_TESTING)
+  set(TEST_FILES_OUTPUT_PATH ${PROJECT_BINARY_DIR}/test/test_files)
+  include(dadicorbaTestingMacros)
+  dadicorba_test_setup()
+  add_subdirectory(test)
+endif()
 
 ## generate doxygen documentation
 #add_custom_target(doc ALL)

@@ -20,11 +20,6 @@
 
 
 /**
- * Errorlevel constants for connectTool, disconnectTool,
- * addFilter and removeFilter
- */
-// const short LS_OK = 0; defined in the LogTypes.idl
-/**
  * @brief The error for an existing tool
  */
 const short LS_TOOL_CONNECT_ALREADYEXISTS = 1;
@@ -81,7 +76,7 @@ struct filter_t
  * that the monitor can actively forward messages to the
  * tool. Active MessagePulling from the tool is not possible
  * in the moment.
- * @section ToolMsgReceiverIDL
+ * @class ToolMsgReceiver
  */
 interface ToolMsgReceiver
 {
@@ -98,7 +93,7 @@ interface ToolMsgReceiver
 /**
  * @brief methods offered by the core to allow tools to attach
  * and configure filters
- * @section LogCentralToolIDL
+ * @class LogCentralTool
  */
 interface LogCentralTool
 {

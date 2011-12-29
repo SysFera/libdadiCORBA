@@ -1,10 +1,11 @@
 /**
  * @file response.idl
  *
- * @brief  DIET IDL types for the responses to requests    
+ * @brief  SysFera-DS IDL types for the responses to requests    
  *
  * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
  *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ *          Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section License
  *   |LICENSE|
@@ -21,16 +22,30 @@
  * @brief Full reference to a server
  */
 struct corba_server_t {
+  /**
+   * @brief The name of the SeD
+   */
   string SeDName;
+  /**
+   * @brief The hostname of the machine where the SeD run
+   */
   string hostName;
+  /**
+   * @brief The port on the machine
+   */
   long   port;
 #ifdef HAVE_ALT_BATCH
   // To add the following, SeDStructures.idl which contains shared structures
   // between SeD and DIET_server.h has to be created
   //diet_server_status_t serverType ; /* batch, seq, etc. */
+  /**
+   * @brief The type of the server
+   */
   long serverType ;
 
-  // Make client know he has to submit parallel or non-parallel
+  /**
+   * @brief Make client know he has to submit parallel or non-parallel
+   */
   long parallel_flag ;
 #endif
 };
@@ -40,12 +55,22 @@ struct corba_server_t {
  * @brief Localization and transfer time of a parameter
  */
 struct corba_data_loc_t {
+  /**
+   * @brief The id of the data
+   */
   string idNumber;
+  /**
+   * @brief The name of the machine containing the data
+   */
   string hostName;
+  /**
+   * @brief The location of the data
+   */
   string locationID;
+  /**
+   * @brief The size of the data
+   */
   unsigned long bytes;
-  //corba_server_t loc;
-  //double         timeToMe;
 };
 /**
  * @brief A set of corba data
@@ -57,7 +82,13 @@ typedef sequence <corba_data_loc_t> SeqDataLoc_t;
  * @brief The server estimation structure
  */
 struct corba_server_estimation_t{
+  /**
+   * @brief The server
+   */
   corba_server_t     loc;
+  /**
+   * @brief The estimation for the server
+   */
   corba_estimation_t estim;
 };
 
@@ -88,9 +119,17 @@ typedef sequence <corba_server_estimation_t> SeqServerEstimation_t;
  *   servers[sortedServers[i]].perf.feeCpu and freeMem
  */
 struct corba_response_t {
+  /**
+   * @brief The id of the request
+   */
   unsigned long reqID;
+  /**
+   * @brief id of the response
+   */
   long myID;
-  // The available servers
+  /**
+   * @brief The available servers
+   */
   SeqServerEstimation_t servers;
 };
 
@@ -98,34 +137,88 @@ struct corba_response_t {
 /*************************************************************************/
 /* for workflow support                                                  */
 /*************************************************************************/
+/**
+ * @brief A sequence of description of problems
+ */
 typedef sequence<corba_pb_desc_t> corba_pb_desc_seq_t;
 
+/**
+ * @brief Extension of the response
+ */
 struct corba_extended_response_t {
+  /**
+   * @brief Description of the problem
+   */
     corba_pb_desc_t       problem;
+  /**
+   * @brief Estimation for the servers
+   */
     SeqServerEstimation_t servers;
 };
-
+/**
+ * @brief Sequence of extended response
+ */
 typedef sequence<corba_extended_response_t> response_seq_t;
 
+/**
+ * @brief A node response
+ */
 struct node_response_t {
+  /**
+   * @brief The id of the node
+   */
     string node_id;
+  /**
+   * @brief The priority of the node
+   */
     double node_priority;
+  /**
+   * @brief The estimation of the response on the server
+   */
     corba_server_estimation_t server;
 };
-
+/**
+ * @brief A sequence of node response
+ */
 typedef sequence<node_response_t> dag_response_t;
 
+/**
+ * @brief A response of a node in a workflow
+ */
 struct wf_node_response_t {
+  /**
+   * @brief The id of the node
+   */
   string node_id;
+  /**
+   * @brief The priority of the node
+   */
   double node_priority;
+  /**
+   * @brief The response
+   */
   corba_response_t response;
 };
-
+/**
+ * @brief A sequence of response of nodes in the workflow
+ */
 typedef sequence <wf_node_response_t> wfn_seq_resp_t;
 
+/**
+ * @brief A response in the workflow
+ */
 struct wf_response_t {
+  /**
+   * @brief If the task is complete
+   */
   boolean complete;
+  /**
+   * @brief The index of the error (if any)
+   */
   long    idxError;
+  /**
+   * @brief The response of the nodes in the workflow
+   */
   wfn_seq_resp_t wfn_seq_resp;
 };
 

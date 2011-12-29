@@ -19,13 +19,7 @@
 #include <sys/types.h>
 #include <cassert>
 
-/**
- * @brief This is a thread safe generic double linked list. The list must be
- * empty to be destroyed. All the methods are thread safe. When an
- * iterator is used, only the iterator can access to the linked
- * list. All the other thread which access to the linked list will
- * wait until the iterator is destroyed.
- *
+/*
  * \code
  *
  * typedef LinkedList<char> list;  // definition of a new list type.
@@ -51,9 +45,16 @@
  * delete(i);                     // free the access to the linked list
  * l.emptyIt();                   // l = <>
  * \endcode
- * @class LinkedList
  */
 
+/**
+ * @brief This is a thread safe generic double linked list. The list must be
+ * empty to be destroyed. All the methods are thread safe. When an
+ * iterator is used, only the iterator can access to the linked
+ * list. All the other thread which access to the linked list will
+ * wait until the iterator is destroyed.
+ * @class LinkedList
+ */
 template<class T>
 class LinkedList {
 private:
@@ -198,7 +199,8 @@ public:
 
   /**
    * @brief returnes the first element of the list et removes it from the
-   * list. If the list is empty, return a \c NULL pointer.
+   * list. If the list is empty, return a NULL pointer.
+   * @return The removed element
    */
   T *
   pop() {
@@ -232,7 +234,6 @@ public:
   /**
    * @brief Append the list given in argument to the end of the list. The
    * list given in argument become en empty list.
-   *
    * @param list The list which is append to the end of the current
    * list. At the end of the call, list is an empty list.
    */
@@ -246,6 +247,7 @@ public:
       list->first->previous = last;
       last = list->last;
       list->first = NULL;
+      counter += list->counter;
       list->counter = 0;
     }
 
@@ -391,7 +393,6 @@ private:
 
     /**
      * @brief creates a new iterator for the linked list \c controledList.
-     *
      * @param controledList pointer on the list which is controled by
      * the iterator.
      */

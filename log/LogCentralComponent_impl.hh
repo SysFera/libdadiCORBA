@@ -49,15 +49,39 @@ const short LS_COMPONENT_DISCONNECT_NOTEXISTS
 class LastPing
 {
 public:
+/**
+ * @brief Constructor
+ */
   LastPing();
+/**
+ * @brief Copy constructor
+ */
   LastPing(LastPing& newLastPing);
+/**
+ * @brief Destructor
+ */
   ~LastPing();
+/**
+ * @brief Affectation
+ */
   LastPing&
   operator=(LastPing& newLastPing);
+/**
+ * @brief The name
+ */
   char* name;
+/**
+ * @brief The time
+ */
   log_time_t time;
+/**
+ * @brief The difference in time
+ */
   log_time_t timeDifference;
 };
+/**
+ * @brief A list of last ping
+ */
 typedef FullLinkedList<LastPing> LastPings;
 
 /**
@@ -67,9 +91,18 @@ typedef FullLinkedList<LastPing> LastPings;
 class LogCentralComponent_impl: public POA_LogCentralComponent,
                                 public PortableServer::RefCountServantBase {
 public:
+/**
+ * @brief Constructor
+ * @paramm componentList A list of component
+ * @param filterManager A filer manager
+ * timeBuffer A time buffer
+ */
   LogCentralComponent_impl(ComponentList* componentList,
                            FilterManagerInterface* filterManager,
                            TimeBuffer* timeBuffer);
+/**
+ * @brief Destructor
+ */
   ~LogCentralComponent_impl();
 
 
@@ -148,15 +181,11 @@ public:
   void
   synchronize(const char* componentName, const log_time_t& componentTime);
 
+/**
+ * @brief Dummy function
+ */
   void
   test();
-
-
-  /**
-   * Uselessbut to have the same idl as in log
-   */
-//  char*
-//  getHostnameOf(const char* toto);
 
 private:
   /**
@@ -170,7 +199,7 @@ private:
 private:
   /**
    * @brief A thread to check if it is alive
-   * @class LogCentralComponent_impl
+   * @class AliveCheckThread
    */
   class AliveCheckThread:public omni_thread
   {
@@ -194,20 +223,46 @@ private:
     void
     stopThread();
   private:
+/**
+ * @brief To run the thread undetached
+ * @param params The parameters
+ * @return TODO
+ */
     void*
     run_undetached(void* params);
   private:
+/**
+ * @brief The log central component
+ */
     LogCentralComponent_impl* LCC;
+/**
+ * @brief If the thread is running
+ */
     bool threadRunning;
   };
 
   friend class LogCentralComponent_impl::AliveCheckThread;
 
 private:
+/**
+ * @brief A list of components
+ */
   ComponentList* mcomponentList;
+/**
+ * @brief A filter manager
+ */
   FilterManagerInterface* mfilterManager;
+/**
+ * @brief A time buffer
+ */
   TimeBuffer* mtimeBuffer;
+/**
+ * @brief A last ping
+ */
   LastPings* mlastPings;
+/**
+ * @brief Check if the thread is still alive
+ */
   AliveCheckThread* maliveCheckThread;
 }; // end class LogCentralComponen_impl
 
