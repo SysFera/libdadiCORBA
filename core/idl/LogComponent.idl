@@ -2,8 +2,9 @@
  * @file LogComponent.idl
  * @brief Defines the componentside interfaces needed by the new LogService 
  *                                                                   
- *  @author Georg Hoesch (hoesch@in.tum.de)                              
- *          Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)     
+ *  @author
+ *          - Georg Hoesch (hoesch@in.tum.de)                              
+ *          - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)     
  *                                                                   
  * @section License
  * |LICENSE|

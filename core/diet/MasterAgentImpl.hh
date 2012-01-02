@@ -3,7 +3,8 @@
  *
  * @brief  DIET master agent implementation header
  *
- * @author - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ * @author
+ *         - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
  *         - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
  *         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)

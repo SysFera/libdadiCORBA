@@ -3,7 +3,8 @@
  *
  * @brief  CLIENT Manager Interface (used in workflow support)
  *
- * @author Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
+ * @author
+ *         - Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
  *
  * @section Licence
  *   |LICENSE|

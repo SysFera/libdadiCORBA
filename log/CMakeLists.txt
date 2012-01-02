@@ -1,5 +1,6 @@
 project( LOGS )
 cmake_minimum_required( VERSION 2.8 )
+include(CMakeDependentOption)
 
 set(LOGS_MAJOR_VERSION 1)
 set(LOGS_MINOR_VERSION 0)
@@ -44,6 +45,27 @@ else (OMNIORB4_FOUND)
   set(OMNIORB4_DIR "" CACHE PATH "Root of omniORB install tree.")
 endif (OMNIORB4_FOUND)
 
+# documentation
+option(ENABLE_DOC "Build documentation" OFF)
+#tests
+option(ENABLE_TESTING "Provide tests execution" OFF)
+
+# when ENABLE_DOC is enabled, we build by default: doxygen html and man pages
+cmake_dependent_option(ENABLE_DOXYGEN "Build doxygen documentation" ON
+  "ENABLE_DOC" OFF)
+set(DOXYGEN_FORMATS  "html;man"
+  CACHE STRING "Doxygen output formats (allowed: html;man;pdf;rtf)")
+mark_as_advanced(DOXYGEN_FORMATS)
+cmake_dependent_option(ENABLE_EXTRAS_DOC "Build extrasdocumentation" OFF
+  "ENABLE_DOC" OFF)
+
+## generate doxygen documentation
+add_custom_target(doc ALL)
+if(ENABLE_DOXYGEN)
+  include(UseDoxygen)
+  generate_doxygen(FORMATS ${DOXYGEN_FORMATS})
+endif()
+
 find_package(Dadi)
 
 
@@ -61,6 +83,14 @@ add_library(LogCommon
 add_subdirectory(
   examples
 )
+
+## tests
+if(ENABLE_TESTING)
+  set(TEST_FILES_OUTPUT_PATH ${PROJECT_BINARY_DIR}/test/test_files)
+  include(dadicorbaLogTestingMacros)
+  dadicorbalog_test_setup()
+  add_subdirectory(test)
+endif()
 
 add_executable(LogCentral 
   LogCentral.cc

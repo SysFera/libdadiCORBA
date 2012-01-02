@@ -5,7 +5,8 @@
  * to the corresponding toolMsgReceiver. Based on omni_thread and the orb.
  * Attention: causes memory leaks if the orb does not exist !!
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *

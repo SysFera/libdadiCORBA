@@ -4,7 +4,8 @@
  * @brief Defines an object implementing the interface LogCentralTool defined in
  * the LogCentralTool.idl
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *

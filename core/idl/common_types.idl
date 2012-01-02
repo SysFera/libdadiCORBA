@@ -3,9 +3,9 @@
  * @brief SysFera-DS IDL types for SeD registration and client request (init steps)     
  *                                                                          
  *  @author                                                             
- *    Philippe COMBES (Philippe.Combes@ens-lyon.fr)                       
- *    Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)             
- *    Kevin Coulomb (kevin.coulomb@sysfera.com)
+ *          - Philippe COMBES (Philippe.Combes@ens-lyon.fr)                       
+ *          - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)             
+ *          - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *                                                                          
  * |LICENSE|
  */
@@ -351,7 +351,7 @@ struct corba_aggregator_desc_t {
  */
 struct corba_profile_desc_t {
   /**
-   * @brief TODO
+   * @brief The service name
    */
   string path;
   /**
@@ -409,7 +409,7 @@ typedef sequence<corba_data_t> SeqCorbaData_t;
  */
 struct corba_pb_desc_t {
   /**
-   * @brief TODO
+   * @brief The service name
    */
   string path;
   /**

@@ -3,7 +3,8 @@
  *
  * @brief  DIET SeD implementation header
  *
- * @author - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ * @author
+ *         - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
  *         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *

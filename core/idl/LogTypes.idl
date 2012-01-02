@@ -2,8 +2,9 @@
  * @file LogTypes.idl
  * @brief General type definitions used by the new LogService          
  *                                                              
- *  @author Georg Hoesch (hoesch@in.tum.de)                         
- *          Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
+ *  @author
+ *          - Georg Hoesch (hoesch@in.tum.de)                         
+ *          - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *  
  * @section License                                                            
  * |LICENSE|

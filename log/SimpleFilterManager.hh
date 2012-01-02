@@ -1,8 +1,10 @@
 /**
+ * @file SimpleFilterManager.hh
  * @brief The SimpleFilterManager implements the FilterManagerInterface. This
  * Implementation is complete, but it is not very efficient.
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
@@ -100,7 +102,7 @@ public:
    * the filter must already exist in the toollist. A
    * iterator used for inserting should be passed.
    * @param toolName The name of the tool
-   * @filterName The name of the filter
+   * @param filterName The name of the filter
    * @param iter The iterator over a tool list
    */
   void
@@ -113,7 +115,7 @@ public:
    * the filter. The iterator for deleting the filter should
    * be passed.
    * @param toolName The name of the tool
-   * @filterName The name of the filter
+   * @param filterName The name of the filter
    * @param iter The iterator over a tool list
    */
   void

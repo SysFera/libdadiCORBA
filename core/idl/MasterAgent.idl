@@ -3,8 +3,9 @@
  *
  * @brief  DIET master agent IDL description    
  *
- * @author  Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
- *          Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author  
+ *          - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *          - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section License
  *   |LICENSE|
@@ -46,7 +47,7 @@ interface MasterAgent : Agent {
   /** 
    * @brief look up of data identified by id 
    * @param id The id of the data
-   * @return TODO
+   * @return True converted to long if the data is present, 0 otherwise
    */
   unsigned long dataLookUp(in string id);
 
@@ -176,7 +177,7 @@ interface MasterAgent : Agent {
    * @brief To insert a data
    * @param key The key to insert the data
    * @param values The values of the data
-   * @return TODO
+   * @return 0 on success, 1 if the data is already in the dagda catalog
    */
   long insertData(in string key, in SeqString values);
 };

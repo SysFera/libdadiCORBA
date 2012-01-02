@@ -3,9 +3,10 @@
  *
  * @brief  SysFera-DS IDL types for the responses to requests    
  *
- * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
- *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
- *          Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author 
+ *          - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ *          - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ *          - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section License
  *   |LICENSE|

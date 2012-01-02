@@ -3,7 +3,8 @@
  *
  * @brief   POA callback implementation
  *
- * @author  - Christophe PERA (christophe.pera@ens-lyon.fr)
+ * @author
+ *          - Christophe PERA (christophe.pera@ens-lyon.fr)
  *          - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section Licence

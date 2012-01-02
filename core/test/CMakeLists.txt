@@ -1,4 +1,4 @@
-#dadicorba_fixture_test(automtest)
+dadicorba_fixture_test(automtest)
 dadicorba_test(automtest_fulllinkedlist)
 dadicorba_test(automtest_linkedList)
 dadicorba_test(automtest_sshtunnel)

@@ -3,7 +3,8 @@
  *
  * @brief Dagda component implementation
  *
- * @author Gael Le Mahec (lemahec@clermont.in2p3.fr)
+ * @author
+ *         - Gael Le Mahec (lemahec@clermont.in2p3.fr)
  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section Licence

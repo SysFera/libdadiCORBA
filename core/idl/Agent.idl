@@ -3,9 +3,10 @@
  *
  * @brief  DIET agent IDL description
  *
- * @author Philippe COMBES (Philippe.Combes@ens-lyon.fr)
- *         Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
- *         Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ * @author
+ *         - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ *         - Sylvain DAHAN (Sylvain.Dahan@lifc.univ-fcomte.fr)
+ *         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *
  * @section License
  *   |LICENSE|

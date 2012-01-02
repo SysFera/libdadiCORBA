@@ -3,8 +3,9 @@
  *
  * @brief  MA DAG IDL description   
  *
- * @author  Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
- *          Benjamin Isnard (Benjamin.Isnard@ens-lyon.fr)
+ * @author
+ *         - Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
+ *         - Benjamin Isnard (Benjamin.Isnard@ens-lyon.fr)
  *
  * @section License
  *   |LICENSE|
@@ -84,7 +85,7 @@ interface MaDag {
 
   /**
    * @brief Get a new workflow request identifier
-   * @return TODO
+   * @return The request ID
    */
   long getWfReqId();
 

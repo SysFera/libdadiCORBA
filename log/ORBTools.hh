@@ -2,7 +2,8 @@
  * @file ORBTools.hh
  * @brief A class for putting some ORB functions together - HEADER
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *

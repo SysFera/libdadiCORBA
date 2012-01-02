@@ -3,7 +3,8 @@
  *
  * @brief LogCentral binary
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *

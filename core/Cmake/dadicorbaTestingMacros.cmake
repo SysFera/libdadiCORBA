@@ -32,21 +32,31 @@ macro(dadicorba_fixture_test NAME)
     endif()
   endif()
 
-message("path: ${PROJECT_SOURCE_DIR}/utils")
-    include_directories(${PROJECT_SOURCE_DIR}/test
-      ${PROJECT_SOURCE_DIR}/utils
-      )
-    # link libraries
-    target_link_libraries(${NAME}
-      dadiCORBA
-      )
 
   if(NOT DEFINED ${ARGV0}-DISABLED)
     # create unit tests executable
     add_executable(${NAME}
       "${NAME}.cc"
+      ${PROJECT_SOURCE_DIR}/test/utils.cpp
       #entry point
       ${PROJECT_SOURCE_DIR}/test/TestRunner.cc)
+
+message("path: ${PROJECT_SOURCE_DIR}/utils")
+    include_directories(${PROJECT_SOURCE_DIR}/test
+      ${PROJECT_SOURCE_DIR}/utils
+      ${PROJECT_SOURCE_DIR}/test/third-party
+      ${Boost_INCLUDE_DIR}
+      )
+    # link libraries
+    target_link_libraries(${NAME}
+      dadiCORBA
+      CorbaCommon
+      ${Boost_LIBRARIES}
+      ${OMNIORB4_LIBRARIES}
+      LibForwarder
+      pthread
+      ${DADI_LIBRARIES}
+      )
 
 
     file(READ "${NAME}.cc" content)

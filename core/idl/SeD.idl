@@ -3,8 +3,9 @@
  *
  * @brief  DIET SeD IDL description    
  *
- * @author  Philippe COMBES (Philippe.Combes@ens-lyon.fr)
- *          Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
+ * @author
+ *         - Philippe COMBES (Philippe.Combes@ens-lyon.fr)
+ *         - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)
  *
  * @section License
  *   |LICENSE|
@@ -70,7 +71,7 @@ interface SeD {
 
   /**
    * @brief Solve function: all arguments are inout for "const" reasons. 
-   * @param path TODO
+   * @param path The Function to solve
    * @param pb The profile of the problem
    * @return An error code
    */
@@ -82,7 +83,7 @@ interface SeD {
    *   all arguments are in for asynchronous reasons              
    *   We can use persistent IOR rather callback ref in futur which 
    *   will allow fault tolerance on if client dies               
-   * @param path TODO
+   * @param path The function to use to solve
    * @param pb The profile of the problem
    * @param volatileclientPtr TODO
    */

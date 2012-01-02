@@ -3,7 +3,8 @@
  *
  * @brief  Workflow monitoring interface    
  *
- * @author  Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
+ * @author
+ *         - Abdelkader Amar (Abdelkader.Amar@ens-lyon.fr)
  *
  * @section License
  *   |LICENSE|
@@ -29,8 +30,8 @@ interface WfLogService {
   /**
    * @brief To update the workflow
    * @param wfId The id of the workflow
-   * @param wfState TODO
-   * @param data TODO
+   * @param wfState The new state of the workflow
+   * @param data The data asociated
    */
   void
   updateWorkflow(in string wfId, in string wfState, in string data);
@@ -47,8 +48,8 @@ interface WfLogService {
    * @brief To update the dag
    * @param dagId The id of the dag
    * @param wfId The id of the workflow
-   * @param dagState TODO
-   * @param data TODO
+   * @param dagState The state of the dag
+   * @param data The data asociated
    */
   void
   updateDag(in string dagId, in string wfId, in string dagState, in string data);
@@ -85,7 +86,7 @@ interface WfLogService {
                         in string dependencies);
   
   /**
-   * @brief TODO
+   * @brief Create a link between dag nodes
    * @param srcNodeId The id of the source node
    * @param srcWfId The id of the source workflow
    * @param destNodeId The id of the destination node
@@ -96,7 +97,7 @@ interface WfLogService {
 		    in string destNodeId, in string destWfId);
 		    
   /**
-   * @brief TODO
+   * @brief Create a data for a dag node
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
    * @param dagNodePortId The id of the port node in the dag
@@ -107,15 +108,15 @@ interface WfLogService {
 		    in string dagNodePortId, in string dataId);
 
   /**
-   * @brief TODO
+   * @brief Create a data element
    * @param dataId The id of the data
-   * @param elementIdList TODO
+   * @param elementIdList The id of the element
    */
   void
   createDataElements(in string dataId, in string elementIdList);
 
   /**
-   * @brief TODO
+   * @brief Create a data tree
    * @param sourceId The id of the source
    * @param wfId The id of the workflow
    * @param dataIdTree The id of the tree of data
@@ -124,8 +125,8 @@ interface WfLogService {
   createSourceDataTree(in string sourceId, in string wfId, in string dataIdTree);
 
   /**
-   * @brief TODO
-   * @param sinkId TODO
+   * @brief Create a sink data
+   * @param sinkId The id of the sink
    * @param wfId The id of the workflow
    * @param dataId The id of the data
    */
@@ -133,7 +134,7 @@ interface WfLogService {
   createSinkData(in string sinkId, in string wfId, in string dataId);
 
   /**
-   * @brief TODO
+   * @brief Set the node as ready
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
    */
@@ -141,17 +142,17 @@ interface WfLogService {
   nodeIsReady(in string dagNodeId, in string wfId);
 
   /**
-   * @brief TODO
+   * @brief Set the node as starting
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
-   * @param pbName TODO
-   * @param hostname TODO
+   * @param pbName The name of the problem
+   * @param hostname The hostname
    */
   void
   nodeIsStarting(in string dagNodeId, in string wfId, in string pbName, in string hostname);
 		    
   /**
-   * @brief TODO
+   * @brief Set the node as running
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
    */
@@ -159,7 +160,7 @@ interface WfLogService {
   nodeIsRunning(in string dagNodeId, in string wfId);
 
   /**
-   * @brief TODO
+   * @brief Set a node as done
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
    */
@@ -167,7 +168,7 @@ interface WfLogService {
   nodeIsDone(in string dagNodeId, in string wfId);
 
   /**
-   * @brief TODO
+   * @brief Set a node as failed
    * @param dagNodeId The id of the node of the dag
    * @param wfId The id of the workflow
    */

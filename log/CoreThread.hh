@@ -3,7 +3,8 @@
  *
  * @brief Header of the core thread class
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
@@ -29,7 +30,7 @@ public:
 /**
  * @brief Constructor
  * @param timeBuffer A time buffer
- * @param StateManager A state manager
+ * @param stateManager A state manager
  * @param filterManager A filter manager
  * @param toolList A toollist object
  */

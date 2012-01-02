@@ -5,7 +5,8 @@
  * to the corresponding toolMsgReceiver. Based on omni_thread and the orb.
  * Attention: causes memory leaks if the orb does not exist !!
  *
- * @author - Kevin Coulomb (kevin.coulomb@sysfera.com)
+ * @author
+ *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
  *
@@ -29,8 +30,7 @@ public:
   /**
    * @brief Creates a SendThread. The thread can be started with runThread().
    * Use stopThread() to stop and delete the thread.
-   *
-   * @param toolList. The toolList that the thread will work on.
+   * @param toolList The toolList that the thread will work on.
    */
   explicit SendThread(ToolList* toolList);
 

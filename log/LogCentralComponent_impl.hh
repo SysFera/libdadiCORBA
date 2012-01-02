@@ -1,9 +1,10 @@
 /**
- * @file LogCentralComponent_impl.cc
+ * @file LogCentralComponent_impl.hh
  *
  * @brief Implementation corresponding to the LogComponentComponent interface
  *
- * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ * @author
+ *         - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *         - Georg Hoesch (hoesch@in.tum.de)
  *         - Cyrille Pontvieux (cyrille.pontvieux@edu.univ-fcomte.fr)
@@ -93,9 +94,9 @@ class LogCentralComponent_impl: public POA_LogCentralComponent,
 public:
 /**
  * @brief Constructor
- * @paramm componentList A list of component
+ * @param componentList A list of component
  * @param filterManager A filer manager
- * timeBuffer A time buffer
+ * @param timeBuffer A time buffer
  */
   LogCentralComponent_impl(ComponentList* componentList,
                            FilterManagerInterface* filterManager,
@@ -159,6 +160,7 @@ public:
   /**
    * @brief Tell if a component exists or not.
    * @param name name of the component to find
+   * @param it Te iterator to use to browse the elements to check
    * @return true if the component exists
    */
   bool
