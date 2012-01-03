@@ -7,6 +7,8 @@
 
 set (libName "CorbaCommon")
 set (libName2 "dadiCORBA")
+set (libName2 "LibForwarder")
+
 MARK_AS_ADVANCED (libName)
 
 find_path(FWD_INCLUDE_DIR ORBMgr.hh
@@ -18,6 +20,9 @@ find_library(FWD_LIBRARY ${libName}
 find_library(FWD_LIBRARY2 ${libName2}
   PATHS ${FWD_DIR}/lib 
   DOC "The forwarder library")
+find_library(FWD_LIBRARY3 ${libName2}
+  PATHS ${FWD_DIR}/lib 
+  DOC "The forwarder library")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(FWD DEFAULT_MSG FWD_INCLUDE_DIR FWD_LIBRARY)
@@ -25,6 +30,7 @@ find_package_handle_standard_args(FWD DEFAULT_MSG FWD_INCLUDE_DIR FWD_LIBRARY)
 set (FWD_LIBRARY
   ${FWD_LIBRARY}
   ${FWD_LIBRARY2}
+  ${FWD_LIBRARY3}
 )
 
 if (NOT FWD_FOUND)

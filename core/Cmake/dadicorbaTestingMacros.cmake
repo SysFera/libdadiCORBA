@@ -50,10 +50,10 @@ message("path: ${PROJECT_SOURCE_DIR}/utils")
     # link libraries
     target_link_libraries(${NAME}
       dadiCORBA
+      LibForwarder
       CorbaCommon
       ${Boost_LIBRARIES}
       ${OMNIORB4_LIBRARIES}
-      LibForwarder
       pthread
       ${DADI_LIBRARIES}
       )
@@ -137,6 +137,7 @@ macro(dadicorba_test NAME)
     # link libraries
     target_link_libraries(${NAME}
       dadiCORBA
+      CorbaCommon
       ${Boost_LIBRARIES}
       ${OMNIORB4_LIBRARIES}
       LibForwarder

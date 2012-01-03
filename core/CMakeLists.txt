@@ -176,7 +176,7 @@ if (DIET_USE_WORKFLOW)
   )
 endif (DIET_USE_WORKFLOW)
 
-add_library(LibForwarder STATIC
+add_library(LibForwarder SHARED
   ${Forwarder_SOURCES}
 )
 add_executable(corbaForwarder
@@ -213,6 +213,7 @@ target_link_libraries(corbaForwarder
 
   
 install(TARGETS corbaForwarder DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS LibForwarder DESTINATION ${LIB_INSTALL_DIR})
 install(TARGETS CorbaCommon DESTINATION ${LIB_INSTALL_DIR})
 
 

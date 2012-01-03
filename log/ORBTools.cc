@@ -128,12 +128,16 @@ ORBTools::registerServant(const char* contextName, const char* contextKind,
     } catch(CORBA::SystemException& ex) {
       cerr << "Failed to narrow the root naming context.\n";
       return false;
+    } catch(...) {
+      return false;
     }
   } catch (CORBA::ORB::InvalidName& ex) {
     cerr << "The NamingService could not be resolved (InvalidName)\n";
     return false;
   } catch (CORBA::SystemException& ex) {
     cerr << "The NamingService could not be resolved (SystemException)\n";
+    return false;
+  } catch(...) {
     return false;
   }
   try {
@@ -154,6 +158,8 @@ ORBTools::registerServant(const char* contextName, const char* contextKind,
         cerr << "Failed to narrow naming context.\n";
         return false;
       }
+    } catch(...) {
+      return false;
     }
     CosNaming::Name object;
     object.length(1);
@@ -166,6 +172,8 @@ ORBTools::registerServant(const char* contextName, const char* contextKind,
       testContext->bind(object, objref);
     } catch (CosNaming::NamingContext::AlreadyBound& ex) {
       testContext->rebind(object, objref);
+    } catch(...) {
+      return false;
     }
   } catch (CORBA::COMM_FAILURE& ex) {
     cerr << "Caught system exception COMM_FAILURE -- unable to contact the "
@@ -173,6 +181,8 @@ ORBTools::registerServant(const char* contextName, const char* contextKind,
     return false;
   } catch (CORBA::SystemException& ex) {
     cerr << "Caught a CORBA::SystemException while using the naming service.\n";
+    return false;
+  } catch(...) {
     return false;
   }
   return true;

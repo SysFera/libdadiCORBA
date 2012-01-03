@@ -79,6 +79,8 @@ add_library(LogCommon
   SendThread.cc
   SimpleFilterManager.cc
   CoreThread.cc
+  LogCentralTool_impl.cc
+  LogCentralComponent_impl.cc
 )
 add_subdirectory(
   examples

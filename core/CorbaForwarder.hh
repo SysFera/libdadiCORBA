@@ -139,8 +139,6 @@ public:
   std::list<std::string>
   otherForwarders() const;
 
-//#ifdef CORBA_DIET
-
   /* AgentFwdr implementation. */
 
   ::CORBA::Long
@@ -206,8 +204,6 @@ public:
           ::CORBA::Boolean successful,
           const char* objName);
 #endif //HAVE_WORKFLOW
-
-//#endif  // CORBA_DIET
 
   /* Dagda implementation. */
   ::CORBA::Boolean
@@ -610,7 +606,6 @@ public:
   static std::string
   getCtxt(const std::string& namectxt);
 
-//#ifdef CORBA_LOG
   ComponentConfigurator_ptr getCompoConf(const char* name);
   ToolMsgReceiver_ptr getToolMsgReceiver(const char* name);
   LogCentralComponent_ptr getLogCentralComponent(const char* name);
@@ -653,7 +648,6 @@ public:
   synchronize(const char* componentName,
               const log_time_t& componentTime,
               const char* objName);
-//#endif
 private:
   /**
    * @brief When a new forwarder object is created, we cache it.

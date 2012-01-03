@@ -1,0 +1,1 @@
+dadicorbalog_fixture_test(automtest)

@@ -428,7 +428,6 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
                                      "Object (" + ctxt + "/" + name + ")"
                                      + " is reachable through forwarder " + objHost + "\n",
                                      dadi::Message::PRIO_DEBUG));
-//#ifdef CORBA_DIET
           if (ctxt == AGENTCTXT) {
             if (!localAgent) {
               object = fwd->getMasterAgent(name.c_str());
@@ -449,10 +448,6 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
           if (ctxt == SEDCTXT) {
             object = fwd->getSeD(name.c_str());
           }
-
-  //        if (ctxt == DAGDACTXT) {
-  //          object = fwd->getDagda(name.c_str());
-  //        }
 #ifdef HAVE_WORKFLOW
           if (ctxt == WFMGRCTXT) {
             object = fwd->getCltMan(name.c_str());
@@ -461,8 +456,6 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
             object = fwd->getMaDag(name.c_str());
           }
 #endif // have workflow
-//#endif  // CORBA_DIET
-//#ifdef CORBA_LOG
           if (ctxt2==LOGCOMPCTXT) {
             object = fwd->getLogCentralComponent(name.c_str());
           }
@@ -475,7 +468,6 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
           if (ctxt2==LOGCOMPCONFCTXT) {
             object = fwd->getCompoConf(name.c_str());
           }
-//#endif  // CORBA_LOG
         } else {
           mlogger->log(dadi::Message("ORBMgr",
                                      "Direct access to object " + ctxt + "/" + name + "\n",
