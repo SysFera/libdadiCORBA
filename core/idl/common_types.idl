@@ -7,7 +7,8 @@
  *          - Frederic LOMBARD (Frederic.Lombard@lifc.univ-fcomte.fr)             
  *          - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *                                                                          
- * |LICENSE|
+ * @section Licence
+ *   |LICENSE|
  */
 
 
@@ -267,7 +268,7 @@ struct corba_data_desc_t {
  */
   long mode;
 /**
- * @brief TODO
+ * @brief Type primitif de diet
  */
   long base_type;
 /**

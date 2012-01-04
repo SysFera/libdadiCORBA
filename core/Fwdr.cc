@@ -14,7 +14,6 @@
 #include "CorbaForwarder.hh"
 #include "ORBMgr.hh"
 #include "utils/SSHTunnel.hh"
-//#include "utils/Options.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -131,6 +130,7 @@ main(int argc, char* argv[], char* envp[]) {
 // Init logger
   dadi::LoggerPtr logger;
   dadi::ChannelPtr cc;
+  int nbRetry= NBRETRY;
   logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
   logger->setLevel(dadi::Message::PRIO_TRACE);
   cc = dadi::ChannelPtr(new dadi::ConsoleChannel);
@@ -138,7 +138,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   dadi::Options opt;
   dadi::Config& config = dadi::Config::instance();
-  std::string usa = "\n [-h] --name <name> \n or the second: \n [-h] [options] --peer-name <peer-name> --ssh-host <host> --remote-host <localhost>";
+  std::string usa = "\n [-h] --name <name> \n or the second: \n [-h] [options] --name <name> --peer-name <peer-name> --ssh-host <host> --remote-host <localhost>";
 
   opt.setName("Fwdr");
   opt.setUsage(usa);
@@ -161,6 +161,8 @@ main(int argc, char* argv[], char* envp[]) {
     boost::bind(dadi::setPropertyString, "peer-ior", _1));
   boost::function1<void, std::string> fret(
     boost::bind(dadi::setPropertyString, "nb-retry", _1));
+  boost::function1<void, std::string> fkey(
+    boost::bind(dadi::setPropertyString, "ssh-key", _1));
 
 
   opt.addSwitch("help,h", "display help message", fHelp);
@@ -173,6 +175,7 @@ main(int argc, char* argv[], char* envp[]) {
   opt.addOption("remote-port,z", "to use a specific port", fremotep)->default_value("");
   opt.addOption("peer-ior,i", "to use a specific ior for the peer", fpior)->default_value("");
   opt.addOption("nb-retry,a", "the number of time to retry again", fret)->default_value("");
+  opt.addOption("ssh-key,k", "the ssh key", fkey)->default_value("");
 
   opt.parseCommandLine(argc, argv);
   opt.notify();
@@ -180,8 +183,13 @@ main(int argc, char* argv[], char* envp[]) {
   bool createFrom = false;
 
   if(config.get<std::string>("name")=="") {
-    std::cout << "Missing Parameter. Usage: " << std::endl << "\n [-h] --name <name> \n or the second: \n [-h] [options] --peer-name <peer-name> --ssh-host <host> --remote-host <localhost>" << std::endl;
+    std::cout << "Missing Parameter. Usage: " << std::endl << "\n [-h] --name <name> \n or the second: \n [-h] [options] --name <name> --peer-name <peer-name> --ssh-host <host> --remote-host <localhost>" << std::endl;
     return 0;
+  }
+
+  if(config.get<std::string>("nb-retry")!="") {
+    std::istringstream is(config.get<std::string>("nb-retry"));
+    is >> nbRetry;
   }
 
 
@@ -225,7 +233,7 @@ main(int argc, char* argv[], char* envp[]) {
                                 "Error when binding the forwarder "
                                 + config.get<std::string>("name") + " \n",
                                 dadi::Message::PRIO_DEBUG));
-      if (count++<NBRETRY) {
+      if (count++<nbRetry) {
         sleep(5);
         continue;
       }
@@ -287,7 +295,8 @@ main(int argc, char* argv[], char* envp[]) {
     copy.setSshPort(config.get<std::string>("ssh-port"));
     copy.setSshLogin(config.get<std::string>("ssh-login"));
 
-    copy.setSshKeyPath("");
+    std::string key = config.get<std::string>("ssh-key");
+    copy.setSshKeyPath(key);
     try {
       if (copy.getFile()) {
         logger->log(dadi::Message("Fwdr",
@@ -366,7 +375,12 @@ main(int argc, char* argv[], char* envp[]) {
     tunnel.createTunnelTo(createTo);
     tunnel.createTunnelFrom(createFrom);
   }
-  tunnel.open();
+  try{
+    tunnel.open();
+  } catch (std::runtime_error &e){
+    logger->log(dadi::Message("Fwdr",e.what(),dadi::Message::PRIO_DEBUG));
+  }
+
 
   /* Try to find the peer. */
   bool canLaunch = true;

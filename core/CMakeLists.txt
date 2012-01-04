@@ -240,9 +240,3 @@ if(ENABLE_TESTING)
   add_subdirectory(test)
 endif()
 
-## generate doxygen documentation
-#add_custom_target(doc ALL)
-#if(ENABLE_DOXYGEN)
-#  include(UseDoxygen)
-#  generate_doxygen(FORMATS ${DOXYGEN_FORMATS})
-#endif()

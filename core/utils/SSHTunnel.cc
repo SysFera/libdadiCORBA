@@ -361,6 +361,7 @@ SSHTunnel::open() {
       mlogger->log(dadi::Message("SSHTunnel",
                                  "Error executing command " + command,
                                  dadi::Message::PRIO_DEBUG));
+      throw std::runtime_error("Error executing"+command);
     }
   }
   for (unsigned int i = 0; i < tokens.size(); ++i) {
