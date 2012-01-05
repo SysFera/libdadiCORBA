@@ -2,8 +2,8 @@ project( FWD )
 cmake_minimum_required( VERSION 2.8 )
 include(CMakeDependentOption)
 
-set(FWD_MAJOR_VERSION 1)
-set(FWD_MINOR_VERSION 0)
+set(FWD_MAJOR_VERSION 0)
+set(FWD_MINOR_VERSION 1)
 set(FWD_REVISION_VERSION 0)
 
 set(FWD_VERSION ${FWD_MAJOR_VERSION}.${FWD_MINOR_VERSION}.${FWD_REVISION_VERSION})

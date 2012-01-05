@@ -36,7 +36,7 @@ $ cd build
   - DADI_LIBRARIES: The path until the libdadi.so library
   - ENABLE_DOC: Whether the documentation will be built
   - ENABLE_DOXYGEN: Whether the doxygen documentation will be built (need the enable doc flag)
-  - ENABLE_EXTRAS_DOC: Whether the users manual will be build (need the enable doc flag))
+  - ENABLE_EXTRAS_DOC: Whether the users manual will be built (need the enable doc flag))
 For instance:
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DDADI_INCLUDE_DIR=/usr/local/include -DDADI_LIBRARIES=/usr/local/lib ..
 * Compile
