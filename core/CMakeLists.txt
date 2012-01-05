@@ -180,9 +180,7 @@ add_library(LibForwarder SHARED
   ${Forwarder_SOURCES}
 )
 add_executable(corbaForwarder
-  ORBMgr.cc
   Fwdr.cc
-  CorbaForwarder.cc
   ${Forwarder_SOURCES}
 )
 

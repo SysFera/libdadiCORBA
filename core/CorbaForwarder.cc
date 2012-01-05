@@ -62,7 +62,7 @@
  */
 bool
 CorbaForwarder::remoteCall(std::string& objName) {
-  // Fixme when cleaning the code, looks for a string
+  // Looks for a string
   // that is prefixed by remote:
   if (objName.find("remote:") != 0) {
     /* Local network call: need to be forwarded to
@@ -82,10 +82,12 @@ CorbaForwarder::getObjectCache(const std::string& name) {
   std::map<std::string, ::CORBA::Object_ptr>::iterator it;
 
   mcachesMutex.lock();
+// If the object is in the cache
   if ((it = mobjectCache.find(name))!=mobjectCache.end()) {
     mcachesMutex.unlock();
     return CORBA::Object::_duplicate(it->second);
   }
+// Return a nil object
   mcachesMutex.unlock();
   return ::CORBA::Object::_nil();
 }
@@ -149,11 +151,13 @@ CorbaForwarder::ping(const char* objName) {
   name = getName(objString);
   ctxt = getCtxt(objString);
 
+// Ping agent
   if (ctxt == std::string(AGENTCTXT)) {
     Agent_var agent =
       ORBMgr::getMgr()->resolve<Agent, Agent_var>(AGENTCTXT, name, this->mname);
     return agent->ping();
   }
+// Ping client
   if (ctxt == std::string(CLIENTCTXT)) {
     Callback_var cb =
       ORBMgr::getMgr()->resolve<Callback, Callback_var>(CLIENTCTXT, name,
@@ -161,18 +165,21 @@ CorbaForwarder::ping(const char* objName) {
     return cb->ping();
   }
 #ifdef HAVE_WORKFLOW
+// Ping workflow
   if (ctxt == std::string(WFMGRCTXT)) {
     CltMan_var clt =
       ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name,
                                                     this->mname);
     return clt->ping();
   }
+// Ping dag
   if (ctxt == std::string(MADAGCTXT)) {
     MaDag_var madag =
       ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
     return madag->ping();
   }
 #endif
+// Ping sed
   if (ctxt== std::string(SEDCTXT)) {
     SeD_var sed = ORBMgr::getMgr()->resolve<SeD, SeD_var>(SEDCTXT, name,
                                                           this->mname);
@@ -482,6 +489,7 @@ CorbaForwarder::cleanCaches() {
   std::list<std::string>::const_iterator jt;
 
   mcachesMutex.lock();
+// Build a list of invalid object getting transient when using the object
   for (it = mobjectCache.begin(); it != mobjectCache.end(); ++it) {
     try {
       Forwarder_var object = Forwarder::_narrow(it->second);
@@ -491,6 +499,7 @@ CorbaForwarder::cleanCaches() {
     }
   }
   mcachesMutex.unlock();
+// Removing the bad objects
   for (jt = invalidObjects.begin(); jt != invalidObjects.end(); ++jt)
     removeObjectFromCache(*jt);
 }

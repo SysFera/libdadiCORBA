@@ -21,6 +21,9 @@
 #include <ctime>
 
 #include "ORBMgr.hh"
+#include "dadi/Logging/ConsoleChannel.hh"
+#include "dadi/Logging/Logger.hh"
+#include "dadi/Logging/Message.hh"
 
 using namespace std;
 
@@ -132,7 +135,6 @@ LogCentralTool_impl::disconnectTool(const char* toolName)
         logger->log(dadi::Message("LCT",
                                   "Disconnection of tool "+string(toolName)+" failed because it does not exist",
                                   dadi::Message::PRIO_DEBUG));
-           toolName);
     return LS_TOOL_DISCONNECT_NOTEXISTS;
   }
 
