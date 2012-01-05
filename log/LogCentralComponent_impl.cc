@@ -29,6 +29,10 @@
 // helpers
 #include "ORBTools.hh"
 
+#include "dadi/Logging/ConsoleChannel.hh"
+#include "dadi/Logging/Logger.hh"
+#include "dadi/Logging/Message.hh"
+
 
 using namespace std;
 
@@ -97,15 +101,24 @@ LogCentralComponent_impl::connectComponent(
   const log_time_t& componentTime,
   tag_list_t& initialConfig)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
+
   if (strcmp(componentName, "*") == 0) {
-    fprintf (stderr, "Bad name componnent. Cannot connect component. \n");
+    logger->log(dadi::Message("LCC",
+                              "Bad name componnent. Cannot connect component. \n",
+                              dadi::Message::PRIO_DEBUG));
     return LS_COMPONENT_CONNECT_BADNAME;
   }
   ComponentConfigurator_ptr compoConf = ORBMgr::getMgr()->resolve
     <ComponentConfigurator,ComponentConfigurator_ptr>(LOGCOMPCONFCTXT, compConfigurator);
 
   if (CORBA::is_nil(compoConf)) {
-    fprintf (stderr, "Bad component configurator **** \n");
+    logger->log(dadi::Message("LCC",
+                              "Bad component configurator. \n",
+                              dadi::Message::PRIO_DEBUG));
     return LS_COMPONENT_CONNECT_BADCOMPONENTCONFIGURATOR;
   }
 
@@ -129,8 +142,9 @@ LogCentralComponent_impl::connectComponent(
       }
 
     if (!lost) {
-      cout << "Connection of component '" << componentName << "' failed, "
-	   << "component already exists" << endl;
+    logger->log(dadi::Message("LCC",
+                              string("Connexion failed because component "+string(componentName)+" already exists"),
+                              dadi::Message::PRIO_DEBUG));
       delete(it);
       return LS_COMPONENT_CONNECT_ALREADYEXISTS;
     }
@@ -163,7 +177,9 @@ LogCentralComponent_impl::connectComponent(
   tag_list_t* tl = this->mfilterManager->componentConnect(
     (const char*)componentName, it);
   if (tl == NULL) {
-    fprintf (stderr, "Connecting component failed after filter \n");
+    logger->log(dadi::Message("LCC",
+                              "Connecting component failed after filter \n",
+                              dadi::Message::PRIO_DEBUG));
     delete(it);
     return LS_COMPONENT_CONNECT_INTERNALERROR;
   }
@@ -183,8 +199,9 @@ LogCentralComponent_impl::connectComponent(
   // Return the initialConfig
   // update the tag_list_t&
   initialConfig = *tl;
-  cout << "Connection of component '" << componentName << "' with message"
-       << " '" << message << "'" << endl;
+  logger->log(dadi::Message("LCC",
+                            "Connection of component '" + string(componentName) + "' with message" + " '" + message,
+                            dadi::Message::PRIO_DEBUG));
   return LS_OK;
 }
 
@@ -192,6 +209,10 @@ CORBA::Short
 LogCentralComponent_impl::disconnectComponent(const char* componentName,
                                               const char* message)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
   // Find the component to delete it
   ComponentList::Iterator* it = this->mcomponentList->getIterator();
   bool found = false;
@@ -204,8 +225,9 @@ LogCentralComponent_impl::disconnectComponent(const char* componentName,
   }
   if (!found) {
     delete it;
-    cout << "Disconnection of component '" << componentName << "' failed,"
-         << " component not exists" << endl;
+  logger->log(dadi::Message("LCC",
+                            "Disconnection of component '" + string(componentName) + "' failed because it does not exist",
+                            dadi::Message::PRIO_DEBUG));
     return LS_COMPONENT_DISCONNECT_NOTEXISTS;
   }
   // Remove the component
@@ -239,14 +261,19 @@ LogCentralComponent_impl::disconnectComponent(const char* componentName,
   this->mtimeBuffer->put(inmsg);
   delete inmsg;
 
-  cout << "Disconnection of '" << componentName << "' with message"
-    << " '" << message << "'" << endl;
+  logger->log(dadi::Message("LCC",
+                            "Disconnection of component '" + string(componentName) + "' with message "+message,
+                            dadi::Message::PRIO_DEBUG));
   return LS_OK;
 }
 
 void
 LogCentralComponent_impl::sendBuffer(const log_msg_buf_t& buffer)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
   // for each message, correction of its time and the message is sent to the
   // TimeBuffer.
   log_time_t td;
@@ -268,7 +295,9 @@ LogCentralComponent_impl::sendBuffer(const log_msg_buf_t& buffer)
     delete it;
 
     if (compExists == false) {
-      cout << "Discarded messageBuffer from unknown component " << name << endl;
+      logger->log(dadi::Message("LCC",
+                                "Discarded messageBuffer from unknown component " + string(name),
+                                dadi::Message::PRIO_DEBUG));
       return;
     }
 
@@ -397,6 +426,10 @@ LogCentralComponent_impl::AliveCheckThread::stopThread()
 void*
 LogCentralComponent_impl::AliveCheckThread::run_undetached(void* params)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
   LastPing* lp = NULL;
   log_time_t checkTime;
   FullLinkedList<char>* componentsToDisconnect = NULL;
@@ -427,7 +460,9 @@ LogCentralComponent_impl::AliveCheckThread::run_undetached(void* params)
         char* msg;
         s = it2->nextRef();
         msg = (char*) malloc(strlen(s) + strlen("Ping Timeout"));
-        cout << "Ping Timeout of '" << s << "' : disconnect the component.\n";
+        logger->log(dadi::Message("LCC",
+                                  "Ping Timeout of '" + string(s) + "' : disconnect the component.\n",
+                                  dadi::Message::PRIO_DEBUG));
         sprintf(msg,"%s Ping Timeout",s);
         this->LCC->disconnectComponent(s, msg);
       }

@@ -38,7 +38,6 @@ struct corba_server_t {
 #ifdef HAVE_ALT_BATCH
   // To add the following, SeDStructures.idl which contains shared structures
   // between SeD and DIET_server.h has to be created
-  //diet_server_status_t serverType ; /* batch, seq, etc. */
   /**
    * @brief The type of the server
    */

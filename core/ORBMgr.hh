@@ -158,7 +158,7 @@ public:
    * @brief Resolve an object using its ctxt/name.
    * @param ctxt The context to use
    * @param name The name of the object
-   * @param fwName The name of the forwarder to use
+   * @param fwdName The name of the forwarder to use
    * @return A CORBA pointer to the object
    */
   CORBA::Object_ptr
@@ -185,7 +185,7 @@ public:
   /**
    * @brief Get the list of the objects id binded in the omniNames server
    *   for a given context.
-   * @param ctxt The name of the context to list all the object inside
+   * @param ctxtName The name of the context to list all the object inside
    * @return A list of the names of the binded objects
    */
   std::list<std::string>

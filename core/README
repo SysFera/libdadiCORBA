@@ -1,0 +1,55 @@
+This repository contains the sources for the libdadiCORBA project.
+
+This readme presents the following points :
+I) License
+II) Requirements 
+III) Installation
+IV) Use
+
+I) License
+The code is under CECILL-B license. For more information about the license, 
+please refer to http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html.
+
+
+II) Requirements
+The libdadiCORBA project needs the following dependencies:
+* boost v1.47 or later (http://www.boost.org/users/history/version_1_47_0.html)
+* libdadi v0.5 (see https://github.com/SysFera/libdadi) or later
+* Doxygen v1.7 or later (http://www.stack.nl/~dimitri/doxygen/)
+* (c)cmake version 2.8.6 or later (http://cmake.org/cmake/resources/software.html)
+* pdftex v3.1415926-1.40.10-2.2 or later (http://www.tug.org/applications/pdftex/)
+* CORBA omniORB v4.1.3 or later (http://omniorb.sourceforge.net/)
+
+Make sure they are installed and configured
+
+III) Installation
+* Get the sources
+* Go to the core repository
+* Create a build repository
+$ mkdir build
+* Go in the build repository
+$ cd build
+* Compile, the majors flags are
+  - ENABLE_TESTING: Whether the tests are compiled or not
+  - CMAKE_INSTALL_PREFIX: Where to install the libdadiCORBA project
+  - DADI_INCLUDE_DIR: The repository containing the include files for the libdadi project
+  - DADI_LIBRARIES: The path until the libdadi.so library
+  - ENABLE_DOC: Whether the documentation will be built
+  - ENABLE_DOXYGEN: Whether the doxygen documentation will be built (need the enable doc flag)
+  - ENABLE_EXTRAS_DOC: Whether the users manual will be build (need the enable doc flag))
+For instance:
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DDADI_INCLUDE_DIR=/usr/local/include -DDADI_LIBRARIES=/usr/local/lib ..
+* Compile
+$ make
+* Install
+$ sudo make install
+
+
+IV) Use
+* launch the corba naming service 
+$ omniNames -start
+* launch the corbaForwarder binary on the server s1
+$ corbaForwarder --name toto
+* launch the corbaForwarder binary on the client 
+$ corbaForwarder --name titi --peer-name toto --ssh-host s1 --remote-host localhost 
+* Now any corba object whose IDL are in the forwarder can be accessed on both sides

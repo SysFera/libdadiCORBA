@@ -3,7 +3,8 @@
  *
  * @brief   DIET forwarder implementation
  *
- * @author - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
+ * @author
+ *         - Gaël Le Mahec (gael.le.mahec@ens-lyon.fr)
  *         - Kevin Coulomb (kevin.coulomb@sysfera.com)
  *
  * @section Licence
@@ -11,6 +12,12 @@
  */
 
 #include "CorbaForwarder.hh"
+
+#include <stdexcept>
+#include <string>
+#include <cstring>
+#include <list>
+#include <unistd.h>  // For gethostname()
 
 #include "Forwarder.hh"
 #include "ORBMgr.hh"
@@ -38,15 +45,6 @@
 #include "dadi/Logging/Logger.hh"
 #include "dadi/Logging/Message.hh"
 
-
-
-//#include "debug.hh"
-
-#include <stdexcept>
-#include <string>
-#include <cstring>
-#include <list>
-#include <unistd.h>  // For gethostname()
 
 #ifdef MAXHOSTNAMELEN
 #define MAX_HOSTNAME_LENGTH MAXHOSTNAMELEN

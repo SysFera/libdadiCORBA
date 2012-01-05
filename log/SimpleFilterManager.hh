@@ -41,7 +41,7 @@ struct ConfigElement {
 };
 
 /**
- * @brief A list to hold the configuration of components
+ * @brief A list to hold the configuration of configuration elements
  */
 typedef FullLinkedList<ConfigElement> ConfigList;
 

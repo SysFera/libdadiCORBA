@@ -53,16 +53,21 @@ CORBA::Short
 LogCentralTool_impl::connectTool(char*& toolName,
                                  const char* msgRec)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
   ToolList::Iterator* it;
   char tmpName[6];
   it = toolList->getIterator();
-  // MODIF ***
+
   ToolMsgReceiver_ptr msgReceiver = ORBMgr::getMgr()->resolve
     <ToolMsgReceiver, ToolMsgReceiver_ptr>(LOGTOOLMSGCTXT, msgRec);
-//  LogCentralTool_ptr msgReceiver = ORBMgr::getMgr()->resolve
-//    <LogCentralTool, LogCentralTool_ptr>(LOGTOOLCTXT, msgRec);
+
   if (CORBA::is_nil(msgReceiver)){
-    fprintf (stderr, "Failed to resolve LCT. Nil receiver \n");
+    logger->log(dadi::Message("LCT",
+                              "Failed to resolve LCT. Nil receiver",
+                              dadi::Message::PRIO_DEBUG));
   }
   // Check if toolName must be created.
   while (strcmp(toolName,"")==0) {
@@ -79,8 +84,9 @@ LogCentralTool_impl::connectTool(char*& toolName,
   if (getToolByName(toolName,it)) {
     // tool already exists and cannot be connected a second time
     delete(it);
-    printf("Connection of tool: '%s' failed, tool already exists\n",
-           toolName);
+    logger->log(dadi::Message("LCT",
+                              "Connection of tool: '"+string(toolName)+"' failed, tool already exists",
+                              dadi::Message::PRIO_DEBUG));
     return LS_TOOL_CONNECT_ALREADYEXISTS;
   }
   // create ToolElement and insert it
@@ -102,13 +108,19 @@ LogCentralTool_impl::connectTool(char*& toolName,
   stateManager->askForSystemState(&(tElem->outBuffer));
 
   delete(it);
-  printf("Connection of tool '%s'\n", toolName);
+    logger->log(dadi::Message("LCT",
+                              "Connection of tool: '"+string(toolName)+"' done",
+                              dadi::Message::PRIO_DEBUG));
   return LS_OK;
 }
 
 CORBA::Short
 LogCentralTool_impl::disconnectTool(const char* toolName)
 {
+  dadi::LoggerPtr logger = dadi::LoggerPtr(dadi::Logger::getLogger("org.dadicorba"));
+  logger->setLevel(dadi::Message::PRIO_TRACE);
+  dadi::ChannelPtr chan = dadi::ChannelPtr(new dadi::ConsoleChannel);
+  logger->setChannel(chan);
   ToolList::Iterator* it;
 
   it = toolList->getIterator();
@@ -117,7 +129,9 @@ LogCentralTool_impl::disconnectTool(const char* toolName)
   if (getToolByName(toolName,it)==false) {
     // tool does not exist and cannot be disconnected
     delete(it);
-    printf("Disconnection of tool: '%s' failed, tool does not exist\n",
+        logger->log(dadi::Message("LCT",
+                                  "Disconnection of tool "+string(toolName)+" failed because it does not exist",
+                                  dadi::Message::PRIO_DEBUG));
            toolName);
     return LS_TOOL_DISCONNECT_NOTEXISTS;
   }
@@ -131,7 +145,9 @@ LogCentralTool_impl::disconnectTool(const char* toolName)
                        // deleted automatically
 
   delete(it);
-  printf("Disconnection of tool '%s'\n",toolName);
+        logger->log(dadi::Message("LCT",
+                                  "Disconnection of tool "+string(toolName)+" done",
+                                  dadi::Message::PRIO_DEBUG));
   return LS_OK;
 }
 
