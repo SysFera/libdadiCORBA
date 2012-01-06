@@ -140,6 +140,7 @@ target_link_libraries(CorbaCommon
 dadiCORBA
 ${DADI_LIBRARIES}
 ${Boost_LIBRARIES}
+${OMNIORB4_LIBRARIES_sh}
 ${OMNIORB4_LIBRARIES}
 )
 

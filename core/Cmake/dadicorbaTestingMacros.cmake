@@ -46,6 +46,7 @@ message("path: ${PROJECT_SOURCE_DIR}/utils")
       ${PROJECT_SOURCE_DIR}/utils
       ${PROJECT_SOURCE_DIR}/test/third-party
       ${Boost_INCLUDE_DIR}
+      ${PROJECT_BINARY_DIR}/include
       )
     # link libraries
     target_link_libraries(${NAME}
@@ -133,6 +134,7 @@ macro(dadicorba_test NAME)
 
     include_directories(${PROJECT_SOURCE_DIR}/test
       ${PROJECT_SOURCE_DIR}/utils
+      ${PROJECT_BINARY_DIR}/include
       )
     # link libraries
     target_link_libraries(${NAME}

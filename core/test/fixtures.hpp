@@ -31,16 +31,7 @@ namespace bf = boost::filesystem;
 namespace bp = boost::process;
 namespace bs = boost::system;
 
-#define OMNINAMES_COMMAND "omniNames"
-#define OMNINAMES_PATH "/usr/local/bin"
-#define ENV_LIBRARY_PATH_NAME "LD_LIBRARY_PATH"
-#define ENV_LIBRARY_PATH "/usr/local/lib:/home/keo/GIT/diet/build/src/client/:/home/keo/GIT/diet/build/src/SeD/:/home/keo/GIT/diet/build/src/utils/DAGDA:"
-#define SLEEP_TIME 500
-#define OMNINAMES_LOGDIR "/tmp/"
-#define DIETAGENT_DIR ""
-#define OMNIORB_CONFIG "/usr/local/etc/omniORB4.cfg"
-#define OMNINAMES_ENDPOINT "giop:tcp:127.0.0.1:2815"
-#define ORB_INIT_REF "NameService=corbaname::127.0.0.1:2815"
+#include "config_test.hpp"
 
 
 template <const char *omniORBConfig>

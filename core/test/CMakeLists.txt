@@ -1,4 +1,31 @@
+# setup for tests
+file( TO_NATIVE_PATH "${OMNINAMES_LOGDIR}/" OMNINAMES_LOGDIR_NATIVE_PATH )
+get_filename_component(OMNIORB4_OMNINAMES_PATH ${OMNIORB4_OMNINAMES_COMMAND} PATH)
+get_filename_component(OMNIORB4_OMNINAMES_CMD ${OMNIORB4_OMNINAMES_COMMAND} NAME)
+file( TO_NATIVE_PATH ${OMNIORB4_OMNINAMES_PATH} OMNIORB4_OMNINAMES_NATIVE_PATH )
+file( TO_NATIVE_PATH "${PROJECT_SOURCE_DIR}/test/omniORB4.cfg" OMNIORB_CONFIG_NATIVE_PATH )
+get_filename_component(OMNIORB4_OMNINAMES_LIBPATH ${OMNIORB4_LIBRARY_omniORB4_sh} PATH)
+file( TO_NATIVE_PATH ${OMNIORB4_OMNINAMES_LIBPATH} OMNIORB4_LIBRARY_NATIVE_PATH )
+
+# System dependent environment variables
+SET(TESTENV_LIBRARY_PATH "${OMNIORB4_LIBRARY_NATIVE_PATH}:${PROJECT_BINARY_DIR}/src/client/:${PROJECT_BINARY_DIR}/src/SeD/:")
+SET(TESTENV_LIBRARY_PATH "${TESTENV_LIBRARY_PATH}${PROJECT_BINARY_DIR}/src/utils/DAGDA:")
+
+if (APPLE)
+  SET(TESTENV_LIBRARY_PATH_NAME "DYLD_LIBRARY_PATH")
+else (APPLE)
+  SET(TESTENV_LIBRARY_PATH_NAME "LD_LIBRARY_PATH")
+endif (APPLE) 
+
+file( TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/src/agent" DIETAGENT_DIR_NATIVE_PATH )
+set( LOCAL_TEST_PORT "${PORTTMP}" CACHE STRING "Test port for the omniNames" )
+
+
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config_test.hpp.in 
+  ${PROJECT_BINARY_DIR}/include/config_test.hpp )
+
 dadicorba_fixture_test(automtest)
 dadicorba_test(automtest_fulllinkedlist)
 dadicorba_test(automtest_linkedList)
 dadicorba_test(automtest_sshtunnel)
+
