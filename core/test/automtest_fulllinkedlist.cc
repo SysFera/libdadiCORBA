@@ -9,26 +9,26 @@
 #include <boost/test/unit_test.hpp>
 #include "FullLinkedList.hh"
 
-BOOST_AUTO_TEST_SUITE( test_suite )
+BOOST_AUTO_TEST_SUITE(test_suite)
 
 
 using namespace std;
 
-BOOST_AUTO_TEST_CASE( getReadIter )
+BOOST_AUTO_TEST_CASE(getReadIter)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   FullLinkedList<int>::ReadIterator* it = l->getReadIterator();
   BOOST_REQUIRE(it!=NULL);
 }
 
-BOOST_AUTO_TEST_CASE( constructorSize )
+BOOST_AUTO_TEST_CASE(constructorSize)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   FullLinkedList<int>::ReadIterator* it = l->getReadIterator();
   BOOST_REQUIRE(it->length()==0);
 }
 
-BOOST_AUTO_TEST_CASE( push )
+BOOST_AUTO_TEST_CASE(push)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE( push )
   BOOST_REQUIRE(it->length()==1);
 }
 
-BOOST_AUTO_TEST_CASE( pushRef )
+BOOST_AUTO_TEST_CASE(pushRef)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE( pushRef )
   BOOST_REQUIRE(it->length()==1);
 }
 
-BOOST_AUTO_TEST_CASE( copyConst )
+BOOST_AUTO_TEST_CASE(copyConst)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( copyConst )
 }
 
 
-BOOST_AUTO_TEST_CASE( empty )
+BOOST_AUTO_TEST_CASE(empty)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( empty )
   BOOST_REQUIRE(it->length()==0);
 }
 
-BOOST_AUTO_TEST_CASE( pop )
+BOOST_AUTO_TEST_CASE(pop)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE( pop )
   BOOST_REQUIRE(it->length()==0);
 }
 
-BOOST_AUTO_TEST_CASE( append )
+BOOST_AUTO_TEST_CASE(append)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   FullLinkedList<int>* l2 = new FullLinkedList<int>();
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( append )
   BOOST_REQUIRE(it->length()==2);
 }
 
-BOOST_AUTO_TEST_CASE( getIter )
+BOOST_AUTO_TEST_CASE(getIter)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   FullLinkedList<int>::Iterator* it = l->getIterator();
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE( getIter )
 }
 
 
-BOOST_AUTO_TEST_CASE( hasCurrentT )
+BOOST_AUTO_TEST_CASE(hasCurrentT)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( hasCurrentT )
   BOOST_REQUIRE(it->hasCurrent());
 }
 
-BOOST_AUTO_TEST_CASE( hasCurrentF )
+BOOST_AUTO_TEST_CASE(hasCurrentF)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   FullLinkedList<int>::ReadIterator* it = l->getReadIterator();
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( hasCurrentF )
 }
 
 
-BOOST_AUTO_TEST_CASE( hasNextF )
+BOOST_AUTO_TEST_CASE(hasNextF)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE( hasNextF )
   BOOST_REQUIRE(it->hasNext()==false);
 }
 
-BOOST_AUTO_TEST_CASE( hasNextT )
+BOOST_AUTO_TEST_CASE(hasNextT)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE( hasNextT )
   BOOST_REQUIRE(it->hasNext());
 }
 
-BOOST_AUTO_TEST_CASE( next )
+BOOST_AUTO_TEST_CASE(next)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE( next )
 
 
 
-BOOST_AUTO_TEST_CASE( hasPrevF )
+BOOST_AUTO_TEST_CASE(hasPrevF)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -157,7 +157,7 @@ BOOST_AUTO_TEST_CASE( hasPrevF )
   BOOST_REQUIRE(it->hasPrevious()==false);
 }
 
-BOOST_AUTO_TEST_CASE( hasPrevT )
+BOOST_AUTO_TEST_CASE(hasPrevT)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE( hasPrevT )
   BOOST_REQUIRE(it->hasPrevious());
 }
 
-BOOST_AUTO_TEST_CASE( prev )
+BOOST_AUTO_TEST_CASE(prev)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;
@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE( prev )
   it->previous();
 }
 
-BOOST_AUTO_TEST_CASE( getCurrent )
+BOOST_AUTO_TEST_CASE(getCurrent)
 {
   FullLinkedList<int>* l = new FullLinkedList<int>();
   int i = 1;

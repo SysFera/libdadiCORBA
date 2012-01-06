@@ -12,7 +12,7 @@
 #include <iostream>
 #include "SSHTunnel.hh"
 
-BOOST_AUTO_TEST_SUITE( test_suite )
+BOOST_AUTO_TEST_SUITE(test_suite)
 
 
 using namespace std;
@@ -36,7 +36,7 @@ static const std::string rPortts = "3";
 static const std::string lPortfs = "4";
 
 
-BOOST_AUTO_TEST_CASE( gettersSSHConnection )
+BOOST_AUTO_TEST_CASE(gettersSSHConnection)
 {
   SSHConnection conn = SSHConnection(sshHost, sshPort,
                                      login, keyPath,
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( gettersSSHConnection )
   BOOST_REQUIRE(conn.getSshPath()==sshPath);
 }
 
-BOOST_AUTO_TEST_CASE( settersSSHConnection )
+BOOST_AUTO_TEST_CASE(settersSSHConnection)
 {
   SSHConnection conn = SSHConnection("", "",
                                      "", "",
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE( settersSSHConnection )
 
 
 
-BOOST_AUTO_TEST_CASE( settersSSHOpt )
+BOOST_AUTO_TEST_CASE(settersSSHOpt)
 {
   SSHConnection conn = SSHConnection("", "",
                                      "", "",
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( settersSSHOpt )
 }
 
 
-BOOST_AUTO_TEST_CASE( gettersSSHTunnel )
+BOOST_AUTO_TEST_CASE(gettersSSHTunnel)
 {
   SSHTunnel conn = SSHTunnel(sshHost, rHost, lPortfs, rPortts, rPortfs, lPortts, false, false, sshPath, sshPort, login, keyPath);
 
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( gettersSSHTunnel )
   BOOST_REQUIRE(conn.getRemotePortFrom()==rPortf);
 }
 
-BOOST_AUTO_TEST_CASE( settersSSHTunnel )
+BOOST_AUTO_TEST_CASE(settersSSHTunnel)
 {
   SSHTunnel conn = SSHTunnel("", "", "", "", "", "", false, false, "", "", "", "");
 

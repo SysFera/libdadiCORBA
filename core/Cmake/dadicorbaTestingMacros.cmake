@@ -41,7 +41,6 @@ macro(dadicorba_fixture_test NAME)
       #entry point
       ${PROJECT_SOURCE_DIR}/test/TestRunner.cc)
 
-message("path: ${PROJECT_SOURCE_DIR}/utils")
     include_directories(${PROJECT_SOURCE_DIR}/test
       ${PROJECT_SOURCE_DIR}/utils
       ${PROJECT_SOURCE_DIR}/test/third-party
@@ -66,7 +65,6 @@ message("path: ${PROJECT_SOURCE_DIR}/utils")
     ## first get test suite name (should be the same as ${TEST_NAME} !!)
     string(REGEX MATCHALL "BOOST_FIXTURE_TEST_SUITE\\([a-zA-Z0-9_]*, [a-zA-Z0-9_]*\\)"
       res_int ${content})
-message ("int: ${res_int}")
     string(REGEX REPLACE  
       "BOOST_FIXTURE_TEST_SUITE\\(([a-zA-Z0-9_]*), [a-zA-Z0-9_]*\\)" 
       "\\1/"
@@ -152,12 +150,10 @@ macro(dadicorba_test NAME)
     # TODO: fix this crazyness as soon as CMake to provides a proper way to
     # extract data with regex
     ## first get test suite name (should be the same as ${TEST_NAME} !!)
-    string(REGEX MATCHALL "BOOST_AUTO_TEST_SUITE\\( [a-zA-Z0-9_]* \\)"
+    string(REGEX MATCHALL "BOOST_AUTO_TEST_SUITE\\([a-zA-Z0-9_]*\\)"
       res_int ${content})
-    message("res: ${res_int}")
-    message("res: ${NAME}")
 
-    string(REGEX REPLACE  "BOOST_AUTO_TEST_SUITE\\(( [a-zA-Z0-9_]* )\\)" "\\1/"
+    string(REGEX REPLACE  "BOOST_AUTO_TEST_SUITE\\(([a-zA-Z0-9_]*)\\)" "\\1/"
       testsuite ${res_int})
 
 
@@ -166,13 +162,13 @@ macro(dadicorba_test NAME)
     # request, this will fail
     # CMake regex engine seems to have some failures ...
     string(REGEX REPLACE
-      "(//|/*) BOOST_AUTO_TEST_CASE\\( [a-zA-Z0-9_]* \\)" "\\1"
+      "(//|/*) BOOST_AUTO_TEST_CASE\\([a-zA-Z0-9_]*\\)" "\\1"
       content ${content})
     ## then test case names
-    string(REGEX MATCHALL "BOOST_AUTO_TEST_CASE\\( [a-zA-Z0-9_]* \\)"
+    string(REGEX MATCHALL "BOOST_AUTO_TEST_CASE\\([a-zA-Z0-9_]*\\)"
       res_int ${content})
     # tricks: i add a ";" at the end, so that i can get a proper list
-    string(REGEX REPLACE "BOOST_AUTO_TEST_CASE\\(( [a-zA-Z0-9_]* )\\)" "\\1;"
+    string(REGEX REPLACE "BOOST_AUTO_TEST_CASE\\(([a-zA-Z0-9_]*)\\)" "\\1;"
       tests ${res_int})
 
     foreach(loop_var ${tests})

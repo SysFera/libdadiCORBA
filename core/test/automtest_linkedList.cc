@@ -9,18 +9,18 @@
 #include "LinkedList.hh"
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_SUITE( test_suite )
+BOOST_AUTO_TEST_SUITE(test_suite)
 
 
 using namespace std;
 
-BOOST_AUTO_TEST_CASE( constructorSize )
+BOOST_AUTO_TEST_CASE(constructorSize)
 {
   LinkedList<int> l = LinkedList<int>();
   BOOST_REQUIRE(l.length()==0);
 }
 
-BOOST_AUTO_TEST_CASE( addSize )
+BOOST_AUTO_TEST_CASE(addSize)
 {
   LinkedList<int> l = LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( addSize )
   l.emptyIt();
 }
 
-BOOST_AUTO_TEST_CASE( copyConst )
+BOOST_AUTO_TEST_CASE(copyConst)
 {
   LinkedList<int> l = LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( copyConst )
 }
 
 
-BOOST_AUTO_TEST_CASE( empty )
+BOOST_AUTO_TEST_CASE(empty)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( empty )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( pop )
+BOOST_AUTO_TEST_CASE(pop)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( pop )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( append )
+BOOST_AUTO_TEST_CASE(append)
 {
   LinkedList<int>* l = new LinkedList<int>();
   LinkedList<int>* l2 = new LinkedList<int>();
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( append )
   delete l2;
 }
 
-BOOST_AUTO_TEST_CASE( getIter )
+BOOST_AUTO_TEST_CASE(getIter)
 {
   LinkedList<int>* l = new LinkedList<int>();
   LinkedList<int>::Iterator* it = l->getIterator();
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE( getIter )
 }
 
 
-BOOST_AUTO_TEST_CASE( hasCurrentT )
+BOOST_AUTO_TEST_CASE(hasCurrentT)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE( hasCurrentT )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( hasCurrentF )
+BOOST_AUTO_TEST_CASE(hasCurrentF)
 {
   LinkedList<int>* l = new LinkedList<int>();
   LinkedList<int>::Iterator* it = l->getIterator();
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( hasCurrentF )
 }
 
 
-BOOST_AUTO_TEST_CASE( hasNextF )
+BOOST_AUTO_TEST_CASE(hasNextF)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE( hasNextF )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( hasNextT )
+BOOST_AUTO_TEST_CASE(hasNextT)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -145,7 +145,7 @@ BOOST_AUTO_TEST_CASE( hasNextT )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( next )
+BOOST_AUTO_TEST_CASE(next)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( next )
 
 
 
-BOOST_AUTO_TEST_CASE( hasPrevF )
+BOOST_AUTO_TEST_CASE(hasPrevF)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE( hasPrevF )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( hasPrevT )
+BOOST_AUTO_TEST_CASE(hasPrevT)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE( hasPrevT )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( prev )
+BOOST_AUTO_TEST_CASE(prev)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE( prev )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( getCurrent )
+BOOST_AUTO_TEST_CASE(getCurrent)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE( getCurrent )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( setCurrent )
+BOOST_AUTO_TEST_CASE(setCurrent)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
@@ -239,7 +239,7 @@ BOOST_AUTO_TEST_CASE( setCurrent )
   delete l;
 }
 
-BOOST_AUTO_TEST_CASE( delCurrent )
+BOOST_AUTO_TEST_CASE(delCurrent)
 {
   LinkedList<int>* l = new LinkedList<int>();
   int* i = (int *)malloc (sizeof (int));
