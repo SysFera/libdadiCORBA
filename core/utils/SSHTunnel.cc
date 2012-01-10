@@ -38,11 +38,11 @@
 
 const unsigned int DEFAULT_WAITING_TIME = 10;
 
-std::string SSHTunnel::mcmdFormat = "%p -l %u %s -p %P -N";
-std::string SSHTunnel::mcmdFormatDefault = "%p %s -N";
-std::string SSHTunnel::mlocalFormat = "-L%l:%h:%R";
-std::string SSHTunnel::mremoteFormat = "-R%r:%h:%L";
-std::string SSHTunnel::mkeyFormat = "-i %k";
+std::string SSHTunnel::mcmdFormat = std::string("%p -l %u %s -p %P -N");
+std::string SSHTunnel::mcmdFormatDefault = std::string("%p %s -N");
+std::string SSHTunnel::mlocalFormat = std::string("-L%l:%h:%R");
+std::string SSHTunnel::mremoteFormat = std::string("-R%r:%h:%L");
+std::string SSHTunnel::mkeyFormat = std::string("-i %k");
 
 /* Return the current session login. */
 std::string
