@@ -54,14 +54,12 @@ public:
   Dagda_ptr
   getDagda(const char* name);
 
-#ifdef HAVE_WORKFLOW
   CltMan_ptr
   getCltMan(const char* name);
   MaDag_ptr
   getMaDag(const char* name);
   WfLogService_ptr
   getWfLogService(const char* name);
-#endif  // WORKFLOW
 
   /* Common methods implementations. */
   ::CORBA::Long
@@ -186,7 +184,7 @@ public:
                ::CORBA::Long reqID,
                ::CORBA::Long result,
                const char* objName);
-#ifdef HAVE_WORKFLOW
+
   /* CltManFwdr implementation. */
   ::CORBA::Long
   execNodeOnSed(const char* node_id,
@@ -203,7 +201,6 @@ public:
   release(const char* dag_id,
           ::CORBA::Boolean successful,
           const char* objName);
-#endif //HAVE_WORKFLOW
 
   /* Dagda implementation. */
   ::CORBA::Boolean
@@ -381,7 +378,6 @@ public:
   unsubscribeParent(const char* objName);
 
 
-#ifdef HAVE_WORKFLOW
   /* MaDagFwdr implementation. */
   ::CORBA::Long
   processDagWf(const ::corba_wf_desc_t& dag_desc,
@@ -407,7 +403,6 @@ public:
 
   void
   setPlatformType(::MaDag::pfmType_t pfmType, const char* objName);
-#endif
 
   /* MasterAgentFwdr implementation. */
   corba_response_t*
@@ -433,7 +428,6 @@ public:
   SeqCorbaProfileDesc_t*
   getProfiles(::CORBA::Long& length, const char* objName);
 
-#ifdef HAVE_WORKFLOW
   wf_response_t*
   submit_pb_set(const ::corba_pb_desc_seq_t& seq_pb, const char* objName);
 
@@ -445,7 +439,6 @@ public:
                 ::CORBA::Long& seqReqId,
                 const char* objName);
 
-#endif
   SeqString*
   searchData(const char* request, const char* objName);
 
@@ -453,7 +446,6 @@ public:
   insertData(const char* key,
              const ::SeqString& values,
              const char* objName);
-#ifdef HAVE_MULTI_MA
 
   ::CORBA::Boolean
   handShake(const char* masterAgentName,
@@ -498,7 +490,6 @@ public:
   serviceFound(::CORBA::Long reqId,
                const ::corba_response_t& decision,
                const char* objName);
-#endif
   /* SeD implementation. */
 
   ::CORBA::Long
@@ -526,7 +517,6 @@ public:
   SeqCorbaProfileDesc_t*
   getSeDProfiles(::CORBA::Long& length, const char* objName);
 
-#ifdef HAVE_WORKFLOW
   /* WfLogServiceFwdr implementation. */
   void
   initWorkflow(const char* wfId, const char* name,
@@ -598,7 +588,6 @@ public:
   void
   nodeIsFailed(const char* dagNodeId, const char* wfId, const char* objName);
 
-#endif
   /* Utility fonctions to extract name & context from context/name. */
   static std::string
   getName(const std::string& namectxt);

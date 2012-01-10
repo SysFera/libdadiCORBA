@@ -97,6 +97,9 @@ SSHConnection::userKey() {
   return "";
 } // userKey
 
+SSHConnection::~SSHConnection() {
+}
+
 SSHConnection::SSHConnection() {
   setSshPath("/usr/bin/ssh");
 // Init logger
@@ -278,6 +281,7 @@ SSHTunnel::makeCmd() {
   return result;
 } // makeCmd
 
+
 SSHTunnel::SSHTunnel(): SSHConnection() {
   this->mcreateTo = false;
   this->mcreateFrom = false;
@@ -358,9 +362,9 @@ SSHTunnel::open() {
   }
   if (mpid == 0) {
     if (execvp(argv[0], argv)) {
-      mlogger->log(dadi::Message("SSHTunnel",
-                                 "Error executing command " + command,
-                                 dadi::Message::PRIO_DEBUG));
+//      mlogger->log(dadi::Message("SSHTunnel",
+//                                 "Error executing command " + command,
+//                                 dadi::Message::PRIO_DEBUG));
       throw std::runtime_error("Error executing"+command);
     }
   }
@@ -371,15 +375,15 @@ SSHTunnel::open() {
   std::ostringstream intval;
   intval << this->mwaitingTime;
 
-  mlogger->log(dadi::Message("SSHTunnel",
-                             "Sleep " + intval.str()
-                             + " s. waiting for tunnel\n",
-                             dadi::Message::PRIO_DEBUG));
+//  mlogger->log(dadi::Message("SSHTunnel",
+//                             "Sleep " + intval.str()
+//                             + " s. waiting for tunnel\n",
+//                             dadi::Message::PRIO_DEBUG));
   sleep(this->mwaitingTime);
 
-  mlogger->log(dadi::Message("SSHTunnel",
-                             "Wake up!\n",
-                             dadi::Message::PRIO_DEBUG));
+//  mlogger->log(dadi::Message("SSHTunnel",
+//                             "Wake up!\n",
+//                             dadi::Message::PRIO_DEBUG));
 } // open
 
 void
@@ -559,9 +563,9 @@ SSHCopy::getFile() const {
   if (mpid == 0) {
     fclose(stdout);
     if (execvp(argv[0], argv)) {
-      mlogger->log(dadi::Message("SSHTunnel",
-                                 "Error executing command " + command,
-                                 dadi::Message::PRIO_DEBUG));
+//      mlogger->log(dadi::Message("SSHTunnel",
+//                                 "Error executing command " + command,
+//                                 dadi::Message::PRIO_DEBUG));
     }
   }
 
@@ -617,9 +621,9 @@ SSHCopy::putFile() const {
   if (mpid == 0) {
     fclose(stdout);
     if (execvp(argv[0], argv)) {
-      mlogger->log(dadi::Message("SSHTunnel",
-                                 "Error executing command " + command,
-                                 dadi::Message::PRIO_DEBUG));
+//      mlogger->log(dadi::Message("SSHTunnel",
+//                                 "Error executing command " + command,
+//                                 dadi::Message::PRIO_DEBUG));
     }
   }
 

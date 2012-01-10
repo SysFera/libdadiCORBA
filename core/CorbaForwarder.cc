@@ -35,11 +35,9 @@
 
 #include "dagda/DagdaImpl.hh"
 
-#ifdef HAVE_WORKFLOW
-#include "CltWfMgr.hh"
-#include "MaDag_impl.hh"
-#include "WfLogServiceImpl.hh"
-#endif
+#include "diet/CltWfMgrImpl.hh"
+#include "diet/MaDagImpl.hh"
+#include "diet/WfLogServiceImpl.hh"
 
 #include "dadi/Logging/ConsoleChannel.hh"
 #include "dadi/Logging/Logger.hh"
@@ -164,7 +162,6 @@ CorbaForwarder::ping(const char* objName) {
                                                         this->mname);
     return cb->ping();
   }
-#ifdef HAVE_WORKFLOW
 // Ping workflow
   if (ctxt == std::string(WFMGRCTXT)) {
     CltMan_var clt =
@@ -178,7 +175,6 @@ CorbaForwarder::ping(const char* objName) {
       ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
     return madag->ping();
   }
-#endif
 // Ping sed
   if (ctxt== std::string(SEDCTXT)) {
     SeD_var sed = ORBMgr::getMgr()->resolve<SeD, SeD_var>(SEDCTXT, name,

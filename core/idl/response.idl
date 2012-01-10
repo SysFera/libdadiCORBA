@@ -35,7 +35,6 @@ struct corba_server_t {
    * @brief The port on the machine
    */
   long   port;
-#ifdef HAVE_ALT_BATCH
   // To add the following, SeDStructures.idl which contains shared structures
   // between SeD and DIET_server.h has to be created
   /**
@@ -47,7 +46,6 @@ struct corba_server_t {
    * @brief Make client know he has to submit parallel or non-parallel
    */
   long parallel_flag ;
-#endif
 };
 
 
@@ -133,7 +131,6 @@ struct corba_response_t {
   SeqServerEstimation_t servers;
 };
 
-#ifdef HAVE_WORKFLOW
 /*************************************************************************/
 /* for workflow support                                                  */
 /*************************************************************************/
@@ -221,7 +218,5 @@ struct wf_response_t {
    */
   wfn_seq_resp_t wfn_seq_resp;
 };
-
-#endif // HAVE_WORKFLOW
 
 #endif // _RESPONSE_IDL_

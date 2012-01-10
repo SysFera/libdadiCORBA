@@ -30,7 +30,7 @@ CorbaForwarder::processDagWf(const ::corba_wf_desc_t& dag_desc,
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->processDagWf(dag_desc, cltMgrRef, wfReqId);
   }
 
@@ -52,7 +52,7 @@ CorbaForwarder::processMultiDagWf(const ::corba_wf_desc_t& dag_desc,
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->processMultiDagWf(dag_desc, cltMgrRef, wfReqId, release);
   }
 
@@ -68,7 +68,7 @@ CorbaForwarder::getWfReqId(const char* objName) {
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->getWfReqId();
   }
 
@@ -84,7 +84,7 @@ CorbaForwarder::releaseMultiDag(::CORBA::Long wfReqId, const char* objName) {
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->releaseMultiDag(wfReqId);
 }
 
@@ -100,7 +100,7 @@ CorbaForwarder::cancelDag(::CORBA::Long dagId, const char* objName) {
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->cancelDag(dagId);
 }
 
@@ -117,6 +117,6 @@ CorbaForwarder::setPlatformType(::MaDag::pfmType_t pfmType,
   name = getName(objString);
 
   MaDag_var agent =
-    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<MaDag, MaDag_var>(MADAGCTXT, name, this->mname);
   return agent->setPlatformType(pfmType);
 }

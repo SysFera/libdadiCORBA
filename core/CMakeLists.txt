@@ -129,6 +129,9 @@ add_library(CorbaCommon SHARED
   diet/Agent.cc
   diet/SeD.cc
   diet/Callback.cc
+  diet/WfLogServiceImpl.cc
+  diet/MaDagImpl.cc
+  diet/CltWfMgrImpl.cc
 )
 
 # CorbaCommon library depends on CORBA files
@@ -157,25 +160,11 @@ set(Forwarder_SOURCES
   diet/MasterAgent.cc
   diet/SeD.cc
   log/LogForwarder.cc
-)
-
-
-set(Forwarder_SOURCES
-  ${Forwarder_SOURCES}
   dagda/Dagda.cc
+  diet/CltMan.cc
+  diet/MaDag.cc
+  diet/WfLogService.cc
   )
-if (DIET_USE_WORKFLOW)
-  set(Forwarder_SOURCES
-    ${Forwarder_SOURCES}
-    diet/CltMan.cc
-    diet/MaDag.cc
-    diet/WfLogService.cc
-  )
-  include_directories(
-    ${XERCES_INCLUDE_DIR}
-    ${XQILLA_INCLUDE_DIR}
-  )
-endif (DIET_USE_WORKFLOW)
 
 add_library(LibForwarder SHARED
   ${Forwarder_SOURCES}
@@ -201,10 +190,8 @@ set(Forwarder_Libs
 target_link_libraries(corbaForwarder
   ${Forwarder_Libs}
   pthread
-  dadiCORBA
   ${Boost_LIBRARIES}
   ${DADI_LIBRARIES}
-  ${OMNIORB4_LIBRARIES}
 )
 
 ## ------------- New : For scheduler load support. ---------------

@@ -32,7 +32,7 @@ CorbaForwarder::execNodeOnSed(const char* node_id,
   name = getName(objString);
 
   CltMan_var clt =
-    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->mname);
   return clt->execNodeOnSed(node_id, dag_id, seDName, reqID, ev);
   }
 
@@ -50,7 +50,7 @@ CorbaForwarder::execNode(const char* node_id,
   name = getName(objString);
 
   CltMan_var clt =
-    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->mname);
   return clt->execNode(node_id, dag_id);
   }
 
@@ -68,6 +68,6 @@ CorbaForwarder::release(const char* dag_id,
   name = getName(objString);
 
   CltMan_var clt =
-    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->name);
+    ORBMgr::getMgr()->resolve<CltMan, CltMan_var>(WFMGRCTXT, name, this->mname);
   return clt->release(dag_id, successful);
 }

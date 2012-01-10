@@ -28,6 +28,10 @@ public:
  * @brief Constructor
  */
   SSHConnection();
+/**
+ * @brief Destructor
+ */
+  ~SSHConnection();
 
 /**
  * @brief Constructor

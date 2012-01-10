@@ -28,11 +28,9 @@
 
 #include "dagda/DagdaImpl.hh"
 
-#ifdef HAVE_WORKFLOW
-#include "CltWfMgr.hh"
-#include "MaDag_impl.hh"
+#include "CltWfMgrImpl.hh"
+#include "MaDagImpl.hh"
 #include "WfLogServiceImpl.hh"
-#endif
 
 #include <stdexcept>
 #include <string>
@@ -213,7 +211,6 @@ CorbaForwarder::getSeD(const char* name) {
 //  return Dagda::_duplicate(dagda->_this());
 //}
 
-#ifdef HAVE_WORKFLOW
 CltMan_ptr
 CorbaForwarder::getCltMan(const char* name) {
   std::string nm(name);
@@ -299,7 +296,6 @@ CorbaForwarder::getWfLogService(const char* name) {
   return WfLogService::_duplicate(wfl->_this());
 }
 
-#endif
 
 //::CORBA::Long
 //CorbaForwarder::disconnect(const char* objName) {

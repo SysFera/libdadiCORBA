@@ -375,12 +375,10 @@ struct corba_profile_desc_t {
    * @brief The aggregator for the service
    */
   corba_aggregator_desc_t aggregator;
-#if HAVE_ALT_BATCH
   /**
    * @brief TODO
    */
   long parallel_flag ;
-#endif
 };
 /**
  * @brief A sequence of profile descriptor
@@ -435,7 +433,6 @@ struct corba_pb_desc_t {
    * @brief The description of the parameters
    */
   SeqCorbaDataDesc_t param_desc;
-#if HAVE_ALT_BATCH
   /**
    * @brief TODO
    */
@@ -452,7 +449,6 @@ struct corba_pb_desc_t {
    * @brief Wall time for the batch
    */
   long   walltime ;
-#endif
 };
 
 /****************************************************************************/
@@ -526,6 +522,16 @@ struct corba_estimation_t {
   SeqEstValue_t estValues;
 };
 
+/**
+ * @brief The workflow description structure. 
+ */
+struct corba_wf_desc_t {
+  /**
+   * @brief abstract workflow
+   */
+  string abstract_wf;
+};
+
 
 /****************************************************************************/
 /* PROFILE (for problem solve)                                              */
@@ -559,7 +565,6 @@ struct corba_profile_t {
    * @brief The estimation vector
    */
   corba_estimation_t estim;
-#if HAVE_ALT_BATCH
   /**
    * @brief TODO
    */
@@ -576,7 +581,6 @@ struct corba_profile_t {
    * @brief Wall time 
    */
   long   walltime ;
-#endif
 };
 
 #endif // _COMMON_TYPES_IDL_

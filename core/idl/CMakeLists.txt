@@ -29,9 +29,7 @@ if (DIET_USE_ALT_BATCH)
    set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_ALT_BATCH")
 endif (DIET_USE_ALT_BATCH)
 
-if (DIET_USE_WORKFLOW)
-   set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_WORKFLOW")
-endif (DIET_USE_WORKFLOW)
+#set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_WORKFLOW")
 
 if (DIET_WITH_MULTI_MA)
    set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_MULTI_MA")
@@ -79,20 +77,13 @@ set(IDL_SOURCES
   LogTypes
   LogComponentFwdr
   LogToolFwdr
+  MaDag
+  CltMan
+  CltManFwdr
+  MaDagFwdr
+  WfLogService
+  WfLogServiceFwdr
   )
-
-#    - Workflow's IDLs
-if (DIET_USE_WORKFLOW)
-  set(IDL_SOURCES
-    MaDag
-    CltMan
-    CltManFwdr
-    MaDagFwdr
-    WfLogService
-    WfLogServiceFwdr
-    ${IDL_SOURCES}
-  )
-endif (DIET_USE_WORKFLOW)
 
 
 # A clean way to call omniidl
@@ -160,16 +151,14 @@ set(IDL_INSTALL_SOURCES
   LogToolFwdr.idl
   )
 
-if (DIET_USE_WORKFLOW)
-  set(IDL_INSTALL_SOURCES
-    MaDag.idl
-    CltMan.idl
-    CltManFwdr.idl
-    MaDagFwdr.idl
-    WfLogService.idl
-    WfLogServiceFwdr.idl
-    ${IDL_INSTALL_SOURCES}
+set(IDL_INSTALL_SOURCES
+  MaDag.idl
+  CltMan.idl
+  CltManFwdr.idl
+  MaDagFwdr.idl
+  WfLogService.idl
+  WfLogServiceFwdr.idl
+  ${IDL_INSTALL_SOURCES}
   )
-endif (DIET_USE_WORKFLOW)
 
 install(FILES ${IDL_INSTALL_SOURCES} DESTINATION ${INC_INSTALL_DIR}/idl)
