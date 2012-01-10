@@ -105,8 +105,19 @@ include_directories(
 add_subdirectory(idl)
 
 
-# Compile CorbaCommon static library
-add_library(CorbaCommon SHARED
+
+set(Forwarder_SOURCES
+  utils/SSHTunnel.cc
+  diet/Agent.cc
+  diet/Callback.cc
+  diet/MasterAgent.cc
+  diet/SeD.cc
+  log/LogForwarder.cc
+  dagda/Dagda.cc
+  diet/CltMan.cc
+  diet/MaDag.cc
+  diet/WfLogService.cc
+
   ORBMgr.cc
   CorbaForwarder.cc
   diet/SeDImpl.cc
@@ -132,38 +143,6 @@ add_library(CorbaCommon SHARED
   diet/WfLogServiceImpl.cc
   diet/MaDagImpl.cc
   diet/CltWfMgrImpl.cc
-)
-
-# CorbaCommon library depends on CORBA files
-add_dependencies(CorbaCommon CORBAFiles)
-
-
-# Link CorbaCommon to DIET_CORBA, DIET_Utils and OmniORB
-target_link_libraries(CorbaCommon
-dadiCORBA
-${DADI_LIBRARIES}
-${Boost_LIBRARIES}
-${OMNIORB4_LIBRARIES_sh}
-${OMNIORB4_LIBRARIES}
-)
-
-
-if (DIET_USE_ALT_BATCH)
-  target_link_libraries(CorbaCommon UtilsSeDBatch)
-endif (DIET_USE_ALT_BATCH)
-
-
-set(Forwarder_SOURCES
-  utils/SSHTunnel.cc
-  diet/Agent.cc
-  diet/Callback.cc
-  diet/MasterAgent.cc
-  diet/SeD.cc
-  log/LogForwarder.cc
-  dagda/Dagda.cc
-  diet/CltMan.cc
-  diet/MaDag.cc
-  diet/WfLogService.cc
   )
 
 add_library(LibForwarder SHARED
@@ -171,24 +150,16 @@ add_library(LibForwarder SHARED
 )
 add_executable(corbaForwarder
   Fwdr.cc
-  ${Forwarder_SOURCES}
 )
 
 # dietForwarder & LibForwarder depend on CORBA files.
 add_dependencies(corbaForwarder CORBAFiles)
 add_dependencies(LibForwarder CORBAFiles)
 
-set(Forwarder_Libs
-  ${Forwarder_Libs}
-  dadiCORBA
-  CorbaCommon
-  ${OMNIORB4_LIBRARIES}
-  )
-
-
-
 target_link_libraries(corbaForwarder
-  ${Forwarder_Libs}
+  ${OMNIORB4_LIBRARIES_sh}
+  LibForwarder
+  dadiCORBA
   pthread
   ${Boost_LIBRARIES}
   ${DADI_LIBRARIES}
@@ -200,7 +171,6 @@ target_link_libraries(corbaForwarder
   
 install(TARGETS corbaForwarder DESTINATION ${BIN_INSTALL_DIR})
 install(TARGETS LibForwarder DESTINATION ${LIB_INSTALL_DIR})
-install(TARGETS CorbaCommon DESTINATION ${LIB_INSTALL_DIR})
 
 
 install(FILES ORBMgr.hh DESTINATION ${INC_INSTALL_DIR})

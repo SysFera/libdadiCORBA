@@ -51,9 +51,8 @@ macro(dadicorba_fixture_test NAME)
     target_link_libraries(${NAME}
       dadiCORBA
       LibForwarder
-      CorbaCommon
       ${Boost_LIBRARIES}
-      ${OMNIORB4_LIBRARIES}
+      ${OMNIORB4_LIBRARIES_sh}
       pthread
       ${DADI_LIBRARIES}
       )
@@ -136,11 +135,10 @@ macro(dadicorba_test NAME)
       )
     # link libraries
     target_link_libraries(${NAME}
-      dadiCORBA
-      CorbaCommon
+#      dadiCORBA
+#      LibForwarder
       ${Boost_LIBRARIES}
-      ${OMNIORB4_LIBRARIES}
-      LibForwarder
+      ${OMNIORB4_LIBRARIES_sh}
       pthread
       ${DADI_LIBRARIES}
       )
