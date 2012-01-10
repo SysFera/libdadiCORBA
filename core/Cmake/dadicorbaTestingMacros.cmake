@@ -135,8 +135,8 @@ macro(dadicorba_test NAME)
       )
     # link libraries
     target_link_libraries(${NAME}
-#      dadiCORBA
-#      LibForwarder
+      dadiCORBA
+      LibForwarder
       ${Boost_LIBRARIES}
       ${OMNIORB4_LIBRARIES_sh}
       pthread
