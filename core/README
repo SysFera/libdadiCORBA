@@ -14,6 +14,7 @@ please refer to http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html.
 II) Requirements
 The libdadiCORBA project needs the following dependencies:
 * boost v1.47 or later (http://www.boost.org/users/history/version_1_47_0.html)
+ - WARNING: The boost tests fail with boost 1.47, to execute the automatic tests, please use boost 1.48.0 or later
 * libdadi v0.5 (see https://github.com/SysFera/libdadi) or later
 * Doxygen v1.7 or later (http://www.stack.nl/~dimitri/doxygen/)
 * (c)cmake version 2.8.6 or later (http://cmake.org/cmake/resources/software.html)
