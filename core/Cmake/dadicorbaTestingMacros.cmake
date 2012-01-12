@@ -8,7 +8,7 @@ macro(dadicorba_test_setup)
   enable_testing()
 
   # add a test-xml targets that allows us to generate Boost.Test xml reports
-  add_custom_target( dadicorba_test-xml )
+  add_custom_target( test-xml )
 
   file( MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/reports )
   set( REPORT_OUTPUT_PATH ${PROJECT_BINARY_DIR}/reports )
