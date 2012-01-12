@@ -101,7 +101,7 @@ macro(dadicorba_fixture_test NAME)
       -DTEST_PROG=${NAME}
       -DBIN_PATH=${EXECUTABLE_OUTPUT_PATH}
       -DREPORT_PATH=${REPORT_OUTPUT_PATH}
-      -P ${PROJECT_SOURCE_DIR}/cmake/runtest.cmake)
+      -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake)
       add_dependencies(test-xml ${NAME}-xml)
     endif()
   endif()
