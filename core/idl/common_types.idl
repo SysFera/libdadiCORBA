@@ -322,6 +322,10 @@ struct corba_agg_default_t {
   octet dummy;
 };
 
+struct corba_agg_user_t {
+  octet dummy;
+};
+
 /**
  * @brief server estimate aggregation priority
  */
@@ -347,6 +351,11 @@ union corba_agg_specific_t switch (long) {
     * @brief Priority aggregator
     */
    corba_agg_priority_t agg_priority;
+   /**
+    * @brief New : The aggregator for user scheduler support. 
+    */
+ case 2:
+   corba_agg_user_t agg_user;
 };
 
 /**

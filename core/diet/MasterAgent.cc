@@ -167,7 +167,6 @@ CorbaForwarder::getProfiles(::CORBA::Long& length, const char* objName) {
   return agent->getProfiles(length);
 }
 
-#ifdef HAVE_WORKFLOW
 wf_response_t*
 CorbaForwarder::submit_pb_set(const ::corba_pb_desc_seq_t& seq_pb,
                              const char* objName) {
@@ -210,7 +209,6 @@ CorbaForwarder::submit_pb_seq(const ::corba_pb_desc_seq_t& pb_seq,
                                                             this->mname);
   return agent->submit_pb_seq(pb_seq, reqCount, complete, firstReqId, seqReqId);
 }
-#endif
 
 ::CORBA::Long
 CorbaForwarder::insertData(const char* key,
@@ -232,7 +230,6 @@ CorbaForwarder::insertData(const char* key,
   return agent->insertData(key, values);
 }
 
-#ifdef HAVE_MULTI_MA
 ::CORBA::Boolean
 CorbaForwarder::handShake(const char* masterAgentName,
                          const char* myName,
@@ -412,4 +409,3 @@ CorbaForwarder::serviceFound(::CORBA::Long reqId,
                                                             this->mname);
   return agent->serviceFound(reqId, decision);
 }
-#endif

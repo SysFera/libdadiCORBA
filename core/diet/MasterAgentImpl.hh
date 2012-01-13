@@ -20,12 +20,6 @@
 #include "AgentImpl.hh"
 #include "utils/LinkedList.hh"
 
-#if HAVE_MULTI_MA
-#include "BindService.hh"
-#include "KeyString.hh"
-#include "ts_container/ts_set.hh"
-class FloodRequestsList;
-#endif
 
 #include "Forwarder.hh"
 #include "MasterAgentFwdr.hh"
@@ -96,7 +90,6 @@ public:
   virtual SeqCorbaProfileDesc_t*
   getProfiles(CORBA::Long& length);
 
-#ifdef HAVE_MULTI_MA
   virtual CORBA::Boolean
   handShake(const char* name, const char* myName);
 
@@ -125,8 +118,6 @@ public:
 
   virtual void
   serviceFound(CORBA::Long reqId, const corba_response_t& decision);
-#endif
-#ifdef HAVE_WORKFLOW
   virtual wf_response_t *
   submit_pb_set(const corba_pb_desc_seq_t& seq_pb);
 
@@ -137,7 +128,6 @@ public:
                 CORBA::Long& firstReqId,
                 CORBA::Long& seqReqId);
 
-#endif
   virtual CORBA::Long
   childRemoveService(CORBA::ULong childID, const corba_profile_desc_t& profile);
 

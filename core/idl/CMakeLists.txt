@@ -23,17 +23,6 @@ include_directories(
  
 set(CORBA_IDL_FLAGS "-bcxx -Wba -Wbtp")
 
-#if (CORBA_DIET)
-# Flags for DIET modules
-if (DIET_USE_ALT_BATCH)
-   set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_ALT_BATCH")
-endif (DIET_USE_ALT_BATCH)
-
-#set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_WORKFLOW")
-
-if (DIET_WITH_MULTI_MA)
-   set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DHAVE_MULTI_MA")
-endif (DIET_WITH_MULTI_MA)
 
 if (DIET_USE_USERSCHED)
   set(CORBA_IDL_FLAGS "${DIET_IDL_FLAGS} -DUSERSCHED")
@@ -46,7 +35,6 @@ if (DIET_USE_USERSCHED)
     DESTINATION include/scheduler
   )
 endif (DIET_USE_USERSCHED)
-#endif (CORBA_DIET)
 
 # Transform DIET_IDL_FLAGS from a string to a string list containing
 # the arguments for omniidl

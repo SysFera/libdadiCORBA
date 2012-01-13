@@ -21,19 +21,14 @@
 #include "dadi/Logging/Message.hh"
 
 
-#ifdef HAVE_MULTI_MA
 #include "ORBMgr.hh"
-#endif
 
 
-#ifdef HAVE_WORKFLOW
 /*
   Workflow utilities header
 */
 
 omni_mutex reqCount_mutex;
-
-#endif /* HAVE_WORKFLOW */
 
 //#define aff_val(x)
 #define aff_val(x) cout << #x << " = " << x << "\n";
@@ -98,7 +93,6 @@ MasterAgentFwdrImpl::getProfiles(CORBA::Long& length) {
   return mforwarder->getProfiles(length, mobjName);
 }
 
-#ifdef HAVE_MULTI_MA
 CORBA::Boolean
 MasterAgentFwdrImpl::handShake(const char* name,
                                const char* myName) {
@@ -152,8 +146,6 @@ MasterAgentFwdrImpl::serviceFound(CORBA::Long reqId,
                                   const corba_response_t& decision) {
   mforwarder->serviceFound(reqId, decision, mobjName);
 }
-#endif /* HAVE_MULTI_MA */
-#ifdef HAVE_WORKFLOW
 wf_response_t*
 MasterAgentFwdrImpl::submit_pb_set(const corba_pb_desc_seq_t& seq_pb) {
   return mforwarder->submit_pb_set(seq_pb, mobjName);
@@ -168,7 +160,6 @@ MasterAgentFwdrImpl::submit_pb_seq(const corba_pb_desc_seq_t& pb_seq,
   return mforwarder->submit_pb_seq(pb_seq, reqCount, complete,
                                   firstReqId, seqReqId, mobjName);
 }
-#endif /* HAVE_WORKFLOW */
 
 SeqString* MasterAgentFwdrImpl::searchData(const char* request) {
   return mforwarder->searchData(request, mobjName);

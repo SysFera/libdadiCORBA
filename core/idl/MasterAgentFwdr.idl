@@ -59,7 +59,6 @@ interface MasterAgentForwarder : AgentForwarder {
                                     in string objName)
     raises(UnknownObject);
 
-#ifdef HAVE_MULTI_MA
   boolean handShake(in string masterAgentName, in string myName,
                     in string objName)
     raises(UnknownObject);
@@ -91,9 +90,6 @@ interface MasterAgentForwarder : AgentForwarder {
   oneway void serviceFound(in long reqId, in corba_response_t decision,
                            in string objName);
 
-#endif // HAVE_MULTI_MA
-
-#ifdef HAVE_WORKFLOW
   wf_response_t submit_pb_set (in corba_pb_desc_seq_t seq_pb,
                                in string objName)
     raises(UnknownObject);
@@ -106,7 +102,6 @@ interface MasterAgentForwarder : AgentForwarder {
                 out long seqReqId,
                 in string objName)
     raises(UnknownObject);
-#endif // HAVE_WORKFLOW
 
   SeqString searchData(in string request,
                        in string objName)

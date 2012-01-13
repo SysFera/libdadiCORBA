@@ -72,8 +72,6 @@ interface MasterAgent : Agent {
    */
   SeqCorbaProfileDesc_t getProfiles(out long length);
 
-#ifdef HAVE_MULTI_MA
-
   /**
    * @brief MAs federation management 
    * @param masterAgentName The name of the MA
@@ -142,9 +140,6 @@ interface MasterAgent : Agent {
    */
   oneway void serviceFound(in long reqId, in corba_response_t decision) ;
 
-#endif // HAVE_MULTI_MA
-
-#ifdef HAVE_WORKFLOW
   /**
    * @brief Workflow submission function. *
    * called by the MA_DAG or a client to submit a set of problems *
@@ -172,7 +167,6 @@ interface MasterAgent : Agent {
                   out boolean complete,
                   out long firstReqId,
                   out long seqReqId);
-#endif // HAVE_WORKFLOW
   /**
    * @brief To insert a data
    * @param key The key to insert the data
