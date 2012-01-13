@@ -275,6 +275,18 @@ struct corba_data_desc_t {
  * @brief TODO
  */
   type specific;
+  /**
+   * @brief This data Dagda data manager name.
+   */
+  string dataManager;
+  /**
+   * @brief TODO
+   */
+  short byte_order;
+  /**
+   * @brief TODO
+   */
+  short base_type_size;
 };
 /**
  * @brief Sequence of corba data
@@ -581,6 +593,10 @@ struct corba_profile_t {
    * @brief Wall time 
    */
   long   walltime ;
+  /**
+   * @brief The client asking for the service
+   */
+  string clientName;
 };
 
 #endif // _COMMON_TYPES_IDL_
