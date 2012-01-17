@@ -157,7 +157,7 @@ add_dependencies(corbaForwarder CORBAFiles)
 add_dependencies(LibForwarder CORBAFiles)
 
 target_link_libraries(corbaForwarder
-  ${OMNIORB4_LIBRARIES_sh}
+  ${OMNIORB4_LIBRARIES}
   LibForwarder
   dadiCORBA
   pthread
