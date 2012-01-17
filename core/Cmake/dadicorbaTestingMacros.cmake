@@ -52,7 +52,7 @@ macro(dadicorba_fixture_test NAME)
       dadiCORBA
       LibForwarder
       ${Boost_LIBRARIES}
-      ${OMNIORB4_LIBRARIES_sh}
+      ${OMNIORB4_LIBRARIES}
       pthread
       ${DADI_LIBRARIES}
       )
@@ -138,7 +138,7 @@ macro(dadicorba_test NAME)
       dadiCORBA
       LibForwarder
       ${Boost_LIBRARIES}
-      ${OMNIORB4_LIBRARIES_sh}
+      ${OMNIORB4_LIBRARIES}
       pthread
       ${DADI_LIBRARIES}
       )
