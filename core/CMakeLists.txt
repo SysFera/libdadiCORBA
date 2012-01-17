@@ -152,7 +152,7 @@ target_link_libraries(LibForwarder
   pthread
   ${Boost_LIBRARIES}
   ${DADI_LIBRARIES}
-  ${OMNIORB4_LIBRARIES_sh}
+  ${OMNIORB4_LIBRARIES}
 )
 add_executable(corbaForwarder
   Fwdr.cc
