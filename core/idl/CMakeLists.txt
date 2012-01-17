@@ -110,7 +110,7 @@ add_custom_target(CORBAFiles
 add_library(dadiCORBA SHARED ${CORBA_SOURCES})
 add_dependencies(dadiCORBA ${IDL_GENERATED_HEADERS})
 target_link_libraries(dadiCORBA
-  ${OMNIORB4_LIBRARIES}
+  ${OMNIORB4_LIBRARIES_sh}
 )
 
 install(FILES ${IDL_GENERATED_HEADERS} DESTINATION ${INC_INSTALL_DIR})

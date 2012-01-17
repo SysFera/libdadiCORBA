@@ -112,7 +112,6 @@ set(Forwarder_SOURCES
   diet/Callback.cc
   diet/MasterAgent.cc
   diet/SeD.cc
-  log/LogForwarder.cc
   dagda/Dagda.cc
   diet/CltMan.cc
   diet/MaDag.cc
@@ -147,6 +146,13 @@ set(Forwarder_SOURCES
 
 add_library(LibForwarder SHARED
   ${Forwarder_SOURCES}
+)
+target_link_libraries(LibForwarder
+  dadiCORBA
+  pthread
+  ${Boost_LIBRARIES}
+  ${DADI_LIBRARIES}
+  ${OMNIORB4_LIBRARIES_sh}
 )
 add_executable(corbaForwarder
   Fwdr.cc
