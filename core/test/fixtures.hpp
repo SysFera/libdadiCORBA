@@ -35,9 +35,9 @@ namespace bs = boost::system;
 
 
 template <const char *omniORBConfig>
-class setDietEnvFixture {
+class setEnvFixture {
 public:
-  setDietEnvFixture() {
+  setEnvFixture() {
     BOOST_TEST_MESSAGE("== Test setup [BEGIN]: setting environment ==");
 
     // Set env regarding omniORB
@@ -53,13 +53,9 @@ public:
 
       BOOST_TEST_MESSAGE("== Test setup [END]: setting environment ==");
     }
-
-    // std::string dietPath = std::string(DIETAGENT_DIR)
-    // + std::string(getenv("PATH"));
-    // setenv("PATH", dietPath.c_str(), 1);
   }
 
-  ~setDietEnvFixture() {
+  ~setEnvFixture() {
     BOOST_TEST_MESSAGE("== Test teardown [BEGIN]: unsetting environment ==");
     BOOST_TEST_MESSAGE("== Test teardown [END]: unsetting environment ==");
   }
@@ -67,12 +63,12 @@ public:
 
 
 
-/* Diet test fixture (aka test context)
+/* test fixture (aka test context)
  * basically setup omniNames before starting our test
  * and then cleanup after test has been executed
  */
 template <const char *config, const char *endPoint, const char *initRef>
-class OmniNamesFixture: public setDietEnvFixture<config> {
+class OmniNamesFixture: public setEnvFixture<config> {
 boost::scoped_ptr<bp::child> processNamingService;
 
 public:
@@ -142,67 +138,6 @@ std::string logdir;
 };
 
 
-template <const char *config, const char *omniORBConfig, class parentFixture>
-class DietAgentFixture: public parentFixture {
-boost::scoped_ptr<bp::child> processAgent;
-
-public:
-DietAgentFixture(): processAgent(NULL) {
-  BOOST_TEST_MESSAGE(
-    "== Test setup [BEGIN]:  Launching DIET Agent (config file: "
-    << config << ", omniORB config: " << omniORBConfig <<
-    ") ==");
-
-
-  std::string exec;
-  try {
-    exec = bp::find_executable_in_path("dietAgent", DIETAGENT_DIR);
-  } catch (bs::system_error &e) {
-    BOOST_TEST_MESSAGE("can't find dietAgent: " << e.what());
-    return;
-  }
-
-  BOOST_TEST_MESSAGE("dietAgent found: " << exec);
-
-  // setup dietAgent environment
-  bp::context ctx;
-  ctx.process_name = "dietAgent";
-  bp::environment::iterator i_c;
-  i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
-  if (i_c != ctx.env.end()) {
-    i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
-  } else {
-    ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
-  }
-  ctx.env["OMNIORB_CONFIG"] = omniORBConfig;
-
-  // redirect output to /dev/null
-  ctx.streams[bp::stdout_id] = bp::behavior::null();
-  ctx.streams[bp::stderr_id] = bp::behavior::null();
-
-
-  // setup dietAGent arguments
-  std::vector<std::string> args = ba::list_of(config);
-
-  // launch diet Agent
-  const bp::child c = bp::create_child(exec, args, ctx);
-
-  processAgent.reset(utils::copy_child(c));
-  boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-  BOOST_TEST_MESSAGE("== Test setup [END]: Launching DIET Agent ==");
-}
-
-~DietAgentFixture() {
-  BOOST_TEST_MESSAGE("== Test teardown [BEGIN]: Stopping DIET Agent ==");
-  if (processAgent) {
-    processAgent->terminate();
-    processAgent->wait();
-  }
-
-  BOOST_TEST_MESSAGE("== Test teardown [END]: Stopping DIET Agent ==");
-}
-};
-
 
 // must not be static
 // should be a primitive type with an identifier name
@@ -211,11 +146,6 @@ char OmniORBEndPoint[] = OMNINAMES_ENDPOINT;
 char OmniORBInitRef[] = ORB_INIT_REF;
 typedef OmniNamesFixture<ConfigOmniORB, OmniORBEndPoint,
                          OmniORBInitRef> omniNamesFixture;
-
-
-char ConfigMasterAgent[] = "/home/keo/Bureau/MA.cfg";
-typedef DietAgentFixture<ConfigMasterAgent, ConfigOmniORB,
-                         omniNamesFixture> DietMAFixture;
 
 
 
