@@ -65,7 +65,7 @@ endif (CYGWIN)
 
 
 # OmniORB is mandatory:
-find_package(OmniORB)
+find_package(OmniORB4)
 if (OMNIORB4_FOUND)
   add_definitions(-D__OMNIORB4__)
 else (OMNIORB4_FOUND)

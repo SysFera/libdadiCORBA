@@ -24,7 +24,7 @@ endif(FWD_FOUND)
 
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries." ON)
 # OmniORB is mandatory:
-find_package(OmniORB)
+find_package(OmniORB4)
 if (OMNIORB4_FOUND)
   add_definitions(-D__OMNIORB4__)
   set(OMNIORB4_LIBRARIES ${OMNIORB4_LIBRARIES})

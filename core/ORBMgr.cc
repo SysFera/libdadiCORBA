@@ -449,14 +449,12 @@ ORBMgr::resolveObject(const std::string& context, const std::string& name,
           if (ctxt == SEDCTXT) {
             object = fwd->getSeD(name.c_str());
           }
-#ifdef HAVE_WORKFLOW
           if (ctxt == WFMGRCTXT) {
             object = fwd->getCltMan(name.c_str());
           }
           if (ctxt == MADAGCTXT) {
             object = fwd->getMaDag(name.c_str());
           }
-#endif // have workflow
           if (ctxt2==LOGCOMPCTXT) {
             object = fwd->getLogCentralComponent(name.c_str());
           }
