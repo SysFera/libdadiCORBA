@@ -96,6 +96,7 @@ find_package(Dadi)
 
 include_directories(
   ${OMNIORB4_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
   ${FWD_BINARY_DIR}/idl
   ${FWD_SOURCE_DIR}/impl
   ${FWD_SOURCE_DIR}/
