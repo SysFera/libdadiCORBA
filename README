@@ -1,0 +1,11 @@
+This repository is a test to try to externalize the CORBA layer from DIET, Dagda
+and LogService. The idea was to have only one CORBA building block for those
+tools, in order to reduce code duplication, and reduce the numer of forwarders
+needed to bypass firewalls.
+
+However, we ended up abandonning this code, as it requires to have all DIET,
+Dagda and LogService CORBA IDLs, and thus created a dependency between all those
+projects.
+
+If you want to know more about DIET, Dagda and LogService, see
+http://graal.ens-lyon.fr/diet
